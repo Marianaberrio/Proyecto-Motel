@@ -1,7 +1,12 @@
+# Ignorar la carpeta .vs y sus archivos
 .vs/
+
+# Ignorar carpetas de build
 bin/
 obj/
-.user
-.suo
-.userosscache
-.sln.docstates
+
+# Ignorar archivos de configuración de Visual Studio
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
