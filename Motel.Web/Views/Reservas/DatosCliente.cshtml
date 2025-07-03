@@ -1,0 +1,53 @@
+﻿@model Motel.Web.Models.Cliente
+
+@{
+    ViewData["Title"] = "Datos del Cliente";
+    var habitacionIds = TempData["HabitacionIds"]?.ToString();
+    var servicioIds = TempData["ServicioIds"]?.ToString();
+    var fechaEntrada = TempData["FechaEntrada"]?.ToString();
+    var fechaSalida = TempData["FechaSalida"]?.ToString();
+}
+
+<h2>Datos del Cliente</h2>
+
+<form asp-action="ConfirmarReserva" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- Llevar las selecciones y fechas en hidden fields -->
+    <input type="hidden" name="habitacionIds" value="@habitacionIds" />
+    <input type="hidden" name="servicioIds"   value="@servicioIds" />
+    <input type="hidden" name="fechaEntrada"  value="@fechaEntrada" />
+    <input type="hidden" name="fechaSalida"   value="@fechaSalida" />
+
+    <div class="mb-3">
+        <label asp-for="NombreCliente" class="form-label"></label>
+        <input asp-for="NombreCliente" class="form-control" />
+        <span asp-validation-for="NombreCliente" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ApellidoCliente" class="form-label"></label>
+        <input asp-for="ApellidoCliente" class="form-control" />
+        <span asp-validation-for="ApellidoCliente" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CorreoCliente" class="form-label"></label>
+        <input asp-for="CorreoCliente" class="form-control" />
+        <span asp-validation-for="CorreoCliente" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="TelefonoCliente" class="form-label"></label>
+        <input asp-for="TelefonoCliente" class="form-control" />
+        <span asp-validation-for="TelefonoCliente" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="FechaNacimiento" class="form-label"></label>
+        <input asp-for="FechaNacimiento" type="date" class="form-control" />
+        <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Confirmar Reserva</button>
+</form>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

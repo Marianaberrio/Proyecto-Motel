@@ -1,0 +1,25 @@
+﻿@model List<proyecto_motel.WeatherForecast>
+
+<h2>Pronóstico del Clima</h2>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Temp. (°C)</th>
+            <th>Temp. (°F)</th>
+            <th>Resumen</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>@item.Date</td>
+                    <td>@item.TemperatureC</td>
+                    <td>@item.TemperatureF</td>
+                    <td>@item.Summary</td>
+                </tr>
+        }
+    </tbody>
+</table>

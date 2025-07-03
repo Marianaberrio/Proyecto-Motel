@@ -1,0 +1,45 @@
+﻿@model List<Motel.Web.Models.Cliente>
+@{
+    ViewData["Title"] = "Clientes";
+}
+<h2 class="text-center mb-4">Clientes</h2>
+<table class="table table-hover table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var cliente in Model)
+            {
+                        <tr>
+                            <td>@cliente.NumCliente</td>
+                            <td>@cliente.NombreCliente</td>
+                            <td>@cliente.ApellidoCliente</td>
+                            <td>@cliente.CorreoCliente</td>
+                            <td>@cliente.TelefonoCliente</td>
+                            <td>@cliente.FechaNacimiento.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@cliente.NumCliente" class="btn btn-sm btn-info">Ver</a>
+                                <a asp-action="Edit"    asp-route-id="@cliente.NumCliente" class="btn btn-sm btn-primary">Editar</a>
+                                <a asp-action="Delete"  asp-route-id="@cliente.NumCliente" class="btn btn-sm btn-danger">Eliminar</a>
+                            </td>
+                        </tr>
+            }
+        }
+        else
+        {
+                <tr>
+                    <td colspan="7" class="text-center">No hay clientes para mostrar.</td>
+                </tr>
+        }
+    </tbody>
+</table>

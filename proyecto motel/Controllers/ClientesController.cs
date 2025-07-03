@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;  // Necesario para IConfiguration
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
@@ -16,35 +19,39 @@ namespace proyecto_motel.Controllers
             _connectionString = configuration.GetConnectionString("ConexionMotel");
         }
 
-        // POST: api/clientes
+        // POST: api/Clientes
         [HttpPost]
         public async Task<IActionResult> CrearCliente([FromBody] Cliente cliente)
         {
             if (cliente == null)
-            {
                 return BadRequest("Cliente no puede ser nulo.");
-            }
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using var conn = new SqlConnection(_connectionString);
+                await conn.OpenAsync();
+
+                using var cmd = new SqlCommand("CrearCliente", conn)
                 {
-                    await connection.OpenAsync();
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@NombreCliente",   cliente.NombreCliente);
+                cmd.Parameters.AddWithValue("@ApellidoCliente", cliente.ApellidoCliente);
+                cmd.Parameters.AddWithValue("@CorreoCliente",   cliente.CorreoCliente);
+                cmd.Parameters.AddWithValue("@TelefonoCliente", cliente.TelefonoCliente);
+                cmd.Parameters.AddWithValue("@FechaNacimiento", cliente.FechaNacimiento);
 
-                    using (SqlCommand command = new SqlCommand("CrearCliente", connection))
-                    {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@NombreCliente", cliente.NombreCliente);
-                        command.Parameters.AddWithValue("@ApellidoCliente", cliente.ApellidoCliente);
-                        command.Parameters.AddWithValue("@CorreoCliente", cliente.CorreoCliente);
-                        command.Parameters.AddWithValue("@TelefonoCliente", cliente.TelefonoCliente);
-                        command.Parameters.AddWithValue("@FechaNacimiento", cliente.FechaNacimiento);
+                // OUTPUT parameter
+                var outId = new SqlParameter("@NumCliente", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                cmd.Parameters.Add(outId);
 
-                        await command.ExecuteNonQueryAsync();
-                    }
-                }
+                await cmd.ExecuteNonQueryAsync();
+                cliente.NumCliente = (int)outId.Value;
 
-                return CreatedAtAction(nameof(CrearCliente), new { id = cliente.NumCliente }, cliente);
+                return CreatedAtAction(nameof(Get), new { id = cliente.NumCliente }, cliente);
             }
             catch (Exception ex)
             {
@@ -52,44 +59,36 @@ namespace proyecto_motel.Controllers
             }
         }
 
-        // GET: api/clientes/{numCliente}
+        // GET: api/Clientes/{id}
         [HttpGet("{id}")]
-        public ActionResult<Cliente> Get(int id)
+        public async Task<ActionResult<Cliente>> Get(int id)
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using var conn = new SqlConnection(_connectionString);
+                await conn.OpenAsync();
+
+                using var cmd = new SqlCommand("ConsultarCliente", conn)
                 {
-                    connection.Open();
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@NumCliente", id);
 
-                    using (SqlCommand command = new SqlCommand("ConsultarCliente", connection))
-                    {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@NumCliente", id);
+                using var reader = await cmd.ExecuteReaderAsync();
+                if (!await reader.ReadAsync())
+                    return NotFound();
 
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                var cliente = new Cliente
-                                {
-                                    NumCliente = reader.GetInt32(0),
-                                    NombreCliente = reader.GetString(1),
-                                    ApellidoCliente = reader.GetString(2),
-                                    CorreoCliente = reader.GetString(3),
-                                    TelefonoCliente = reader.GetString(4),
-                                    FechaNacimiento = reader.GetDateTime(5)
-                                };
+                var cliente = new Cliente
+                {
+                    NumCliente      = reader.GetInt32(0),
+                    NombreCliente   = reader.GetString(1),
+                    ApellidoCliente = reader.GetString(2),
+                    CorreoCliente   = reader.GetString(3),
+                    TelefonoCliente = reader.GetString(4),
+                    FechaNacimiento = reader.GetDateTime(5)
+                };
 
-                                return Ok(cliente); // Devuelve el cliente encontrado
-                            }
-                            else
-                            {
-                                return NotFound(); // Si no se encuentra el cliente
-                            }
-                        }
-                    }
-                }
+                return Ok(cliente);
             }
             catch (Exception ex)
             {
@@ -97,43 +96,42 @@ namespace proyecto_motel.Controllers
             }
         }
 
-        // PUT: api/clientes/{numCliente}
+        // PUT: api/Clientes/{id}
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Cliente cliente)
+        public async Task<IActionResult> Put(int id, [FromBody] Cliente cliente)
         {
-            if (cliente == null)
-            {
-                return BadRequest("Cliente no puede ser nulo.");
-            }
+            if (cliente == null || id != cliente.NumCliente)
+                return BadRequest("Datos inválidos.");
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
-                {
-                    connection.Open();
+                using var conn = new SqlConnection(_connectionString);
+                await conn.OpenAsync();
 
-                    using (SqlCommand command = new SqlCommand("ActualizarCliente", connection))
-                    {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@NumCliente", id);
-                        command.Parameters.AddWithValue("@NombreCliente", cliente.NombreCliente);
-                        command.Parameters.AddWithValue("@ApellidoCliente", cliente.ApellidoCliente);
-                        command.Parameters.AddWithValue("@CorreoCliente", cliente.CorreoCliente);
-                        command.Parameters.AddWithValue("@TelefonoCliente", cliente.TelefonoCliente);
-                        command.Parameters.AddWithValue("@FechaNacimiento", cliente.FechaNacimiento);
+                // Usamos SQL directo para asegurar la actualización de FechaNacimiento
+                const string sql = @"
+                    UPDATE Clientes
+                    SET 
+                        NombreCliente    = @NombreCliente,
+                        ApellidoCliente  = @ApellidoCliente,
+                        CorreoCliente    = @CorreoCliente,
+                        TelefonoCliente  = @TelefonoCliente,
+                        FechaNacimiento  = @FechaNacimiento
+                    WHERE NumCliente = @NumCliente";
 
-                        int rowsAffected = command.ExecuteNonQuery();
+                using var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@NombreCliente",   cliente.NombreCliente);
+                cmd.Parameters.AddWithValue("@ApellidoCliente", cliente.ApellidoCliente);
+                cmd.Parameters.AddWithValue("@CorreoCliente",   cliente.CorreoCliente);
+                cmd.Parameters.AddWithValue("@TelefonoCliente", cliente.TelefonoCliente);
+                cmd.Parameters.AddWithValue("@FechaNacimiento", cliente.FechaNacimiento);
+                cmd.Parameters.AddWithValue("@NumCliente",       cliente.NumCliente);
 
-                        if (rowsAffected > 0)
-                        {
-                            return NoContent(); // El cliente fue actualizado
-                        }
-                        else
-                        {
-                            return NotFound(); // Si no se encuentra el cliente para actualizar
-                        }
-                    }
-                }
+                var rows = await cmd.ExecuteNonQueryAsync();
+                if (rows == 0)
+                    return NotFound();
+
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -141,33 +139,66 @@ namespace proyecto_motel.Controllers
             }
         }
 
-        // DELETE: api/clientes/{numCliente}
+        // DELETE: api/Clientes/{id}
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using var conn = new SqlConnection(_connectionString);
+                await conn.OpenAsync();
+
+                using var cmd = new SqlCommand("EliminarCliente", conn)
                 {
-                    connection.Open();
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@NumCliente", id);
 
-                    using (SqlCommand command = new SqlCommand("EliminarCliente", connection))
-                    {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@NumCliente", id);
+                var rows = await cmd.ExecuteNonQueryAsync();
+                if (rows == 0)
+                    return NotFound();
 
-                        int rowsAffected = command.ExecuteNonQuery();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error en el servidor: {ex.Message}");
+            }
+        }
 
-                        if (rowsAffected > 0)
-                        {
-                            return NoContent(); // El cliente fue eliminado
-                        }
-                        else
-                        {
-                            return NotFound(); // Si no se encuentra el cliente para eliminar
-                        }
-                    }
-                }
+        // GET: api/Clientes/buscar?email=foo@bar.com
+        [HttpGet("buscar")]
+        public async Task<IActionResult> BuscarClientePorEmail([FromQuery] string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return BadRequest("Email es requerido.");
+
+            try
+            {
+                using var conn = new SqlConnection(_connectionString);
+                await conn.OpenAsync();
+
+                using var cmd = new SqlCommand("BuscarClientePorEmail", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@CorreoCliente", email);
+
+                using var reader = await cmd.ExecuteReaderAsync();
+                if (!await reader.ReadAsync())
+                    return NotFound();
+
+                var cliente = new Cliente
+                {
+                    NumCliente      = reader.GetInt32(0),
+                    NombreCliente   = reader.GetString(1),
+                    ApellidoCliente = reader.GetString(2),
+                    CorreoCliente   = reader.GetString(3),
+                    TelefonoCliente = reader.GetString(4),
+                    FechaNacimiento = reader.GetDateTime(5)
+                };
+
+                return Ok(cliente);
             }
             catch (Exception ex)
             {

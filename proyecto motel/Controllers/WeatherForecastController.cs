@@ -1,33 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace proyecto_motel.Controllers
+[Route("WeatherForecastWeb")]
+public class WeatherForecastController : Controller
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    [HttpGet("")]
+    public IActionResult Index()
     {
-        private static readonly string[] Summaries = new[]
+        var summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        var forecasts = Enumerable.Range(1, 5).Select(index => new proyecto_motel.WeatherForecast
         {
-            _logger = logger;
-        }
+            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = summaries[Random.Shared.Next(summaries.Length)]
+        }).ToList();
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }
+        return View(forecasts);
     }
 }

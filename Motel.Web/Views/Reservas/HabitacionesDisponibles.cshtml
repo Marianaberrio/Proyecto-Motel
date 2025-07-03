@@ -1,0 +1,99 @@
+﻿@model List<Motel.Web.Models.Habitacion>
+
+@{
+    ViewData["Title"] = "Habitaciones Disponibles";
+    var fechaEntrada = DateTime.Parse(TempData["FechaEntrada"].ToString());
+    var fechaSalida = DateTime.Parse(TempData["FechaSalida"].ToString());
+    var horas = (fechaSalida - fechaEntrada).TotalHours;
+}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">@ViewData["Title"]</h3>
+            <p class="mb-0">
+                @fechaEntrada.ToString("dd/MM/yyyy HH:mm") a @fechaSalida.ToString("dd/MM/yyyy HH:mm")
+                (@horas.ToString("0.00") horas)
+            </p>
+        </div>
+        <div class="card-body">
+            @if (TempData["Error"] != null)
+            {
+                    <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            <form asp-action="ElegirServicios" method="post" id="habitacionesForm">
+                <input type="hidden" name="habitacionIds" id="habitacionIds" />
+
+                @if (Model != null && Model.Any())
+                {
+                        <table class="table table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Seleccionar</th>
+                                    <th>Número</th>
+                                    <th>Tipo</th>
+                                    <th>Precio/hora</th>
+                                    <th>Total</th>
+                                    <th>Capacidad</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var habitacion in Model)
+                            {
+                                    <tr>
+                                        <td>
+                                            <!-- Ahora usamos NumHabitacion (cadena) tal y como espera la API -->
+                                            <input type="checkbox"
+                                                   class="habitacion-checkbox"
+                                                   value="@habitacion.NumHabitacion"
+                                                   id="hab_@habitacion.IdHabitacion" />
+                                        </td>
+                                        <td>@habitacion.NumHabitacion</td>
+                                        <td>@habitacion.TipoHabitacion</td>
+                                        <td>@habitacion.PrecioHabitacion.ToString("C")</td>
+                                        <td>@((habitacion.PrecioHabitacion * (decimal)horas).ToString("C"))</td>
+                                        <td>@habitacion.CapacidadHabitacion personas</td>
+                                        <td><span class="badge bg-success">@habitacion.EstadoHabitacion</span></td>
+                                    </tr>
+                            }
+                            </tbody>
+                        </table>
+
+                        <div class="d-flex justify-content-end mt-3">
+                            <a asp-action="BuscarDisponibilidad" class="btn btn-secondary me-2">
+                                <i class="fas fa-arrow-left me-1"></i> Cambiar fechas
+                            </a>
+                            <button type="submit" class="btn btn-primary" id="continuarBtn" disabled>
+                                <i class="fas fa-arrow-right me-1"></i> Continuar con servicios
+                            </button>
+                        </div>
+                }
+                else
+                {
+                        <div class="alert alert-warning">
+                            No hay habitaciones disponibles para las fechas seleccionadas.
+                        </div>
+                        <a asp-action="BuscarDisponibilidad" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i> Volver a buscar
+                        </a>
+                }
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <script>
+            $(function() {
+                $('.habitacion-checkbox').change(function() {
+                    const seleccionadas = $('.habitacion-checkbox:checked');
+                    $('#continuarBtn').prop('disabled', seleccionadas.length === 0);
+
+                    const ids = seleccionadas.map((_,c) => $(c).val()).get().join(',');
+                    $('#habitacionIds').val(ids);
+                });
+            });
+        </script>
+}
