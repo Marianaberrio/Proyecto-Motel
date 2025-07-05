@@ -1,0 +1,74 @@
+﻿@model Motel.Web.Models.Cliente
+
+@{
+    ViewData["Title"] = "Mi Perfil";
+}
+
+<h2 class="mb-4">@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-7">
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="NumCliente" />
+
+            <div class="form-floating mb-3">
+                <input asp-for="NombreCliente" class="form-control" placeholder="Nombre" />
+                <label asp-for="NombreCliente">Nombre</label>
+                <span asp-validation-for="NombreCliente" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="ApellidoCliente" class="form-control" placeholder="Apellido" />
+                <label asp-for="ApellidoCliente">Apellido</label>
+                <span asp-validation-for="ApellidoCliente" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="CorreoCliente" type="email" class="form-control" placeholder="Correo" />
+                <label asp-for="CorreoCliente">Correo Electrónico</label>
+                <span asp-validation-for="CorreoCliente" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="TelefonoCliente" class="form-control" placeholder="Teléfono" />
+                <label asp-for="TelefonoCliente">Teléfono</label>
+                <span asp-validation-for="TelefonoCliente" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-4">
+                <input asp-for="FechaNacimiento" type="date"
+                       class="form-control" placeholder="Fecha de nacimiento"
+                       max="@DateTime.Now.AddYears(-18).ToString("yyyy-MM-dd")" />
+                <label asp-for="FechaNacimiento">Fecha de Nacimiento</label>
+                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-1"></i> Guardar Cambios
+                </button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-home me-1"></i> Inicio
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-5">
+        <div class="card border-info shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="fas fa-user"></i> Datos de Cuenta</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Usuario:</strong> @Model.CorreoCliente</p>
+                <p><strong>Teléfono:</strong> @Model.TelefonoCliente</p>
+                <p><strong>Registrado:</strong> @DateTime.Now.ToString("dd/MM/yyyy")</p>
+                <hr />
+                <p class="text-muted small">
+                    Aquí puedes mantener tus datos al día.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

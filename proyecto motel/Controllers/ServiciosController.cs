@@ -166,6 +166,42 @@ namespace proyecto_motel.Controllers
             {
                 return StatusCode(500, $"Error en el servidor: {ex.Message}");
             }
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    var servicios = new List<Servicios>();
+                    using (SqlCommand command = new SqlCommand("SELECT * FROM Servicios", connection))
+                    {
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                servicios.Add(new Servicios
+                                {
+                                    NumServicio = reader.GetInt32(0),
+                                    NombreServicio = reader.GetString(1),
+                                    DescripcionServicio = reader.IsDBNull(2) ? null : reader.GetString(2),
+                                    PrecioServicio = reader.GetDecimal(3)
+                                });
+                            }
+                        }
+                    }
+
+                    return Ok(servicios);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error en el servidor: {ex.Message}");
+            }
         }
     }
 }

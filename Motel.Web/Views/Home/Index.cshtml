@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+    // Si el usuario está logueado, mostramos su nombre
+    var nombre = Context.Session.GetString("ClienteNombre") ?? "Invitado";
+}
+
+<!-- Hero -->
+<div class="bg-primary text-white text-center py-5 mb-4">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Bienvenido, @nombre</h1>
+        <p class="lead">Disfruta de tu estancia en Motel Paradise.</p>
+        <a class="btn btn-light btn-lg mt-3" 
+           asp-controller="Reservas" asp-action="BuscarDisponibilidad">
+            ¡Reserva Ahora!
+        </a>
+    </div>
+</div>
+
+<!-- Tres columnas de servicios -->
+<div class="container">
+    <div class="row g-4">
+        <div class="col-md-4 text-center">
+            <i class="fas fa-bed fa-3x mb-3 text-secondary"></i>
+            <h3>Habitaciones</h3>
+            <p>Elige la habitación perfecta para tu descanso.</p>
+            <a class="btn btn-outline-secondary" 
+               asp-controller="Habitaciones" asp-action="Index">
+                Ver Habitaciones
+            </a>
+        </div>
+        <div class="col-md-4 text-center">
+            <i class="fas fa-concierge-bell fa-3x mb-3 text-secondary"></i>
+            <h3>Servicios</h3>
+            <p>Completa tu experiencia con nuestros servicios.</p>
+            <a class="btn btn-outline-secondary" 
+               asp-controller="Servicios" asp-action="Index">
+                Ver Servicios
+            </a>
+        </div>
+        <div class="col-md-4 text-center">
+            <i class="fas fa-calendar-check fa-3x mb-3 text-secondary"></i>
+            <h3>Mis Reservas</h3>
+            <p>Administra fácilmente tus reservas.</p>
+            <a class="btn btn-outline-secondary" 
+               asp-controller="Reservas" asp-action="Index">
+                Mis Reservas
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de contacto -->
+<div class="bg-light text-center py-5 mt-5">
+    <div class="container">
+        <h2>¿Tienes alguna pregunta?</h2>
+        <p class="mb-4">Estamos disponibles las 24 horas para atenderte.</p>
+        <p>
+            <i class="fas fa-phone fa-lg me-2"></i>+1 809 467 0861<br />
+            <i class="fas fa-envelope fa-lg me-2"></i>info@motelparadise.com
+        </p>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+﻿@model List<Motel.Web.Models.Habitacion>
+
+@{
+    ViewData["Title"] = "Habitaciones";
+}
+
+<h2 class="mb-4">@ViewData["Title"]</h2>
+
+@if (TempData["Error"] != null)
+{
+        <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (Model == null || !Model.Any())
+{
+        <div class="alert alert-warning">No hay habitaciones para mostrar.</div>
+}
+else
+{
+        <div class="row g-3">
+        @foreach (var h in Model)
+        {
+                    <div class="col-md-4">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">@h.NumHabitacion</h5>
+                                <h6 class="card-subtitle text-muted mb-2">@h.TipoHabitacion</h6>
+                                <p class="card-text">
+                                    <strong>Precio:</strong> @h.PrecioHabitacion.ToString("C")<br />
+                                    <strong>Capacidad:</strong> @h.CapacidadHabitacion personas
+                                </p>
+                            </div>
+                            <div class="card-footer bg-transparent border-top-0 text-end">
+                                <span class="badge @(h.EstadoHabitacion == "Disponible" ? "bg-success" : "bg-danger")">
+                            @h.EstadoHabitacion
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+        }
+        </div>
+}
