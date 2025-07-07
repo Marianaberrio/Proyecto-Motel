@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Motel Paradise</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-hotel me-2"></i>Motel Paradise
+                </a>
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString()=="Home"?"active":"")"
+                               asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home"></i> Inicio
+                            </a>
+                        </li>
+                        @* Aquí se eliminó el enlace “Reservar” *@
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        @if (Context.Session.GetString("ClienteEmail") != null)
+                        {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown"
+                                       role="button" data-bs-toggle="dropdown">
+                                        <i class="fas fa-user-circle"></i>
+                                    @Context.Session.GetString("ClienteEmail")
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                    @* Aquí se quitó “Mis Reservas” *@
+                                        <li>
+                                            <a class="dropdown-item"
+                                               asp-controller="Clientes" asp-action="Edit"
+                                               asp-route-id="@Context.Session.GetInt32("ClienteId")">
+                                                <i class="fas fa-user-edit"></i> Mi Perfil
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider" /></li>
+                                        <li>
+                                            <form asp-controller="Auth" asp-action="Logout"
+                                                  method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                                <button type="submit" class="dropdown-item">
+                                                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                        }
+                        else
+                        {
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString()=="Auth" && ViewContext.RouteData.Values["action"]?.ToString()=="Login"?"active":"")"
+                                       asp-controller="Auth" asp-action="Login">
+                                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString()=="Auth" && ViewContext.RouteData.Values["action"]?.ToString()=="Register"?"active":"")"
+                                       asp-controller="Auth" asp-action="Register">
+                                        <i class="fas fa-user-plus"></i> Registrarse
+                                    </a>
+                                </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container py-4">
+        @if (TempData["Success"] != null)
+        {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+        }
+
+        @RenderBody()
+    </main>
+
+    <footer class="bg-dark text-white py-4 mt-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5><i class="fas fa-hotel"></i> Motel Paradise</h5>
+                    <p>Tu lugar de descanso y privacidad</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone"></i> +1 809 467 0861</li>
+                        <li><i class="fas fa-envelope"></i> info@motelparadise.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Av. Principal 123, Ciudad</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Horario</h5>
+                    <ul class="list-unstyled">
+                        <li>Lunes a Viernes: 24 horas</li>
+                        <li>Sábado y Domingo: 24 horas</li>
+                    </ul>
+                </div>
+            </div>
+            <hr />
+            <div class="text-center">
+                <p class="mb-0">&copy; @DateTime.Now.Year - Motel Paradise. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle con Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- jQuery Validation -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
+
+    <!-- Scripts personalizados -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,73 @@
+﻿@model List<Motel.Web.Models.Servicio>
+
+@{
+    ViewData["Title"] = "Servicios Disponibles";
+    var habitacionIds = TempData["HabitacionIds"]?.ToString();
+    TempData.Keep("HabitacionIds");
+    TempData.Keep("FechaEntrada");
+    TempData.Keep("FechaSalida");
+}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-info text-white">
+            <h3 class="mb-0">Selecciona Servicios Opcionales</h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="DatosCliente" method="post">
+                <input type="hidden" name="habitacionIds" value="@habitacionIds" />
+                <input type="hidden" id="servicioIds" name="servicioIds" />
+
+                @if (Model != null && Model.Any())
+                {
+                        <table class="table table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Seleccionar</th>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var servicio in Model)
+                            {
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="servicio-checkbox" value="@servicio.NumServicio" />
+                                            </td>
+                                            <td>@servicio.NombreServicio</td>
+                                            <td>@servicio.DescripcionServicio</td>
+                                            <td>@servicio.PrecioServicio.ToString("C")</td>
+                                        </tr>
+                            }
+                            </tbody>
+                        </table>
+                }
+                else
+                {
+                        <p>No hay servicios adicionales disponibles.</p>
+                }
+
+                <div class="text-end">
+                    <a asp-action="BuscarDisponibilidad" class="btn btn-secondary">Volver</a>
+                    <button type="submit" class="btn btn-primary">Continuar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <script>
+            $(document).ready(function () {
+                $("form").submit(function () {
+                    var selected = $(".servicio-checkbox:checked")
+                        .map(function () { return $(this).val(); })
+                        .get()
+                        .join(',');
+                    $("#servicioIds").val(selected);
+                });
+            });
+        </script>
+}

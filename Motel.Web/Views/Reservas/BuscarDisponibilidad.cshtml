@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Buscar Disponibilidad";
+}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">@ViewData["Title"]</h3>
+        </div>
+        <div class="card-body">
+            @if (TempData["Error"] != null)
+            {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <h5>Error</h5>
+            <p>@TempData["Error"]</p>
+                    @if (TempData["ErrorDetails"] != null)
+                    {
+                    <details class="mt-2">
+                        <summary>Detalles técnicos</summary>
+                        <code>@TempData["ErrorDetails"]</code>
+                    </details>
+                    }
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+            }
+
+            <form asp-action="HabitacionesDisponibles" method="post" id="disponibilidadForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="fechaEntrada" class="form-label">Fecha de Entrada</label>
+                        <input type="datetime-local" id="fechaEntrada" name="fechaEntrada" class="form-control" required 
+                               min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="fechaSalida" class="form-label">Fecha de Salida</label>
+                        <input type="datetime-local" id="fechaSalida" name="fechaSalida" class="form-control" required 
+                               min="@DateTime.Now.AddHours(1).ToString("yyyy-MM-ddTHH:mm")" />
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-search me-2"></i> Buscar Habitaciones Disponibles
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <script>
+            $(document).ready(function() {
+                // Validación de fechas en el cliente
+                $('#disponibilidadForm').submit(function(e) {
+                    const fechaEntrada = new Date($('#fechaEntrada').val());
+                    const fechaSalida = new Date($('#fechaSalida').val());
+
+                    if (fechaEntrada >= fechaSalida) {
+                        alert('La fecha de salida debe ser posterior a la de entrada');
+                        e.preventDefault();
+                        return false;
+                    }
+
+                    // Mínimo 1 hora de estadía
+                    const diffHours = (fechaSalida - fechaEntrada) / (1000 * 60 * 60);
+                    if (diffHours < 1) {
+                        alert('La estadía mínima es de 1 hora');
+                        e.preventDefault();
+                        return false;
+                    }
+
+                    return true;
+                });
+
+                // Establecer fecha de salida mínima
+                $('#fechaEntrada').change(function() {
+                    const fechaEntrada = new Date($(this).val());
+                    if (fechaEntrada) {
+                        const minSalida = new Date(fechaEntrada.getTime() + 60 * 60 * 1000); // +1 hora
+                        $('#fechaSalida').attr('min', minSalida.toISOString().slice(0, 16));
+
+                        // Si la fecha de salida actual es menor que el nuevo mínimo, actualizarla
+                        const fechaSalida = new Date($('#fechaSalida').val());
+                        if (fechaSalida < minSalida) {
+                            $('#fechaSalida').val(minSalida.toISOString().slice(0, 16));
+                        }
+                    }
+                });
+            });
+        </script>
+}

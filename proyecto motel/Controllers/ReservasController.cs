@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
@@ -15,43 +16,62 @@ namespace proyecto_motel.Controllers
             _connectionString = configuration.GetConnectionString("ConexionMotel");
         }
 
-        // POST: api/reservas
+        // POST: api/Reservas
         [HttpPost]
         public async Task<IActionResult> CrearReserva([FromBody] Reservas reserva)
         {
             if (reserva == null)
-            {
                 return BadRequest("La reserva no puede ser nula.");
-            }
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                int nuevaId;
+                using (var conn = new SqlConnection(_connectionString))
                 {
-                    await connection.OpenAsync();
+                    await conn.OpenAsync();
 
-                    // Paso 1: Crear la reserva
-                    using (SqlCommand command = new SqlCommand("CrearReserva", connection))
+                    // Hacemos insert + OUTPUT para capturar el identity
+                    const string sql = @"
+                INSERT INTO dbo.Reservas
+                    (NumCliente, FechaReserva, FechaEntrada, FechaSalida,
+                     EstadoReserva, TotalReserva, ComentarioReserva)
+                OUTPUT INSERTED.NumReserva
+                VALUES
+                    (@NumCliente, GETDATE(), @FechaEntrada, @FechaSalida,
+                     @EstadoReserva, @TotalReserva, @ComentarioReserva);";
+
+                    using (var cmd = new SqlCommand(sql, conn))
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@NumCliente", reserva.NumCliente);
-                        command.Parameters.AddWithValue("@FechaEntrada", reserva.FechaEntrada);
-                        command.Parameters.AddWithValue("@FechaSalida", reserva.FechaSalida);
-                        command.Parameters.AddWithValue("@EstadoReserva", reserva.EstadoReserva);
-                        command.Parameters.AddWithValue("@TotalReserva", reserva.TotalReserva);
-                        command.Parameters.AddWithValue("@ComentarioReserva", reserva.ComentarioReserva);
+                        cmd.Parameters.AddWithValue("@NumCliente", reserva.NumCliente);
+                        cmd.Parameters.AddWithValue("@FechaEntrada", reserva.FechaEntrada);
+                        cmd.Parameters.AddWithValue("@FechaSalida", reserva.FechaSalida);
+                        cmd.Parameters.AddWithValue("@EstadoReserva", reserva.EstadoReserva);
+                        cmd.Parameters.AddWithValue("@TotalReserva", reserva.TotalReserva);
+                        cmd.Parameters.AddWithValue(
+                            "@ComentarioReserva",
+                            (object)reserva.ComentarioReserva ?? DBNull.Value
+                        );
 
-                        await command.ExecuteNonQueryAsync();
+                        // ExecuteScalarAsync devolverá el NumReserva generado
+                        nuevaId = (int)await cmd.ExecuteScalarAsync();
                     }
                 }
 
-                return CreatedAtAction(nameof(CrearReserva), new { id = reserva.NumReserva }, reserva);
+                // Devolvemos CreatedAtAction apuntando al GET por ID
+                reserva.NumReserva = nuevaId;
+                return CreatedAtAction(
+                    nameof(Get),
+                    new { numReserva = nuevaId },
+                    reserva
+                );
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error en el servidor: {ex.Message}");
             }
         }
+
+
 
         // GET: api/reservas/{numReserva}
         [HttpGet("{numReserva}")]
@@ -65,7 +85,7 @@ namespace proyecto_motel.Controllers
 
                     using (SqlCommand command = new SqlCommand("ConsultarReserva", connection))
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@NumReserva", numReserva);
 
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -86,13 +106,50 @@ namespace proyecto_motel.Controllers
 
                                 return Ok(reserva);
                             }
-                            else
-                            {
-                                return NotFound();
-                            }
+
+                            return NotFound();
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error en el servidor: {ex.Message}");
+            }
+        }
+        // GET: api/Reservas/cliente/{clienteId}
+        [HttpGet("cliente/{clienteId}")]
+        public async Task<ActionResult<List<Reservas>>> GetReservasPorCliente(int clienteId)
+        {
+            var lista = new List<Reservas>();
+            try
+            {
+                using var connection = new SqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                using var cmd = new SqlCommand("ConsultarReservasPorCliente", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@NumCliente", clienteId);
+
+                using var reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    lista.Add(new Reservas
+                    {
+                        NumReserva = reader.GetInt32(0),
+                        NumCliente = reader.GetInt32(1),
+                        FechaReserva = reader.GetDateTime(2),
+                        FechaEntrada = reader.GetDateTime(3),
+                        FechaSalida = reader.GetDateTime(4),
+                        EstadoReserva = reader.GetString(5),
+                        TotalReserva = reader.GetDecimal(6),
+                        ComentarioReserva = reader.IsDBNull(7) ? null : reader.GetString(7)
+                    });
+                }
+
+                return Ok(lista);
             }
             catch (Exception ex)
             {
@@ -105,9 +162,7 @@ namespace proyecto_motel.Controllers
         public async Task<IActionResult> Put(int numReserva, [FromBody] Reservas reserva)
         {
             if (reserva == null)
-            {
                 return BadRequest("La reserva no puede ser nula.");
-            }
 
             try
             {
@@ -117,24 +172,16 @@ namespace proyecto_motel.Controllers
 
                     using (SqlCommand command = new SqlCommand("ActualizarReserva", connection))
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@NumReserva", numReserva);  // Número de la reserva que se va a actualizar
-                        command.Parameters.AddWithValue("@FechaEntrada", reserva.FechaEntrada);  // Nueva fecha de entrada
-                        command.Parameters.AddWithValue("@FechaSalida", reserva.FechaSalida);  // Nueva fecha de salida
-                        command.Parameters.AddWithValue("@EstadoReserva", reserva.EstadoReserva);  // Nuevo estado de la reserva
-                        command.Parameters.AddWithValue("@TotalReserva", reserva.TotalReserva);  // Nuevo total
-                        command.Parameters.AddWithValue("@ComentarioReserva", reserva.ComentarioReserva);  // Nuevo comentario
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@NumReserva", numReserva);
+                        command.Parameters.AddWithValue("@FechaEntrada", reserva.FechaEntrada);
+                        command.Parameters.AddWithValue("@FechaSalida", reserva.FechaSalida);
+                        command.Parameters.AddWithValue("@EstadoReserva", reserva.EstadoReserva);
+                        command.Parameters.AddWithValue("@TotalReserva", reserva.TotalReserva);
+                        command.Parameters.AddWithValue("@ComentarioReserva", reserva.ComentarioReserva ?? (object)DBNull.Value);
 
                         int rowsAffected = await command.ExecuteNonQueryAsync();
-
-                        if (rowsAffected > 0)
-                        {
-                            return NoContent();  // Si se actualiza correctamente
-                        }
-                        else
-                        {
-                            return NotFound();  // Si no se encuentra la reserva
-                        }
+                        return rowsAffected > 0 ? NoContent() : NotFound();
                     }
                 }
             }
@@ -154,30 +201,30 @@ namespace proyecto_motel.Controllers
                 {
                     connection.Open();
 
-                    // Primero, actualizamos el estado de la reserva a "Cancelada"
                     using (SqlCommand command = new SqlCommand("CancelarReserva", connection))
                     {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@NumReserva", numReserva);
 
                         int rowsAffected = command.ExecuteNonQuery();
-
-                        // Si la reserva fue cancelada correctamente
                         if (rowsAffected > 0)
                         {
-                            // Liberamos la habitación (cambiamos el estado de la habitación a "Disponible")
-                            using (SqlCommand liberateRoomCommand = new SqlCommand("UPDATE [dbo].[Habitaciones] SET EstadoHabitacion = 'Disponible' WHERE NumHabitacion IN (SELECT NumHabitacion FROM [dbo].[ReservaHabitacion] WHERE NumReserva = @NumReserva)", connection))
+                            using (SqlCommand liberarHabitaciones = new SqlCommand(@"
+                                UPDATE Habitaciones 
+                                SET EstadoHabitacion = 'Disponible' 
+                                WHERE NumHabitacion IN (
+                                    SELECT NumHabitacion 
+                                    FROM ReservaHabitacion 
+                                    WHERE NumReserva = @NumReserva)", connection))
                             {
-                                liberateRoomCommand.Parameters.AddWithValue("@NumReserva", numReserva);
-                                liberateRoomCommand.ExecuteNonQuery();
+                                liberarHabitaciones.Parameters.AddWithValue("@NumReserva", numReserva);
+                                liberarHabitaciones.ExecuteNonQuery();
                             }
 
-                            return NoContent();  // Reserva cancelada correctamente
+                            return NoContent();
                         }
-                        else
-                        {
-                            return NotFound();  // Si no se encuentra la reserva
-                        }
+
+                        return NotFound();
                     }
                 }
             }
@@ -186,5 +233,99 @@ namespace proyecto_motel.Controllers
                 return StatusCode(500, $"Error en el servidor: {ex.Message}");
             }
         }
+
+        [HttpPost("{reservaId}/habitaciones/{habitacionId}")]
+        public async Task<IActionResult> AsignarHabitacionAReserva(int reservaId, string habitacionId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    // Actualizar estado de habitación
+                    using (SqlCommand command = new SqlCommand("ActualizarEstadoHabitacion", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@NumHabitacion", habitacionId);
+                        command.Parameters.AddWithValue("@EstadoHabitacion", "Reservada");
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    // Asignar habitación a reserva
+                    using (SqlCommand command = new SqlCommand("AsignarHabitacionAReserva", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@NumReserva", reservaId);
+                        command.Parameters.AddWithValue("@NumHabitacion", habitacionId);
+                        await command.ExecuteNonQueryAsync();
+                    }
+
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error en el servidor: {ex.Message}");
+            }
+        }
+        [HttpGet("disponibles")]
+        public async Task<IActionResult> GetHabitacionesDisponibles(
+    [FromQuery] DateTime fechaInicio,
+    [FromQuery] DateTime fechaFin)
+        {
+            try
+            {
+                using var conn = new SqlConnection(_connectionString);
+                await conn.OpenAsync();
+
+                // 1. Lee todas las habitaciones
+                var todas = new List<Habitacion>();
+                using (var cmd = new SqlCommand("SELECT * FROM Habitaciones", conn))
+                using (var rdr = await cmd.ExecuteReaderAsync())
+                {
+                    while (await rdr.ReadAsync())
+                    {
+                        todas.Add(new Habitacion
+                        {
+                            IdHabitacion = rdr.GetInt32(0),
+                            NumHabitacion = rdr.GetString(1),
+                            TipoHabitacion = rdr.GetString(2),
+                            PrecioHabitacion = rdr.GetDecimal(3),
+                            EstadoHabitacion = rdr.GetString(4),
+                            CapacidadHabitacion = rdr.GetInt32(5)
+                        });
+                    }
+                }
+
+                // 2. Encuentra habitaciones ocupadas en el rango solapado
+                var ocupadas = new HashSet<int>();
+                const string sqlOcupadas = @"
+            SELECT DISTINCT rh.IdHabitacion
+            FROM Reservas r
+            JOIN ReservaHabitacion rh 
+              ON r.NumReserva = rh.NumReserva
+            WHERE r.EstadoReserva != 'Cancelada'
+              AND @fInicio < r.FechaSalida
+              AND @fFin    > r.FechaEntrada";
+                using (var cmd = new SqlCommand(sqlOcupadas, conn))
+                {
+                    cmd.Parameters.AddWithValue("@fInicio", fechaInicio);
+                    cmd.Parameters.AddWithValue("@fFin", fechaFin);
+                    using var rdr = await cmd.ExecuteReaderAsync();
+                    while (await rdr.ReadAsync())
+                        ocupadas.Add(rdr.GetInt32(0));
+                }
+
+                // 3. Devuelve solo las libres
+                var libres = todas.Where(h => !ocupadas.Contains(h.IdHabitacion)).ToList();
+                return Ok(libres);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error en servidor: {ex.Message}");
+            }
+        }
+
     }
 }

@@ -1,0 +1,114 @@
+﻿@model Motel.Web.Models.Cliente
+
+@{
+    ViewData["Title"] = "Registro de Cliente";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="text-center mb-0">Registro de Cliente</h3>
+                </div>
+                <div class="card-body p-4">
+                    @if (TempData["Error"] != null)
+                    {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["Error"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                    }
+                    @if (TempData["Success"] != null)
+                    {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["Success"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                    }
+
+                    <form asp-action="Register" method="post" id="registerForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <div class="form-floating">
+                                    <input asp-for="NombreCliente" class="form-control" placeholder="Nombre" required />
+                                    <label asp-for="NombreCliente">Nombre</label>
+                                    <span asp-validation-for="NombreCliente" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="ApellidoCliente" class="form-control" placeholder="Apellido" required />
+                                    <label asp-for="ApellidoCliente">Apellido</label>
+                                    <span asp-validation-for="ApellidoCliente" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="CorreoCliente" type="email" class="form-control" placeholder="Correo electrónico" required />
+                            <label asp-for="CorreoCliente">Correo electrónico</label>
+                            <span asp-validation-for="CorreoCliente" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="TelefonoCliente" class="form-control" placeholder="Teléfono" required />
+                            <label asp-for="TelefonoCliente">Teléfono</label>
+                            <span asp-validation-for="TelefonoCliente" class="text-danger"></span>
+                            <small class="form-text text-muted">Se usará como contraseña para iniciar sesión</small>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input asp-for="FechaNacimiento" type="date" class="form-control" placeholder="Fecha de nacimiento" required 
+                                   max="@DateTime.Now.AddYears(-18).ToString("yyyy-MM-dd")" />
+                            <label asp-for="FechaNacimiento">Fecha de nacimiento</label>
+                            <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg" id="registerButton">
+                                <span id="registerText">Registrarse</span>
+                                <span id="registerSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <p class="mb-0">¿Ya tienes cuenta? <a asp-action="Login" class="text-primary">Inicia sesión aquí</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        <script>
+            $(document).ready(function() {
+                $('#registerForm').submit(function() {
+                    $('#registerText').addClass('d-none');
+                    $('#registerSpinner').removeClass('d-none');
+                    $('#registerButton').prop('disabled', true);
+                });
+
+                // Validar fecha de nacimiento
+                $('#FechaNacimiento').change(function() {
+                    var fechaNacimiento = new Date($(this).val());
+                    var hoy = new Date();
+                    var edadMinima = new Date(hoy.getFullYear() - 18, hoy.getMonth(), hoy.getDate());
+
+                    if (fechaNacimiento > edadMinima) {
+                        $(this).addClass('is-invalid');
+                        $('#FechaNacimiento-error').text('Debes ser mayor de 18 años para registrarte');
+                    } else {
+                        $(this).removeClass('is-invalid');
+                    }
+                });
+            });
+        </script>
+}

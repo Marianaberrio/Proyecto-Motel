@@ -1,0 +1,44 @@
+﻿@model List<Motel.Web.Models.Pagos>
+
+@{
+    ViewData["Title"] = "Pagos";
+}
+
+<h2 class="text-center mb-4">Pagos Registrados</h2>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th># Pago</th>
+            <th># Reserva</th>
+            <th>Monto</th>
+            <th>Fecha</th>
+            <th>Método</th>
+            <th>Estado</th>
+            <th>Comentario</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var pago in Model)
+            {
+                        <tr>
+                            <td>@pago.NumPago</td>
+                            <td>@pago.NumReserva</td>
+                            <td>@pago.MontoPago.ToString("C")</td>
+                            <td>@pago.FechaPago.ToString("dd/MM/yyyy")</td>
+                            <td>@pago.MetodoPago</td>
+                            <td>@pago.EstadoPago</td>
+                            <td>@pago.ComentarioPago</td>
+                        </tr>
+            }
+        }
+        else
+        {
+                <tr>
+                    <td colspan="7" class="text-center">No hay pagos registrados.</td>
+                </tr>
+        }
+    </tbody>
+</table>
