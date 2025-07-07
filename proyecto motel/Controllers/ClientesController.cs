@@ -52,7 +52,7 @@ namespace proyecto_motel.Controllers
             }
         }
 
-        // GET: api/clientes/{numCliente}
+        // GET: api/clientes/{idCliente}
         [HttpGet("{id}")]
         public ActionResult<Cliente> Get(int id)
         {
@@ -62,10 +62,10 @@ namespace proyecto_motel.Controllers
                 {
                     connection.Open();
 
-                    using (SqlCommand command = new SqlCommand("ConsultarCliente", connection))
+                    using (SqlCommand command = new SqlCommand("ConsultarCliente", connection)) // Usando un SP para el ID
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@NumCliente", id);
+                        command.Parameters.AddWithValue("@NumCliente", id);  // Pasamos el ID del cliente
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -78,14 +78,15 @@ namespace proyecto_motel.Controllers
                                     ApellidoCliente = reader.GetString(2),
                                     CorreoCliente = reader.GetString(3),
                                     TelefonoCliente = reader.GetString(4),
-                                    FechaNacimiento = reader.GetDateTime(5)
+                                    FechaNacimiento = reader.GetDateTime(5),
+                                    FechaRegistro = reader.GetDateTime(6) // Aquí agregamos la Fecha de Registro
                                 };
 
-                                return Ok(cliente); // Devuelve el cliente encontrado
+                                return Ok(cliente);  // Cliente encontrado
                             }
                             else
                             {
-                                return NotFound(); // Si no se encuentra el cliente
+                                return NotFound();  // Si no se encuentra el cliente
                             }
                         }
                     }

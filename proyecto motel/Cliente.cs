@@ -6,4 +6,6 @@
     public string CorreoCliente { get; set; }
     public string TelefonoCliente { get; set; }
     public DateTime FechaNacimiento { get; set; }
+
+    public DateTime FechaRegistro { get; set; }
 }
