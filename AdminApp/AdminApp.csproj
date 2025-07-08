@@ -33,8 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -53,6 +54,7 @@
   <ItemGroup>
     <Compile Include="ClaseClientes.cs" />
     <Compile Include="ClaseHabitacion.cs" />
+    <Compile Include="ClaseReservas.cs" />
     <Compile Include="ClaseServicios.cs" />
     <Compile Include="ClaseUsuarios.cs" />
     <Compile Include="Clientes.cs">
@@ -71,6 +73,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dbMotelDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dbMotelReservasDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbMotelReservasDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="dbMotelHabitacionesDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -92,6 +99,12 @@
     </Compile>
     <Compile Include="Habitaciones.Designer.cs">
       <DependentUpon>Habitaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HabitacionesReserva.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HabitacionesReserva.Designer.cs">
+      <DependentUpon>HabitacionesReserva.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
@@ -125,6 +138,13 @@
     <Compile Include="Servicios.Designer.cs">
       <DependentUpon>Servicios.cs</DependentUpon>
     </Compile>
+    <Compile Include="ServiciosReserva.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServiciosReserva.Designer.cs">
+      <DependentUpon>ServiciosReserva.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TipoHabitacion.cs" />
     <Compile Include="Usuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +172,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Reservas.resx">
+      <DependentUpon>Reservas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Servicios.resx">
       <DependentUpon>Servicios.cs</DependentUpon>
     </EmbeddedResource>
@@ -168,6 +191,17 @@
     </None>
     <None Include="dbMotelDataSet.xss">
       <DependentUpon>dbMotelDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="dbMotelReservasDataSet.xsc">
+      <DependentUpon>dbMotelReservasDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="dbMotelReservasDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dbMotelReservasDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="dbMotelReservasDataSet.xss">
+      <DependentUpon>dbMotelReservasDataSet.xsd</DependentUpon>
     </None>
     <None Include="dbMotelHabitacionesDataSet.xsc">
       <DependentUpon>dbMotelHabitacionesDataSet.xsd</DependentUpon>

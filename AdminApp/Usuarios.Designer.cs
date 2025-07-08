@@ -42,25 +42,15 @@
             this.txtAgregarNombreUsuario = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtModificarServicio = new System.Windows.Forms.TextBox();
             this.btnAgregarUsuario = new System.Windows.Forms.Button();
-            this.txtModificarPrecioServicio = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtModificardescripcionServicio = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtModificarNombreServicio = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.btnBuscarModificarServicio = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
             this.serviciosTableAdapter = new AdminApp.dbMotelServiciosDataSetTableAdapters.ServiciosTableAdapter();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pagosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.usuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serviciosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reservasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.habitacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuprincipalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.CerrarApp = new System.Windows.Forms.Button();
@@ -74,30 +64,49 @@
             this.serviciosBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dbMotelServiciosDataSet = new AdminApp.dbMotelServiciosDataSet();
             this.clientesTableAdapter = new AdminApp.dbMotelDataSetTableAdapters.ClientesTableAdapter();
-            this.label31 = new System.Windows.Forms.Label();
-            this.btnBuscarIDServicio = new System.Windows.Forms.Button();
-            this.txtBuscarServicio = new System.Windows.Forms.TextBox();
+            this.btnBuscarUser = new System.Windows.Forms.Button();
+            this.txtBuscarIDUsuario = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
-            this.btnSalirBuscarServicio = new System.Windows.Forms.Button();
+            this.btnSalirBuscarUsuario = new System.Windows.Forms.Button();
             this.label29 = new System.Windows.Forms.Label();
             this.gbBuscarUsuario = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnBuscarNombreUsuario = new System.Windows.Forms.RadioButton();
+            this.txtBuscarNombreUsuario = new System.Windows.Forms.TextBox();
+            this.btnBuscarIDUsuario = new System.Windows.Forms.RadioButton();
+            this.txtBuscarRolUser = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtContraseñaUser = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtBuscarNombreUser = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.btnModificarServ = new System.Windows.Forms.Button();
+            this.btnModificarUser = new System.Windows.Forms.Button();
             this.btnCancelarModificar = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.gbModificarUsuario = new System.Windows.Forms.GroupBox();
+            this.btnCambiarContraseña = new System.Windows.Forms.Button();
+            this.txtConfirmarModificarContraseñaUsuario = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.btnModificarNombreUsuario = new System.Windows.Forms.RadioButton();
+            this.txtModificarNombreUser = new System.Windows.Forms.TextBox();
+            this.btnModificarIDUsuario = new System.Windows.Forms.RadioButton();
+            this.txtModificarRolUsuario = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtModificarContraseñaUsuario = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtModificarNombreUsuario = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btnBuscarModificarUsuario = new System.Windows.Forms.Button();
+            this.txtModificarIdUsuario = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.gbAgregarUsuario = new System.Windows.Forms.GroupBox();
             this.txtAgregarConfirmarContrasena = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.btnCancelarEliminar = new System.Windows.Forms.Button();
             this.gbEliminarUsuario = new System.Windows.Forms.GroupBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.txtEliminarServicio = new System.Windows.Forms.TextBox();
+            this.btnEliminarNombreUsuario = new System.Windows.Forms.RadioButton();
+            this.txtEliminarNombreUsuario = new System.Windows.Forms.TextBox();
+            this.btnEliminarIdUsuario = new System.Windows.Forms.RadioButton();
+            this.txtEliminarIDUsuario = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.label20 = new System.Windows.Forms.Label();
@@ -106,6 +115,8 @@
             this.dbMotelDataSet = new AdminApp.dbMotelDataSet();
             this.clientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.usuariosTableAdapter = new AdminApp.dbMotelUsuariosDataSet1TableAdapters.UsuariosTableAdapter();
+            this.serviciosPorReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.habitacionesPorReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClientes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.usuariosBindingSource)).BeginInit();
@@ -242,13 +253,6 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Agregar Usuario";
             // 
-            // txtModificarServicio
-            // 
-            this.txtModificarServicio.Location = new System.Drawing.Point(380, 125);
-            this.txtModificarServicio.Name = "txtModificarServicio";
-            this.txtModificarServicio.Size = new System.Drawing.Size(105, 22);
-            this.txtModificarServicio.TabIndex = 67;
-            // 
             // btnAgregarUsuario
             // 
             this.btnAgregarUsuario.Font = new System.Drawing.Font("Lucida Sans Typewriter", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -260,86 +264,6 @@
             this.btnAgregarUsuario.UseVisualStyleBackColor = true;
             this.btnAgregarUsuario.Click += new System.EventHandler(this.btnAgregarUsuario_Click);
             // 
-            // txtModificarPrecioServicio
-            // 
-            this.txtModificarPrecioServicio.Location = new System.Drawing.Point(818, 176);
-            this.txtModificarPrecioServicio.Name = "txtModificarPrecioServicio";
-            this.txtModificarPrecioServicio.Size = new System.Drawing.Size(177, 22);
-            this.txtModificarPrecioServicio.TabIndex = 75;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(566, 179);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(199, 19);
-            this.label6.TabIndex = 74;
-            this.label6.Text = "Precio de Servicio:";
-            // 
-            // txtModificardescripcionServicio
-            // 
-            this.txtModificardescripcionServicio.Location = new System.Drawing.Point(338, 230);
-            this.txtModificardescripcionServicio.Name = "txtModificardescripcionServicio";
-            this.txtModificardescripcionServicio.Size = new System.Drawing.Size(657, 22);
-            this.txtModificardescripcionServicio.TabIndex = 73;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(39, 230);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(259, 19);
-            this.label7.TabIndex = 72;
-            this.label7.Text = "Descripción de Servicio: ";
-            // 
-            // txtModificarNombreServicio
-            // 
-            this.txtModificarNombreServicio.Location = new System.Drawing.Point(338, 179);
-            this.txtModificarNombreServicio.Name = "txtModificarNombreServicio";
-            this.txtModificarNombreServicio.Size = new System.Drawing.Size(177, 22);
-            this.txtModificarNombreServicio.TabIndex = 71;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(39, 179);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(169, 19);
-            this.label8.TabIndex = 70;
-            this.label8.Text = "Nombre Servicio:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Lucida Sans Typewriter", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(243, 132);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(103, 15);
-            this.label9.TabIndex = 69;
-            this.label9.Text = "ID Servicio:";
-            // 
-            // btnBuscarModificarServicio
-            // 
-            this.btnBuscarModificarServicio.Location = new System.Drawing.Point(510, 126);
-            this.btnBuscarModificarServicio.Name = "btnBuscarModificarServicio";
-            this.btnBuscarModificarServicio.Size = new System.Drawing.Size(75, 23);
-            this.btnBuscarModificarServicio.TabIndex = 68;
-            this.btnBuscarModificarServicio.Text = "Buscar";
-            this.btnBuscarModificarServicio.UseVisualStyleBackColor = true;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(39, 129);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(169, 19);
-            this.label10.TabIndex = 66;
-            this.label10.Text = "Buscar Servicio:";
-            // 
             // serviciosTableAdapter
             // 
             this.serviciosTableAdapter.ClearBeforeFill = true;
@@ -349,42 +273,52 @@
             this.reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
             this.reportesToolStripMenuItem.Size = new System.Drawing.Size(82, 24);
             this.reportesToolStripMenuItem.Text = "Reportes";
+            this.reportesToolStripMenuItem.Click += new System.EventHandler(this.reportesToolStripMenuItem_Click);
             // 
             // pagosToolStripMenuItem
             // 
             this.pagosToolStripMenuItem.Name = "pagosToolStripMenuItem";
             this.pagosToolStripMenuItem.Size = new System.Drawing.Size(62, 24);
             this.pagosToolStripMenuItem.Text = "Pagos";
-            // 
-            // usuariosToolStripMenuItem
-            // 
-            this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
-            this.usuariosToolStripMenuItem.Text = "Usuarios";
+            this.pagosToolStripMenuItem.Click += new System.EventHandler(this.pagosToolStripMenuItem_Click_1);
             // 
             // serviciosToolStripMenuItem
             // 
             this.serviciosToolStripMenuItem.Name = "serviciosToolStripMenuItem";
-            this.serviciosToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
-            this.serviciosToolStripMenuItem.Text = "Reservas";
+            this.serviciosToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.serviciosToolStripMenuItem.Text = "Servicios";
+            this.serviciosToolStripMenuItem.Click += new System.EventHandler(this.serviciosToolStripMenuItem_Click_1);
             // 
             // reservasToolStripMenuItem
             // 
+            this.reservasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.serviciosPorReservaToolStripMenuItem,
+            this.habitacionesPorReservaToolStripMenuItem});
             this.reservasToolStripMenuItem.Name = "reservasToolStripMenuItem";
-            this.reservasToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
-            this.reservasToolStripMenuItem.Text = "Clientes";
+            this.reservasToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
+            this.reservasToolStripMenuItem.Text = "Reservas";
+            this.reservasToolStripMenuItem.Click += new System.EventHandler(this.reservasToolStripMenuItem_Click_1);
             // 
             // clientesToolStripMenuItem
             // 
             this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
-            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
-            this.clientesToolStripMenuItem.Text = "Habitaciones";
+            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
+            this.clientesToolStripMenuItem.Text = "Clientes";
+            this.clientesToolStripMenuItem.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click_1);
             // 
             // habitacionesToolStripMenuItem
             // 
             this.habitacionesToolStripMenuItem.Name = "habitacionesToolStripMenuItem";
-            this.habitacionesToolStripMenuItem.Size = new System.Drawing.Size(121, 24);
-            this.habitacionesToolStripMenuItem.Text = "Menú Principal";
+            this.habitacionesToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
+            this.habitacionesToolStripMenuItem.Text = "Habitaciones";
+            this.habitacionesToolStripMenuItem.Click += new System.EventHandler(this.habitacionesToolStripMenuItem_Click_1);
+            // 
+            // menuprincipalToolStripMenuItem
+            // 
+            this.menuprincipalToolStripMenuItem.Name = "menuprincipalToolStripMenuItem";
+            this.menuprincipalToolStripMenuItem.Size = new System.Drawing.Size(121, 24);
+            this.menuprincipalToolStripMenuItem.Text = "Menú Principal";
+            this.menuprincipalToolStripMenuItem.Click += new System.EventHandler(this.menuprincipalToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -400,11 +334,11 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuprincipalToolStripMenuItem,
             this.habitacionesToolStripMenuItem,
             this.clientesToolStripMenuItem,
             this.reservasToolStripMenuItem,
             this.serviciosToolStripMenuItem,
-            this.usuariosToolStripMenuItem,
             this.pagosToolStripMenuItem,
             this.reportesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -502,31 +436,22 @@
             // 
             this.clientesTableAdapter.ClearBeforeFill = true;
             // 
-            // label31
+            // btnBuscarUser
             // 
-            this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("Lucida Sans Typewriter", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.Location = new System.Drawing.Point(225, 100);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(95, 15);
-            this.label31.TabIndex = 19;
-            this.label31.Text = "ID Usuario:";
+            this.btnBuscarUser.Location = new System.Drawing.Point(842, 93);
+            this.btnBuscarUser.Name = "btnBuscarUser";
+            this.btnBuscarUser.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscarUser.TabIndex = 16;
+            this.btnBuscarUser.Text = "Buscar";
+            this.btnBuscarUser.UseVisualStyleBackColor = true;
+            this.btnBuscarUser.Click += new System.EventHandler(this.btnBuscarUser_Click);
             // 
-            // btnBuscarIDServicio
+            // txtBuscarIDUsuario
             // 
-            this.btnBuscarIDServicio.Location = new System.Drawing.Point(492, 94);
-            this.btnBuscarIDServicio.Name = "btnBuscarIDServicio";
-            this.btnBuscarIDServicio.Size = new System.Drawing.Size(75, 23);
-            this.btnBuscarIDServicio.TabIndex = 16;
-            this.btnBuscarIDServicio.Text = "Buscar";
-            this.btnBuscarIDServicio.UseVisualStyleBackColor = true;
-            // 
-            // txtBuscarServicio
-            // 
-            this.txtBuscarServicio.Location = new System.Drawing.Point(362, 93);
-            this.txtBuscarServicio.Name = "txtBuscarServicio";
-            this.txtBuscarServicio.Size = new System.Drawing.Size(105, 22);
-            this.txtBuscarServicio.TabIndex = 14;
+            this.txtBuscarIDUsuario.Location = new System.Drawing.Point(338, 98);
+            this.txtBuscarIDUsuario.Name = "txtBuscarIDUsuario";
+            this.txtBuscarIDUsuario.Size = new System.Drawing.Size(105, 22);
+            this.txtBuscarIDUsuario.TabIndex = 14;
             // 
             // label24
             // 
@@ -538,15 +463,16 @@
             this.label24.TabIndex = 11;
             this.label24.Text = "Buscar Usuario:";
             // 
-            // btnSalirBuscarServicio
+            // btnSalirBuscarUsuario
             // 
-            this.btnSalirBuscarServicio.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalirBuscarServicio.Location = new System.Drawing.Point(772, 342);
-            this.btnSalirBuscarServicio.Name = "btnSalirBuscarServicio";
-            this.btnSalirBuscarServicio.Size = new System.Drawing.Size(145, 35);
-            this.btnSalirBuscarServicio.TabIndex = 9;
-            this.btnSalirBuscarServicio.Text = "Salir";
-            this.btnSalirBuscarServicio.UseVisualStyleBackColor = true;
+            this.btnSalirBuscarUsuario.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalirBuscarUsuario.Location = new System.Drawing.Point(772, 342);
+            this.btnSalirBuscarUsuario.Name = "btnSalirBuscarUsuario";
+            this.btnSalirBuscarUsuario.Size = new System.Drawing.Size(145, 35);
+            this.btnSalirBuscarUsuario.TabIndex = 9;
+            this.btnSalirBuscarUsuario.Text = "Salir";
+            this.btnSalirBuscarUsuario.UseVisualStyleBackColor = true;
+            this.btnSalirBuscarUsuario.Click += new System.EventHandler(this.btnSalirBuscarUsuario_Click);
             // 
             // label29
             // 
@@ -560,17 +486,19 @@
             // 
             // gbBuscarUsuario
             // 
-            this.gbBuscarUsuario.Controls.Add(this.textBox1);
+            this.gbBuscarUsuario.Controls.Add(this.btnBuscarNombreUsuario);
+            this.gbBuscarUsuario.Controls.Add(this.txtBuscarNombreUsuario);
+            this.gbBuscarUsuario.Controls.Add(this.btnBuscarIDUsuario);
+            this.gbBuscarUsuario.Controls.Add(this.txtBuscarRolUser);
             this.gbBuscarUsuario.Controls.Add(this.label13);
-            this.gbBuscarUsuario.Controls.Add(this.textBox2);
+            this.gbBuscarUsuario.Controls.Add(this.txtContraseñaUser);
             this.gbBuscarUsuario.Controls.Add(this.label14);
-            this.gbBuscarUsuario.Controls.Add(this.textBox3);
+            this.gbBuscarUsuario.Controls.Add(this.txtBuscarNombreUser);
             this.gbBuscarUsuario.Controls.Add(this.label16);
-            this.gbBuscarUsuario.Controls.Add(this.label31);
-            this.gbBuscarUsuario.Controls.Add(this.btnBuscarIDServicio);
-            this.gbBuscarUsuario.Controls.Add(this.txtBuscarServicio);
+            this.gbBuscarUsuario.Controls.Add(this.btnBuscarUser);
+            this.gbBuscarUsuario.Controls.Add(this.txtBuscarIDUsuario);
             this.gbBuscarUsuario.Controls.Add(this.label24);
-            this.gbBuscarUsuario.Controls.Add(this.btnSalirBuscarServicio);
+            this.gbBuscarUsuario.Controls.Add(this.btnSalirBuscarUsuario);
             this.gbBuscarUsuario.Controls.Add(this.label29);
             this.gbBuscarUsuario.Location = new System.Drawing.Point(21, 62);
             this.gbBuscarUsuario.Name = "gbBuscarUsuario";
@@ -580,12 +508,44 @@
             this.gbBuscarUsuario.Text = "Buscar Usuario";
             this.gbBuscarUsuario.Visible = false;
             // 
-            // textBox1
+            // btnBuscarNombreUsuario
             // 
-            this.textBox1.Location = new System.Drawing.Point(255, 207);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(177, 22);
-            this.textBox1.TabIndex = 25;
+            this.btnBuscarNombreUsuario.AutoSize = true;
+            this.btnBuscarNombreUsuario.Location = new System.Drawing.Point(505, 97);
+            this.btnBuscarNombreUsuario.Name = "btnBuscarNombreUsuario";
+            this.btnBuscarNombreUsuario.Size = new System.Drawing.Size(127, 20);
+            this.btnBuscarNombreUsuario.TabIndex = 28;
+            this.btnBuscarNombreUsuario.TabStop = true;
+            this.btnBuscarNombreUsuario.Text = "Nombre Usuario";
+            this.btnBuscarNombreUsuario.UseVisualStyleBackColor = true;
+            this.btnBuscarNombreUsuario.CheckedChanged += new System.EventHandler(this.btnBuscarNombreUsuario_CheckedChanged);
+            // 
+            // txtBuscarNombreUsuario
+            // 
+            this.txtBuscarNombreUsuario.Location = new System.Drawing.Point(660, 95);
+            this.txtBuscarNombreUsuario.Name = "txtBuscarNombreUsuario";
+            this.txtBuscarNombreUsuario.Size = new System.Drawing.Size(105, 22);
+            this.txtBuscarNombreUsuario.TabIndex = 27;
+            // 
+            // btnBuscarIDUsuario
+            // 
+            this.btnBuscarIDUsuario.AutoSize = true;
+            this.btnBuscarIDUsuario.Location = new System.Drawing.Point(221, 100);
+            this.btnBuscarIDUsuario.Name = "btnBuscarIDUsuario";
+            this.btnBuscarIDUsuario.Size = new System.Drawing.Size(91, 20);
+            this.btnBuscarIDUsuario.TabIndex = 26;
+            this.btnBuscarIDUsuario.TabStop = true;
+            this.btnBuscarIDUsuario.Text = "ID Usuario";
+            this.btnBuscarIDUsuario.UseVisualStyleBackColor = true;
+            this.btnBuscarIDUsuario.CheckedChanged += new System.EventHandler(this.btnBuscarIDUsuario_CheckedChanged);
+            // 
+            // txtBuscarRolUser
+            // 
+            this.txtBuscarRolUser.Enabled = false;
+            this.txtBuscarRolUser.Location = new System.Drawing.Point(255, 207);
+            this.txtBuscarRolUser.Name = "txtBuscarRolUser";
+            this.txtBuscarRolUser.Size = new System.Drawing.Size(177, 22);
+            this.txtBuscarRolUser.TabIndex = 25;
             // 
             // label13
             // 
@@ -597,12 +557,13 @@
             this.label13.TabIndex = 24;
             this.label13.Text = "Rol:";
             // 
-            // textBox2
+            // txtContraseñaUser
             // 
-            this.textBox2.Location = new System.Drawing.Point(744, 144);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(173, 22);
-            this.textBox2.TabIndex = 23;
+            this.txtContraseñaUser.Enabled = false;
+            this.txtContraseñaUser.Location = new System.Drawing.Point(744, 144);
+            this.txtContraseñaUser.Name = "txtContraseñaUser";
+            this.txtContraseñaUser.Size = new System.Drawing.Size(173, 22);
+            this.txtContraseñaUser.TabIndex = 23;
             // 
             // label14
             // 
@@ -614,12 +575,13 @@
             this.label14.TabIndex = 22;
             this.label14.Text = "Contraseña: ";
             // 
-            // textBox3
+            // txtBuscarNombreUser
             // 
-            this.textBox3.Location = new System.Drawing.Point(255, 144);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(177, 22);
-            this.textBox3.TabIndex = 21;
+            this.txtBuscarNombreUser.Enabled = false;
+            this.txtBuscarNombreUser.Location = new System.Drawing.Point(255, 144);
+            this.txtBuscarNombreUser.Name = "txtBuscarNombreUser";
+            this.txtBuscarNombreUser.Size = new System.Drawing.Size(177, 22);
+            this.txtBuscarNombreUser.TabIndex = 21;
             // 
             // label16
             // 
@@ -631,25 +593,27 @@
             this.label16.TabIndex = 20;
             this.label16.Text = "Nombre de Usuario: ";
             // 
-            // btnModificarServ
+            // btnModificarUser
             // 
-            this.btnModificarServ.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModificarServ.Location = new System.Drawing.Point(561, 348);
-            this.btnModificarServ.Name = "btnModificarServ";
-            this.btnModificarServ.Size = new System.Drawing.Size(145, 35);
-            this.btnModificarServ.TabIndex = 64;
-            this.btnModificarServ.Text = "Modificar";
-            this.btnModificarServ.UseVisualStyleBackColor = true;
+            this.btnModificarUser.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnModificarUser.Location = new System.Drawing.Point(567, 319);
+            this.btnModificarUser.Name = "btnModificarUser";
+            this.btnModificarUser.Size = new System.Drawing.Size(145, 35);
+            this.btnModificarUser.TabIndex = 64;
+            this.btnModificarUser.Text = "Modificar";
+            this.btnModificarUser.UseVisualStyleBackColor = true;
+            this.btnModificarUser.Click += new System.EventHandler(this.btnModificarUser_Click);
             // 
             // btnCancelarModificar
             // 
             this.btnCancelarModificar.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelarModificar.Location = new System.Drawing.Point(321, 348);
+            this.btnCancelarModificar.Location = new System.Drawing.Point(320, 319);
             this.btnCancelarModificar.Name = "btnCancelarModificar";
             this.btnCancelarModificar.Size = new System.Drawing.Size(145, 35);
             this.btnCancelarModificar.TabIndex = 63;
             this.btnCancelarModificar.Text = "Cancelar";
             this.btnCancelarModificar.UseVisualStyleBackColor = true;
+            this.btnCancelarModificar.Click += new System.EventHandler(this.btnCancelarModificar_Click);
             // 
             // label11
             // 
@@ -657,32 +621,175 @@
             this.label11.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.Location = new System.Drawing.Point(427, 43);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(208, 22);
+            this.label11.Size = new System.Drawing.Size(197, 22);
             this.label11.TabIndex = 0;
-            this.label11.Text = "Modificar Servicio";
+            this.label11.Text = "Modificar Usuario";
             // 
             // gbModificarUsuario
             // 
-            this.gbModificarUsuario.Controls.Add(this.txtModificarPrecioServicio);
-            this.gbModificarUsuario.Controls.Add(this.label6);
-            this.gbModificarUsuario.Controls.Add(this.txtModificardescripcionServicio);
-            this.gbModificarUsuario.Controls.Add(this.label7);
-            this.gbModificarUsuario.Controls.Add(this.txtModificarNombreServicio);
-            this.gbModificarUsuario.Controls.Add(this.label8);
-            this.gbModificarUsuario.Controls.Add(this.label9);
-            this.gbModificarUsuario.Controls.Add(this.btnBuscarModificarServicio);
-            this.gbModificarUsuario.Controls.Add(this.txtModificarServicio);
+            this.gbModificarUsuario.Controls.Add(this.btnCambiarContraseña);
+            this.gbModificarUsuario.Controls.Add(this.txtConfirmarModificarContraseñaUsuario);
             this.gbModificarUsuario.Controls.Add(this.label10);
-            this.gbModificarUsuario.Controls.Add(this.btnModificarServ);
+            this.gbModificarUsuario.Controls.Add(this.btnModificarNombreUsuario);
+            this.gbModificarUsuario.Controls.Add(this.txtModificarNombreUser);
+            this.gbModificarUsuario.Controls.Add(this.btnModificarIDUsuario);
+            this.gbModificarUsuario.Controls.Add(this.txtModificarRolUsuario);
+            this.gbModificarUsuario.Controls.Add(this.label6);
+            this.gbModificarUsuario.Controls.Add(this.txtModificarContraseñaUsuario);
+            this.gbModificarUsuario.Controls.Add(this.label7);
+            this.gbModificarUsuario.Controls.Add(this.txtModificarNombreUsuario);
+            this.gbModificarUsuario.Controls.Add(this.label8);
+            this.gbModificarUsuario.Controls.Add(this.btnBuscarModificarUsuario);
+            this.gbModificarUsuario.Controls.Add(this.txtModificarIdUsuario);
+            this.gbModificarUsuario.Controls.Add(this.label9);
+            this.gbModificarUsuario.Controls.Add(this.btnModificarUser);
             this.gbModificarUsuario.Controls.Add(this.btnCancelarModificar);
             this.gbModificarUsuario.Controls.Add(this.label11);
-            this.gbModificarUsuario.Location = new System.Drawing.Point(21, 546);
+            this.gbModificarUsuario.Location = new System.Drawing.Point(15, 56);
             this.gbModificarUsuario.Name = "gbModificarUsuario";
             this.gbModificarUsuario.Size = new System.Drawing.Size(1126, 423);
             this.gbModificarUsuario.TabIndex = 54;
             this.gbModificarUsuario.TabStop = false;
             this.gbModificarUsuario.Text = "Modificar Cliente";
             this.gbModificarUsuario.Visible = false;
+            // 
+            // btnCambiarContraseña
+            // 
+            this.btnCambiarContraseña.Location = new System.Drawing.Point(789, 256);
+            this.btnCambiarContraseña.Name = "btnCambiarContraseña";
+            this.btnCambiarContraseña.Size = new System.Drawing.Size(149, 23);
+            this.btnCambiarContraseña.TabIndex = 79;
+            this.btnCambiarContraseña.Text = "Cambiar Contraseña";
+            this.btnCambiarContraseña.UseVisualStyleBackColor = true;
+            this.btnCambiarContraseña.Click += new System.EventHandler(this.btnCambiarContraseña_Click);
+            // 
+            // txtConfirmarModificarContraseñaUsuario
+            // 
+            this.txtConfirmarModificarContraseñaUsuario.Enabled = false;
+            this.txtConfirmarModificarContraseñaUsuario.Location = new System.Drawing.Point(789, 207);
+            this.txtConfirmarModificarContraseñaUsuario.Name = "txtConfirmarModificarContraseñaUsuario";
+            this.txtConfirmarModificarContraseñaUsuario.Size = new System.Drawing.Size(173, 22);
+            this.txtConfirmarModificarContraseñaUsuario.TabIndex = 78;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(537, 210);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(229, 19);
+            this.label10.TabIndex = 77;
+            this.label10.Text = "Confirmar Contraseña: ";
+            // 
+            // btnModificarNombreUsuario
+            // 
+            this.btnModificarNombreUsuario.AutoSize = true;
+            this.btnModificarNombreUsuario.Location = new System.Drawing.Point(506, 99);
+            this.btnModificarNombreUsuario.Name = "btnModificarNombreUsuario";
+            this.btnModificarNombreUsuario.Size = new System.Drawing.Size(127, 20);
+            this.btnModificarNombreUsuario.TabIndex = 76;
+            this.btnModificarNombreUsuario.TabStop = true;
+            this.btnModificarNombreUsuario.Text = "Nombre Usuario";
+            this.btnModificarNombreUsuario.UseVisualStyleBackColor = true;
+            this.btnModificarNombreUsuario.CheckedChanged += new System.EventHandler(this.btnModificarNombreUsuario_CheckedChanged);
+            // 
+            // txtModificarNombreUser
+            // 
+            this.txtModificarNombreUser.Location = new System.Drawing.Point(661, 97);
+            this.txtModificarNombreUser.Name = "txtModificarNombreUser";
+            this.txtModificarNombreUser.Size = new System.Drawing.Size(105, 22);
+            this.txtModificarNombreUser.TabIndex = 75;
+            // 
+            // btnModificarIDUsuario
+            // 
+            this.btnModificarIDUsuario.AutoSize = true;
+            this.btnModificarIDUsuario.Location = new System.Drawing.Point(222, 102);
+            this.btnModificarIDUsuario.Name = "btnModificarIDUsuario";
+            this.btnModificarIDUsuario.Size = new System.Drawing.Size(91, 20);
+            this.btnModificarIDUsuario.TabIndex = 74;
+            this.btnModificarIDUsuario.TabStop = true;
+            this.btnModificarIDUsuario.Text = "ID Usuario";
+            this.btnModificarIDUsuario.UseVisualStyleBackColor = true;
+            this.btnModificarIDUsuario.CheckedChanged += new System.EventHandler(this.btnModificarIDUsuario_CheckedChanged);
+            // 
+            // txtModificarRolUsuario
+            // 
+            this.txtModificarRolUsuario.Location = new System.Drawing.Point(256, 209);
+            this.txtModificarRolUsuario.Name = "txtModificarRolUsuario";
+            this.txtModificarRolUsuario.Size = new System.Drawing.Size(177, 22);
+            this.txtModificarRolUsuario.TabIndex = 73;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(22, 212);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(49, 19);
+            this.label6.TabIndex = 72;
+            this.label6.Text = "Rol:";
+            // 
+            // txtModificarContraseñaUsuario
+            // 
+            this.txtModificarContraseñaUsuario.Enabled = false;
+            this.txtModificarContraseñaUsuario.Location = new System.Drawing.Point(789, 149);
+            this.txtModificarContraseñaUsuario.Name = "txtModificarContraseñaUsuario";
+            this.txtModificarContraseñaUsuario.Size = new System.Drawing.Size(173, 22);
+            this.txtModificarContraseñaUsuario.TabIndex = 71;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(537, 146);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(129, 19);
+            this.label7.TabIndex = 70;
+            this.label7.Text = "Contraseña: ";
+            // 
+            // txtModificarNombreUsuario
+            // 
+            this.txtModificarNombreUsuario.Location = new System.Drawing.Point(256, 146);
+            this.txtModificarNombreUsuario.Name = "txtModificarNombreUsuario";
+            this.txtModificarNombreUsuario.Size = new System.Drawing.Size(177, 22);
+            this.txtModificarNombreUsuario.TabIndex = 69;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(22, 149);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(199, 19);
+            this.label8.TabIndex = 68;
+            this.label8.Text = "Nombre de Usuario: ";
+            // 
+            // btnBuscarModificarUsuario
+            // 
+            this.btnBuscarModificarUsuario.Location = new System.Drawing.Point(887, 95);
+            this.btnBuscarModificarUsuario.Name = "btnBuscarModificarUsuario";
+            this.btnBuscarModificarUsuario.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscarModificarUsuario.TabIndex = 67;
+            this.btnBuscarModificarUsuario.Text = "Buscar";
+            this.btnBuscarModificarUsuario.UseVisualStyleBackColor = true;
+            this.btnBuscarModificarUsuario.Click += new System.EventHandler(this.btnBuscarModificarUsuario_Click);
+            // 
+            // txtModificarIdUsuario
+            // 
+            this.txtModificarIdUsuario.Location = new System.Drawing.Point(339, 100);
+            this.txtModificarIdUsuario.Name = "txtModificarIdUsuario";
+            this.txtModificarIdUsuario.Size = new System.Drawing.Size(105, 22);
+            this.txtModificarIdUsuario.TabIndex = 66;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(22, 99);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(159, 19);
+            this.label9.TabIndex = 65;
+            this.label9.Text = "Buscar Usuario:";
             // 
             // gbAgregarUsuario
             // 
@@ -725,22 +832,25 @@
             // btnCancelarEliminar
             // 
             this.btnCancelarEliminar.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelarEliminar.Location = new System.Drawing.Point(307, 164);
+            this.btnCancelarEliminar.Location = new System.Drawing.Point(320, 165);
             this.btnCancelarEliminar.Name = "btnCancelarEliminar";
             this.btnCancelarEliminar.Size = new System.Drawing.Size(145, 35);
             this.btnCancelarEliminar.TabIndex = 9;
             this.btnCancelarEliminar.Text = "Cancelar";
             this.btnCancelarEliminar.UseVisualStyleBackColor = true;
+            this.btnCancelarEliminar.Click += new System.EventHandler(this.btnCancelarEliminar_Click);
             // 
             // gbEliminarUsuario
             // 
-            this.gbEliminarUsuario.Controls.Add(this.label35);
-            this.gbEliminarUsuario.Controls.Add(this.txtEliminarServicio);
+            this.gbEliminarUsuario.Controls.Add(this.btnEliminarNombreUsuario);
+            this.gbEliminarUsuario.Controls.Add(this.txtEliminarNombreUsuario);
+            this.gbEliminarUsuario.Controls.Add(this.btnEliminarIdUsuario);
+            this.gbEliminarUsuario.Controls.Add(this.txtEliminarIDUsuario);
             this.gbEliminarUsuario.Controls.Add(this.label15);
             this.gbEliminarUsuario.Controls.Add(this.btnEliminar);
             this.gbEliminarUsuario.Controls.Add(this.btnCancelarEliminar);
             this.gbEliminarUsuario.Controls.Add(this.label20);
-            this.gbEliminarUsuario.Location = new System.Drawing.Point(58, 563);
+            this.gbEliminarUsuario.Location = new System.Drawing.Point(15, 57);
             this.gbEliminarUsuario.Name = "gbEliminarUsuario";
             this.gbEliminarUsuario.Size = new System.Drawing.Size(1126, 423);
             this.gbEliminarUsuario.TabIndex = 55;
@@ -748,52 +858,74 @@
             this.gbEliminarUsuario.Text = "Eliminar Cliente";
             this.gbEliminarUsuario.Visible = false;
             // 
-            // label35
+            // btnEliminarNombreUsuario
             // 
-            this.label35.AutoSize = true;
-            this.label35.Font = new System.Drawing.Font("Lucida Sans Typewriter", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label35.Location = new System.Drawing.Point(349, 100);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(125, 17);
-            this.label35.TabIndex = 15;
-            this.label35.Text = "ID Servicio: ";
+            this.btnEliminarNombreUsuario.AutoSize = true;
+            this.btnEliminarNombreUsuario.Location = new System.Drawing.Point(515, 94);
+            this.btnEliminarNombreUsuario.Name = "btnEliminarNombreUsuario";
+            this.btnEliminarNombreUsuario.Size = new System.Drawing.Size(127, 20);
+            this.btnEliminarNombreUsuario.TabIndex = 82;
+            this.btnEliminarNombreUsuario.TabStop = true;
+            this.btnEliminarNombreUsuario.Text = "Nombre Usuario";
+            this.btnEliminarNombreUsuario.UseVisualStyleBackColor = true;
+            this.btnEliminarNombreUsuario.CheckedChanged += new System.EventHandler(this.btnEliminarNombreUsuario_CheckedChanged);
             // 
-            // txtEliminarServicio
+            // txtEliminarNombreUsuario
             // 
-            this.txtEliminarServicio.Location = new System.Drawing.Point(484, 98);
-            this.txtEliminarServicio.Name = "txtEliminarServicio";
-            this.txtEliminarServicio.Size = new System.Drawing.Size(105, 22);
-            this.txtEliminarServicio.TabIndex = 14;
+            this.txtEliminarNombreUsuario.Location = new System.Drawing.Point(670, 92);
+            this.txtEliminarNombreUsuario.Name = "txtEliminarNombreUsuario";
+            this.txtEliminarNombreUsuario.Size = new System.Drawing.Size(105, 22);
+            this.txtEliminarNombreUsuario.TabIndex = 81;
+            // 
+            // btnEliminarIdUsuario
+            // 
+            this.btnEliminarIdUsuario.AutoSize = true;
+            this.btnEliminarIdUsuario.Location = new System.Drawing.Point(231, 97);
+            this.btnEliminarIdUsuario.Name = "btnEliminarIdUsuario";
+            this.btnEliminarIdUsuario.Size = new System.Drawing.Size(91, 20);
+            this.btnEliminarIdUsuario.TabIndex = 80;
+            this.btnEliminarIdUsuario.TabStop = true;
+            this.btnEliminarIdUsuario.Text = "ID Usuario";
+            this.btnEliminarIdUsuario.UseVisualStyleBackColor = true;
+            this.btnEliminarIdUsuario.CheckedChanged += new System.EventHandler(this.btnEliminarIdUsuario_CheckedChanged);
+            // 
+            // txtEliminarIDUsuario
+            // 
+            this.txtEliminarIDUsuario.Location = new System.Drawing.Point(348, 95);
+            this.txtEliminarIDUsuario.Name = "txtEliminarIDUsuario";
+            this.txtEliminarIDUsuario.Size = new System.Drawing.Size(105, 22);
+            this.txtEliminarIDUsuario.TabIndex = 78;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(27, 97);
+            this.label15.Location = new System.Drawing.Point(31, 94);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(279, 19);
-            this.label15.TabIndex = 11;
-            this.label15.Text = "Buscar Servicio a Eliminar:";
+            this.label15.Size = new System.Drawing.Size(159, 19);
+            this.label15.TabIndex = 77;
+            this.label15.Text = "Buscar Usuario:";
             // 
             // btnEliminar
             // 
             this.btnEliminar.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminar.Location = new System.Drawing.Point(547, 164);
+            this.btnEliminar.Location = new System.Drawing.Point(521, 165);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(145, 35);
             this.btnEliminar.TabIndex = 10;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // label20
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(348, 25);
+            this.label20.Location = new System.Drawing.Point(416, 30);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(197, 22);
+            this.label20.Size = new System.Drawing.Size(186, 22);
             this.label20.TabIndex = 0;
-            this.label20.Text = "Eliminar Servicio";
+            this.label20.Text = "Eliminar Cliente";
             // 
             // dbMotelHabitacionesDataSet
             // 
@@ -819,11 +951,27 @@
             // 
             this.usuariosTableAdapter.ClearBeforeFill = true;
             // 
+            // serviciosPorReservaToolStripMenuItem
+            // 
+            this.serviciosPorReservaToolStripMenuItem.Name = "serviciosPorReservaToolStripMenuItem";
+            this.serviciosPorReservaToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
+            this.serviciosPorReservaToolStripMenuItem.Text = "Servicios por Reserva";
+            this.serviciosPorReservaToolStripMenuItem.Click += new System.EventHandler(this.serviciosPorReservaToolStripMenuItem_Click);
+            // 
+            // habitacionesPorReservaToolStripMenuItem
+            // 
+            this.habitacionesPorReservaToolStripMenuItem.Name = "habitacionesPorReservaToolStripMenuItem";
+            this.habitacionesPorReservaToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
+            this.habitacionesPorReservaToolStripMenuItem.Text = "Habitaciones por Reserva";
+            this.habitacionesPorReservaToolStripMenuItem.Click += new System.EventHandler(this.habitacionesPorReservaToolStripMenuItem_Click);
+            // 
             // Usuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1238, 679);
+            this.Controls.Add(this.gbEliminarUsuario);
+            this.Controls.Add(this.gbModificarUsuario);
             this.Controls.Add(this.gbBuscarUsuario);
             this.Controls.Add(this.gbAgregarUsuario);
             this.Controls.Add(this.btnModificarUsuario);
@@ -834,8 +982,6 @@
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.CerrarApp);
             this.Controls.Add(this.dataGridViewClientes);
-            this.Controls.Add(this.gbModificarUsuario);
-            this.Controls.Add(this.gbEliminarUsuario);
             this.Name = "Usuarios";
             this.Text = "Usuarios";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -879,25 +1025,15 @@
         private System.Windows.Forms.TextBox txtAgregarNombreUsuario;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtModificarServicio;
         private System.Windows.Forms.Button btnAgregarUsuario;
-        private System.Windows.Forms.TextBox txtModificarPrecioServicio;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtModificardescripcionServicio;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtModificarNombreServicio;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button btnBuscarModificarServicio;
-        private System.Windows.Forms.Label label10;
         private dbMotelServiciosDataSetTableAdapters.ServiciosTableAdapter serviciosTableAdapter;
         private System.Windows.Forms.ToolStripMenuItem reportesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pagosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serviciosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reservasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem habitacionesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuprincipalToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.Button CerrarApp;
@@ -905,23 +1041,19 @@
         private System.Windows.Forms.BindingSource serviciosBindingSource;
         private dbMotelServiciosDataSet dbMotelServiciosDataSet;
         private dbMotelDataSetTableAdapters.ClientesTableAdapter clientesTableAdapter;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Button btnBuscarIDServicio;
-        private System.Windows.Forms.TextBox txtBuscarServicio;
+        private System.Windows.Forms.Button btnBuscarUser;
+        private System.Windows.Forms.TextBox txtBuscarIDUsuario;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Button btnSalirBuscarServicio;
+        private System.Windows.Forms.Button btnSalirBuscarUsuario;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.GroupBox gbBuscarUsuario;
-        private System.Windows.Forms.Button btnModificarServ;
+        private System.Windows.Forms.Button btnModificarUser;
         private System.Windows.Forms.Button btnCancelarModificar;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.GroupBox gbModificarUsuario;
         private System.Windows.Forms.GroupBox gbAgregarUsuario;
         private System.Windows.Forms.Button btnCancelarEliminar;
         private System.Windows.Forms.GroupBox gbEliminarUsuario;
-        private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.TextBox txtEliminarServicio;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Label label20;
         private dbMotelHabitacionesDataSet dbMotelHabitacionesDataSet;
@@ -937,11 +1069,36 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn rolDataGridViewTextBoxColumn;
         private System.Windows.Forms.TextBox txtAgregarConfirmarContrasena;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtBuscarRolUser;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtContraseñaUser;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtBuscarNombreUser;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.RadioButton btnBuscarNombreUsuario;
+        private System.Windows.Forms.TextBox txtBuscarNombreUsuario;
+        private System.Windows.Forms.RadioButton btnBuscarIDUsuario;
+        private System.Windows.Forms.RadioButton btnModificarNombreUsuario;
+        private System.Windows.Forms.TextBox txtModificarNombreUser;
+        private System.Windows.Forms.RadioButton btnModificarIDUsuario;
+        private System.Windows.Forms.TextBox txtModificarRolUsuario;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtModificarContraseñaUsuario;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtModificarNombreUsuario;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnBuscarModificarUsuario;
+        private System.Windows.Forms.TextBox txtModificarIdUsuario;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtConfirmarModificarContraseñaUsuario;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btnCambiarContraseña;
+        private System.Windows.Forms.RadioButton btnEliminarNombreUsuario;
+        private System.Windows.Forms.TextBox txtEliminarNombreUsuario;
+        private System.Windows.Forms.RadioButton btnEliminarIdUsuario;
+        private System.Windows.Forms.TextBox txtEliminarIDUsuario;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ToolStripMenuItem serviciosPorReservaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem habitacionesPorReservaToolStripMenuItem;
     }
 }

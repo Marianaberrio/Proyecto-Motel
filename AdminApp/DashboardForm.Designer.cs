@@ -40,6 +40,8 @@
             this.pagosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CerrarApp = new System.Windows.Forms.Button();
+            this.serviciosPorReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.habitacionesPorReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -106,6 +108,9 @@
             // 
             // reservasToolStripMenuItem
             // 
+            this.reservasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.serviciosPorReservaToolStripMenuItem,
+            this.habitacionesPorReservaToolStripMenuItem});
             this.reservasToolStripMenuItem.Name = "reservasToolStripMenuItem";
             this.reservasToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
             this.reservasToolStripMenuItem.Text = "Reservas";
@@ -149,6 +154,20 @@
             this.CerrarApp.UseVisualStyleBackColor = true;
             this.CerrarApp.Click += new System.EventHandler(this.CerrarApp_Click);
             // 
+            // serviciosPorReservaToolStripMenuItem
+            // 
+            this.serviciosPorReservaToolStripMenuItem.Name = "serviciosPorReservaToolStripMenuItem";
+            this.serviciosPorReservaToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
+            this.serviciosPorReservaToolStripMenuItem.Text = "Servicios por Reserva";
+            this.serviciosPorReservaToolStripMenuItem.Click += new System.EventHandler(this.serviciosPorReservaToolStripMenuItem_Click);
+            // 
+            // habitacionesPorReservaToolStripMenuItem
+            // 
+            this.habitacionesPorReservaToolStripMenuItem.Name = "habitacionesPorReservaToolStripMenuItem";
+            this.habitacionesPorReservaToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
+            this.habitacionesPorReservaToolStripMenuItem.Text = "Habitaciones por Reserva";
+            this.habitacionesPorReservaToolStripMenuItem.Click += new System.EventHandler(this.habitacionesPorReservaToolStripMenuItem_Click);
+            // 
             // DashboardForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -186,5 +205,7 @@
         private System.Windows.Forms.ToolStripMenuItem pagosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportesToolStripMenuItem;
         private System.Windows.Forms.Button CerrarApp;
+        private System.Windows.Forms.ToolStripMenuItem serviciosPorReservaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem habitacionesPorReservaToolStripMenuItem;
     }
 }

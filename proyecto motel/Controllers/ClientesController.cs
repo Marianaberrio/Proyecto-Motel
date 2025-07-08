@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -35,9 +34,9 @@ namespace proyecto_motel.Controllers
                 {
                     CommandType = CommandType.StoredProcedure
                 };
-                cmd.Parameters.AddWithValue("@NombreCliente",   cliente.NombreCliente);
+                cmd.Parameters.AddWithValue("@NombreCliente", cliente.NombreCliente);
                 cmd.Parameters.AddWithValue("@ApellidoCliente", cliente.ApellidoCliente);
-                cmd.Parameters.AddWithValue("@CorreoCliente",   cliente.CorreoCliente);
+                cmd.Parameters.AddWithValue("@CorreoCliente", cliente.CorreoCliente);
                 cmd.Parameters.AddWithValue("@TelefonoCliente", cliente.TelefonoCliente);
                 cmd.Parameters.AddWithValue("@FechaNacimiento", cliente.FechaNacimiento);
 
@@ -59,11 +58,7 @@ namespace proyecto_motel.Controllers
             }
         }
 
-<<<<<<< HEAD
-        // GET: api/clientes/{idCliente}
-=======
         // GET: api/Clientes/{id}
->>>>>>> 64344312b58ad6ad46ded50baefeed095c806f1f
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> Get(int id)
         {
@@ -78,53 +73,21 @@ namespace proyecto_motel.Controllers
                 };
                 cmd.Parameters.AddWithValue("@NumCliente", id);
 
-<<<<<<< HEAD
-                    using (SqlCommand command = new SqlCommand("ConsultarCliente", connection)) // Usando un SP para el ID
-                    {
-                        command.CommandType = System.Data.CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@NumCliente", id);  // Pasamos el ID del cliente
-
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                var cliente = new Cliente
-                                {
-                                    NumCliente = reader.GetInt32(0),
-                                    NombreCliente = reader.GetString(1),
-                                    ApellidoCliente = reader.GetString(2),
-                                    CorreoCliente = reader.GetString(3),
-                                    TelefonoCliente = reader.GetString(4),
-                                    FechaNacimiento = reader.GetDateTime(5),
-                                    FechaRegistro = reader.GetDateTime(6) // Aquí agregamos la Fecha de Registro
-                                };
-
-                                return Ok(cliente);  // Cliente encontrado
-                            }
-                            else
-                            {
-                                return NotFound();  // Si no se encuentra el cliente
-                            }
-                        }
-                    }
-                }
-=======
                 using var reader = await cmd.ExecuteReaderAsync();
                 if (!await reader.ReadAsync())
                     return NotFound();
 
                 var cliente = new Cliente
                 {
-                    NumCliente      = reader.GetInt32(0),
-                    NombreCliente   = reader.GetString(1),
+                    NumCliente = reader.GetInt32(0),
+                    NombreCliente = reader.GetString(1),
                     ApellidoCliente = reader.GetString(2),
-                    CorreoCliente   = reader.GetString(3),
+                    CorreoCliente = reader.GetString(3),
                     TelefonoCliente = reader.GetString(4),
                     FechaNacimiento = reader.GetDateTime(5)
                 };
 
                 return Ok(cliente);
->>>>>>> 64344312b58ad6ad46ded50baefeed095c806f1f
             }
             catch (Exception ex)
             {
@@ -156,12 +119,12 @@ namespace proyecto_motel.Controllers
                     WHERE NumCliente = @NumCliente";
 
                 using var cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@NombreCliente",   cliente.NombreCliente);
+                cmd.Parameters.AddWithValue("@NombreCliente", cliente.NombreCliente);
                 cmd.Parameters.AddWithValue("@ApellidoCliente", cliente.ApellidoCliente);
-                cmd.Parameters.AddWithValue("@CorreoCliente",   cliente.CorreoCliente);
+                cmd.Parameters.AddWithValue("@CorreoCliente", cliente.CorreoCliente);
                 cmd.Parameters.AddWithValue("@TelefonoCliente", cliente.TelefonoCliente);
                 cmd.Parameters.AddWithValue("@FechaNacimiento", cliente.FechaNacimiento);
-                cmd.Parameters.AddWithValue("@NumCliente",       cliente.NumCliente);
+                cmd.Parameters.AddWithValue("@NumCliente", cliente.NumCliente);
 
                 var rows = await cmd.ExecuteNonQueryAsync();
                 if (rows == 0)
@@ -226,10 +189,10 @@ namespace proyecto_motel.Controllers
 
                 var cliente = new Cliente
                 {
-                    NumCliente      = reader.GetInt32(0),
-                    NombreCliente   = reader.GetString(1),
+                    NumCliente = reader.GetInt32(0),
+                    NombreCliente = reader.GetString(1),
                     ApellidoCliente = reader.GetString(2),
-                    CorreoCliente   = reader.GetString(3),
+                    CorreoCliente = reader.GetString(3),
                     TelefonoCliente = reader.GetString(4),
                     FechaNacimiento = reader.GetDateTime(5)
                 };
@@ -241,5 +204,96 @@ namespace proyecto_motel.Controllers
                 return StatusCode(500, $"Error en el servidor: {ex.Message}");
             }
         }
+
+        // GET: api/clientes/ids
+        [HttpGet("ids")]
+        public async Task<ActionResult<List<int>>> GetAllClienteIds()
+        {
+            try
+            {
+                var ids = new List<int>();
+
+                using (var conn = new SqlConnection(_connectionString))
+                {
+                    await conn.OpenAsync();
+
+                    using (var cmd = new SqlCommand("SELECT NumCliente FROM Clientes", conn))
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            ids.Add(reader.GetInt32(0)); // Agregar el ID del cliente a la lista
+                        }
+                    }
+                }
+
+                return Ok(ids);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error en el servidor: {ex.Message}");
+            }
+        }
+
+        // GET: api/clientes/correos
+        [HttpGet("correos")]
+        public async Task<ActionResult<List<string>>> GetAllClienteEmails()
+        {
+            try
+            {
+                var correos = new List<string>();
+
+                using (var conn = new SqlConnection(_connectionString))
+                {
+                    await conn.OpenAsync();
+
+                    using (var cmd = new SqlCommand("SELECT CorreoCliente FROM Clientes", conn))
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            correos.Add(reader.GetString(0)); // Agregar el correo del cliente a la lista
+                        }
+                    }
+                }
+
+                return Ok(correos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error en el servidor: {ex.Message}");
+            }
+        }
+
+        // GET: api/clientes/obtenerIdPorCorreo/{correo}
+        [HttpGet("obtenerIdPorCorreo/{correo}")]
+        public async Task<ActionResult<int>> ObtenerIdClientePorCorreo(string correo)
+        {
+            try
+            {
+                using var conn = new SqlConnection(_connectionString);
+                await conn.OpenAsync();
+
+                using var cmd = new SqlCommand("BuscarClientePorEmail", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                cmd.Parameters.AddWithValue("@CorreoCliente", correo);
+
+                using var reader = await cmd.ExecuteReaderAsync();
+                if (await reader.ReadAsync())
+                {
+                    // Retornamos solo el ID del cliente
+                    return Ok(reader.GetInt32(0));  // Suponiendo que el primer campo es NumCliente
+                }
+
+                return NotFound("Cliente no encontrado.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error en el servidor: {ex.Message}");
+            }
+        }
+
     }
 }

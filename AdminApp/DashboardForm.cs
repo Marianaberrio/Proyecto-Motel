@@ -94,5 +94,19 @@ namespace AdminApp
         {
             this.Close();
         }
+
+        private void serviciosPorReservaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var mainForm = new ServiciosReserva();
+            mainForm.Show();
+            this.Hide();
+        }
+
+        private void habitacionesPorReservaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var mainForm = new HabitacionesReserva();
+            mainForm.Show();
+            this.Hide();
+        }
     }
 }

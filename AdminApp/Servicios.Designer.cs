@@ -30,6 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gbModificarServicio = new System.Windows.Forms.GroupBox();
+            this.txtModificarPrecioServicio = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtModificardescripcionServicio = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtModificarNombreServicio = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.btnBuscarModificarServicio = new System.Windows.Forms.Button();
+            this.txtModificarServicio = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.btnModificarServ = new System.Windows.Forms.Button();
             this.btnCancelarModificar = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
@@ -110,16 +120,8 @@
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CerrarApp = new System.Windows.Forms.Button();
             this.serviciosTableAdapter = new AdminApp.dbMotelServiciosDataSetTableAdapters.ServiciosTableAdapter();
-            this.txtModificarPrecioServicio = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtModificardescripcionServicio = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtModificarNombreServicio = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.btnBuscarModificarServicio = new System.Windows.Forms.Button();
-            this.txtModificarServicio = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
+            this.serviciosPorReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.habitacionesPorReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbModificarServicio.SuspendLayout();
             this.gbBuscarServicio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClientes)).BeginInit();
@@ -157,6 +159,94 @@
             this.gbModificarServicio.TabStop = false;
             this.gbModificarServicio.Text = "Modificar Cliente";
             this.gbModificarServicio.Visible = false;
+            // 
+            // txtModificarPrecioServicio
+            // 
+            this.txtModificarPrecioServicio.Location = new System.Drawing.Point(818, 176);
+            this.txtModificarPrecioServicio.Name = "txtModificarPrecioServicio";
+            this.txtModificarPrecioServicio.Size = new System.Drawing.Size(177, 22);
+            this.txtModificarPrecioServicio.TabIndex = 75;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(566, 179);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(199, 19);
+            this.label6.TabIndex = 74;
+            this.label6.Text = "Precio de Servicio:";
+            // 
+            // txtModificardescripcionServicio
+            // 
+            this.txtModificardescripcionServicio.Location = new System.Drawing.Point(338, 230);
+            this.txtModificardescripcionServicio.Name = "txtModificardescripcionServicio";
+            this.txtModificardescripcionServicio.Size = new System.Drawing.Size(657, 22);
+            this.txtModificardescripcionServicio.TabIndex = 73;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(39, 230);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(259, 19);
+            this.label7.TabIndex = 72;
+            this.label7.Text = "Descripción de Servicio: ";
+            // 
+            // txtModificarNombreServicio
+            // 
+            this.txtModificarNombreServicio.Location = new System.Drawing.Point(338, 179);
+            this.txtModificarNombreServicio.Name = "txtModificarNombreServicio";
+            this.txtModificarNombreServicio.Size = new System.Drawing.Size(177, 22);
+            this.txtModificarNombreServicio.TabIndex = 71;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(39, 179);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(169, 19);
+            this.label8.TabIndex = 70;
+            this.label8.Text = "Nombre Servicio:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Lucida Sans Typewriter", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(243, 132);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(103, 15);
+            this.label9.TabIndex = 69;
+            this.label9.Text = "ID Servicio:";
+            // 
+            // btnBuscarModificarServicio
+            // 
+            this.btnBuscarModificarServicio.Location = new System.Drawing.Point(510, 126);
+            this.btnBuscarModificarServicio.Name = "btnBuscarModificarServicio";
+            this.btnBuscarModificarServicio.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscarModificarServicio.TabIndex = 68;
+            this.btnBuscarModificarServicio.Text = "Buscar";
+            this.btnBuscarModificarServicio.UseVisualStyleBackColor = true;
+            this.btnBuscarModificarServicio.Click += new System.EventHandler(this.btnBuscarModificarServicio_Click);
+            // 
+            // txtModificarServicio
+            // 
+            this.txtModificarServicio.Location = new System.Drawing.Point(380, 125);
+            this.txtModificarServicio.Name = "txtModificarServicio";
+            this.txtModificarServicio.Size = new System.Drawing.Size(105, 22);
+            this.txtModificarServicio.TabIndex = 67;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(39, 129);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(169, 19);
+            this.label10.TabIndex = 66;
+            this.label10.Text = "Buscar Servicio:";
             // 
             // btnModificarServ
             // 
@@ -877,6 +967,9 @@
             // 
             // serviciosToolStripMenuItem
             // 
+            this.serviciosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.serviciosPorReservaToolStripMenuItem,
+            this.habitacionesPorReservaToolStripMenuItem});
             this.serviciosToolStripMenuItem.Name = "serviciosToolStripMenuItem";
             this.serviciosToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
             this.serviciosToolStripMenuItem.Text = "Reservas";
@@ -917,93 +1010,19 @@
             // 
             this.serviciosTableAdapter.ClearBeforeFill = true;
             // 
-            // txtModificarPrecioServicio
+            // serviciosPorReservaToolStripMenuItem
             // 
-            this.txtModificarPrecioServicio.Location = new System.Drawing.Point(818, 176);
-            this.txtModificarPrecioServicio.Name = "txtModificarPrecioServicio";
-            this.txtModificarPrecioServicio.Size = new System.Drawing.Size(177, 22);
-            this.txtModificarPrecioServicio.TabIndex = 75;
+            this.serviciosPorReservaToolStripMenuItem.Name = "serviciosPorReservaToolStripMenuItem";
+            this.serviciosPorReservaToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
+            this.serviciosPorReservaToolStripMenuItem.Text = "Servicios por Reserva";
+            this.serviciosPorReservaToolStripMenuItem.Click += new System.EventHandler(this.serviciosPorReservaToolStripMenuItem_Click);
             // 
-            // label6
+            // habitacionesPorReservaToolStripMenuItem
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(566, 179);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(199, 19);
-            this.label6.TabIndex = 74;
-            this.label6.Text = "Precio de Servicio:";
-            // 
-            // txtModificardescripcionServicio
-            // 
-            this.txtModificardescripcionServicio.Location = new System.Drawing.Point(338, 230);
-            this.txtModificardescripcionServicio.Name = "txtModificardescripcionServicio";
-            this.txtModificardescripcionServicio.Size = new System.Drawing.Size(657, 22);
-            this.txtModificardescripcionServicio.TabIndex = 73;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(39, 230);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(259, 19);
-            this.label7.TabIndex = 72;
-            this.label7.Text = "Descripción de Servicio: ";
-            // 
-            // txtModificarNombreServicio
-            // 
-            this.txtModificarNombreServicio.Location = new System.Drawing.Point(338, 179);
-            this.txtModificarNombreServicio.Name = "txtModificarNombreServicio";
-            this.txtModificarNombreServicio.Size = new System.Drawing.Size(177, 22);
-            this.txtModificarNombreServicio.TabIndex = 71;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(39, 179);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(169, 19);
-            this.label8.TabIndex = 70;
-            this.label8.Text = "Nombre Servicio:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Lucida Sans Typewriter", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(243, 132);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(103, 15);
-            this.label9.TabIndex = 69;
-            this.label9.Text = "ID Servicio:";
-            // 
-            // btnBuscarModificarServicio
-            // 
-            this.btnBuscarModificarServicio.Location = new System.Drawing.Point(510, 126);
-            this.btnBuscarModificarServicio.Name = "btnBuscarModificarServicio";
-            this.btnBuscarModificarServicio.Size = new System.Drawing.Size(75, 23);
-            this.btnBuscarModificarServicio.TabIndex = 68;
-            this.btnBuscarModificarServicio.Text = "Buscar";
-            this.btnBuscarModificarServicio.UseVisualStyleBackColor = true;
-            this.btnBuscarModificarServicio.Click += new System.EventHandler(this.btnBuscarModificarServicio_Click);
-            // 
-            // txtModificarServicio
-            // 
-            this.txtModificarServicio.Location = new System.Drawing.Point(380, 125);
-            this.txtModificarServicio.Name = "txtModificarServicio";
-            this.txtModificarServicio.Size = new System.Drawing.Size(105, 22);
-            this.txtModificarServicio.TabIndex = 67;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(39, 129);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(169, 19);
-            this.label10.TabIndex = 66;
-            this.label10.Text = "Buscar Servicio:";
+            this.habitacionesPorReservaToolStripMenuItem.Name = "habitacionesPorReservaToolStripMenuItem";
+            this.habitacionesPorReservaToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
+            this.habitacionesPorReservaToolStripMenuItem.Text = "Habitaciones por Reserva";
+            this.habitacionesPorReservaToolStripMenuItem.Click += new System.EventHandler(this.habitacionesPorReservaToolStripMenuItem_Click);
             // 
             // Servicios
             // 
@@ -1145,5 +1164,7 @@
         private System.Windows.Forms.Button btnBuscarModificarServicio;
         private System.Windows.Forms.TextBox txtModificarServicio;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ToolStripMenuItem serviciosPorReservaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem habitacionesPorReservaToolStripMenuItem;
     }
 }

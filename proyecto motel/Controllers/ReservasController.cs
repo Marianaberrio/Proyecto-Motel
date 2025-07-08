@@ -72,6 +72,31 @@ namespace proyecto_motel.Controllers
         }
 
 
+        [HttpGet("ids")]
+        public async Task<IActionResult> ObtenerIdsReservas()
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_connectionString))
+                {
+                    await conn.OpenAsync();
+                    var cmd = new SqlCommand("SELECT NumReserva FROM Reservas", conn);
+                    var reader = await cmd.ExecuteReaderAsync();
+
+                    var ids = new List<int>();
+                    while (await reader.ReadAsync())
+                    {
+                        ids.Add(reader.GetInt32(0));
+                    }
+
+                    return Ok(ids); // Devuelve los IDs de reservas
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error en el servidor: {ex.Message}");
+            }
+        }
 
         // GET: api/reservas/{numReserva}
         [HttpGet("{numReserva}")]

@@ -49,6 +49,7 @@
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.gbEliminarCliente = new System.Windows.Forms.GroupBox();
+            this.label35 = new System.Windows.Forms.Label();
             this.txtEliminarCliente = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.btnEliminar = new System.Windows.Forms.Button();
@@ -65,6 +66,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbAgregarCliente = new System.Windows.Forms.GroupBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.mcFechaNacCliente = new System.Windows.Forms.MonthCalendar();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnCancelarAgregar = new System.Windows.Forms.Button();
             this.txtAgregarTelefonoCliente = new System.Windows.Forms.TextBox();
@@ -95,28 +98,8 @@
             this.dbMotelDataSet = new AdminApp.dbMotelDataSet();
             this.label11 = new System.Windows.Forms.Label();
             this.gbModificarCliente = new System.Windows.Forms.GroupBox();
-            this.clientesTableAdapter = new AdminApp.dbMotelDataSetTableAdapters.ClientesTableAdapter();
-            this.gbBuscarCliente = new System.Windows.Forms.GroupBox();
-            this.btnBuscarIDCLiente = new System.Windows.Forms.Button();
-            this.txtBuscarIDCliente = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.btnSalirBuscarCliente = new System.Windows.Forms.Button();
-            this.label29 = new System.Windows.Forms.Label();
-            this.mcFechaNacCliente = new System.Windows.Forms.MonthCalendar();
-            this.label30 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.txtBuscarTelefonoCliente = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.txtBuscarCorreoCliente = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.txtBuscarApellidosCliente = new System.Windows.Forms.TextBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.txtBuscarNombreCliente = new System.Windows.Forms.TextBox();
-            this.label28 = new System.Windows.Forms.Label();
-            this.txtBuscarFechaNacCliente = new System.Windows.Forms.TextBox();
-            this.txtBuscarFechaRegistroCliente = new System.Windows.Forms.TextBox();
-            this.label32 = new System.Windows.Forms.Label();
+            this.btnModificarClient = new System.Windows.Forms.Button();
+            this.btnCancelarModificar = new System.Windows.Forms.Button();
             this.txtModificarFechaNacCliente = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtFechaRegistroCliente = new System.Windows.Forms.TextBox();
@@ -133,9 +116,28 @@
             this.btnbuscarModificarCliente = new System.Windows.Forms.Button();
             this.txtBuscarModificarCliente = new System.Windows.Forms.TextBox();
             this.label34 = new System.Windows.Forms.Label();
-            this.btnModificarClient = new System.Windows.Forms.Button();
-            this.btnCancelarModificar = new System.Windows.Forms.Button();
-            this.label35 = new System.Windows.Forms.Label();
+            this.clientesTableAdapter = new AdminApp.dbMotelDataSetTableAdapters.ClientesTableAdapter();
+            this.gbBuscarCliente = new System.Windows.Forms.GroupBox();
+            this.txtBuscarFechaRegistroCliente = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.txtBuscarFechaNacCliente = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.txtBuscarTelefonoCliente = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.txtBuscarCorreoCliente = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.txtBuscarApellidosCliente = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.txtBuscarNombreCliente = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.btnBuscarIDCLiente = new System.Windows.Forms.Button();
+            this.txtBuscarIDCliente = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.btnSalirBuscarCliente = new System.Windows.Forms.Button();
+            this.label29 = new System.Windows.Forms.Label();
+            this.serviciosPorReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.habitacionesPorReservaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbBuscarHabitacion.SuspendLayout();
             this.gbEliminarCliente.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -353,6 +355,16 @@
             this.gbEliminarCliente.Text = "Eliminar Cliente";
             this.gbEliminarCliente.Visible = false;
             // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("Lucida Sans Typewriter", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label35.Location = new System.Drawing.Point(349, 100);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(116, 17);
+            this.label35.TabIndex = 15;
+            this.label35.Text = "ID Cliente: ";
+            // 
             // txtEliminarCliente
             // 
             this.txtEliminarCliente.Location = new System.Drawing.Point(471, 95);
@@ -446,6 +458,9 @@
             // 
             // reservasToolStripMenuItem
             // 
+            this.reservasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.serviciosPorReservaToolStripMenuItem,
+            this.habitacionesPorReservaToolStripMenuItem});
             this.reservasToolStripMenuItem.Name = "reservasToolStripMenuItem";
             this.reservasToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
             this.reservasToolStripMenuItem.Text = "Reservas";
@@ -512,6 +527,22 @@
             this.gbAgregarCliente.TabStop = false;
             this.gbAgregarCliente.Text = "Agregar Cliente";
             this.gbAgregarCliente.Visible = false;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(406, 218);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(319, 19);
+            this.label30.TabIndex = 32;
+            this.label30.Text = "Fecha de Nacimiento de Cliente:";
+            // 
+            // mcFechaNacCliente
+            // 
+            this.mcFechaNacCliente.Location = new System.Drawing.Point(754, 216);
+            this.mcFechaNacCliente.Name = "mcFechaNacCliente";
+            this.mcFechaNacCliente.TabIndex = 31;
             // 
             // btnAgregar
             // 
@@ -801,219 +832,27 @@
             this.gbModificarCliente.Text = "Modificar Cliente";
             this.gbModificarCliente.Visible = false;
             // 
-            // clientesTableAdapter
+            // btnModificarClient
             // 
-            this.clientesTableAdapter.ClearBeforeFill = true;
+            this.btnModificarClient.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnModificarClient.Location = new System.Drawing.Point(561, 348);
+            this.btnModificarClient.Name = "btnModificarClient";
+            this.btnModificarClient.Size = new System.Drawing.Size(145, 35);
+            this.btnModificarClient.TabIndex = 64;
+            this.btnModificarClient.Text = "Modificar";
+            this.btnModificarClient.UseVisualStyleBackColor = true;
+            this.btnModificarClient.Click += new System.EventHandler(this.btnModificarClient_Click);
             // 
-            // gbBuscarCliente
+            // btnCancelarModificar
             // 
-            this.gbBuscarCliente.Controls.Add(this.txtBuscarFechaRegistroCliente);
-            this.gbBuscarCliente.Controls.Add(this.label32);
-            this.gbBuscarCliente.Controls.Add(this.txtBuscarFechaNacCliente);
-            this.gbBuscarCliente.Controls.Add(this.label23);
-            this.gbBuscarCliente.Controls.Add(this.txtBuscarTelefonoCliente);
-            this.gbBuscarCliente.Controls.Add(this.label25);
-            this.gbBuscarCliente.Controls.Add(this.txtBuscarCorreoCliente);
-            this.gbBuscarCliente.Controls.Add(this.label26);
-            this.gbBuscarCliente.Controls.Add(this.txtBuscarApellidosCliente);
-            this.gbBuscarCliente.Controls.Add(this.label27);
-            this.gbBuscarCliente.Controls.Add(this.txtBuscarNombreCliente);
-            this.gbBuscarCliente.Controls.Add(this.label28);
-            this.gbBuscarCliente.Controls.Add(this.label31);
-            this.gbBuscarCliente.Controls.Add(this.btnBuscarIDCLiente);
-            this.gbBuscarCliente.Controls.Add(this.txtBuscarIDCliente);
-            this.gbBuscarCliente.Controls.Add(this.label24);
-            this.gbBuscarCliente.Controls.Add(this.btnSalirBuscarCliente);
-            this.gbBuscarCliente.Controls.Add(this.label29);
-            this.gbBuscarCliente.Location = new System.Drawing.Point(8, 53);
-            this.gbBuscarCliente.Name = "gbBuscarCliente";
-            this.gbBuscarCliente.Size = new System.Drawing.Size(1126, 423);
-            this.gbBuscarCliente.TabIndex = 35;
-            this.gbBuscarCliente.TabStop = false;
-            this.gbBuscarCliente.Text = "Buscar Cliente";
-            this.gbBuscarCliente.Visible = false;
-            // 
-            // btnBuscarIDCLiente
-            // 
-            this.btnBuscarIDCLiente.Location = new System.Drawing.Point(492, 94);
-            this.btnBuscarIDCLiente.Name = "btnBuscarIDCLiente";
-            this.btnBuscarIDCLiente.Size = new System.Drawing.Size(75, 23);
-            this.btnBuscarIDCLiente.TabIndex = 16;
-            this.btnBuscarIDCLiente.Text = "Buscar";
-            this.btnBuscarIDCLiente.UseVisualStyleBackColor = true;
-            this.btnBuscarIDCLiente.Click += new System.EventHandler(this.btnBuscarIDCLiente_Click);
-            // 
-            // txtBuscarIDCliente
-            // 
-            this.txtBuscarIDCliente.Location = new System.Drawing.Point(342, 93);
-            this.txtBuscarIDCliente.Name = "txtBuscarIDCliente";
-            this.txtBuscarIDCliente.Size = new System.Drawing.Size(105, 22);
-            this.txtBuscarIDCliente.TabIndex = 14;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(21, 97);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(159, 19);
-            this.label24.TabIndex = 11;
-            this.label24.Text = "Buscar Cliente:";
-            // 
-            // btnSalirBuscarCliente
-            // 
-            this.btnSalirBuscarCliente.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalirBuscarCliente.Location = new System.Drawing.Point(772, 342);
-            this.btnSalirBuscarCliente.Name = "btnSalirBuscarCliente";
-            this.btnSalirBuscarCliente.Size = new System.Drawing.Size(145, 35);
-            this.btnSalirBuscarCliente.TabIndex = 9;
-            this.btnSalirBuscarCliente.Text = "Salir";
-            this.btnSalirBuscarCliente.UseVisualStyleBackColor = true;
-            this.btnSalirBuscarCliente.Click += new System.EventHandler(this.btnSalirBuscarCliente_Click);
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label29.Location = new System.Drawing.Point(342, 25);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(164, 22);
-            this.label29.TabIndex = 0;
-            this.label29.Text = "Buscar Cliente";
-            // 
-            // mcFechaNacCliente
-            // 
-            this.mcFechaNacCliente.Location = new System.Drawing.Point(754, 216);
-            this.mcFechaNacCliente.Name = "mcFechaNacCliente";
-            this.mcFechaNacCliente.TabIndex = 31;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.Location = new System.Drawing.Point(406, 218);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(319, 19);
-            this.label30.TabIndex = 32;
-            this.label30.Text = "Fecha de Nacimiento de Cliente:";
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("Lucida Sans Typewriter", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.Location = new System.Drawing.Point(225, 100);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(95, 15);
-            this.label31.TabIndex = 19;
-            this.label31.Text = "ID CLiente:";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(25, 271);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(319, 19);
-            this.label23.TabIndex = 41;
-            this.label23.Text = "Fecha de Nacimiento de Cliente:";
-            // 
-            // txtBuscarTelefonoCliente
-            // 
-            this.txtBuscarTelefonoCliente.Enabled = false;
-            this.txtBuscarTelefonoCliente.Location = new System.Drawing.Point(844, 207);
-            this.txtBuscarTelefonoCliente.Name = "txtBuscarTelefonoCliente";
-            this.txtBuscarTelefonoCliente.Size = new System.Drawing.Size(173, 22);
-            this.txtBuscarTelefonoCliente.TabIndex = 40;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(572, 210);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(209, 19);
-            this.label25.TabIndex = 39;
-            this.label25.Text = "Teléfono de Cliente:";
-            // 
-            // txtBuscarCorreoCliente
-            // 
-            this.txtBuscarCorreoCliente.Enabled = false;
-            this.txtBuscarCorreoCliente.Location = new System.Drawing.Point(364, 207);
-            this.txtBuscarCorreoCliente.Name = "txtBuscarCorreoCliente";
-            this.txtBuscarCorreoCliente.Size = new System.Drawing.Size(177, 22);
-            this.txtBuscarCorreoCliente.TabIndex = 38;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(25, 210);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(189, 19);
-            this.label26.TabIndex = 37;
-            this.label26.Text = "Correo de Cliente:";
-            // 
-            // txtBuscarApellidosCliente
-            // 
-            this.txtBuscarApellidosCliente.Enabled = false;
-            this.txtBuscarApellidosCliente.Location = new System.Drawing.Point(844, 144);
-            this.txtBuscarApellidosCliente.Name = "txtBuscarApellidosCliente";
-            this.txtBuscarApellidosCliente.Size = new System.Drawing.Size(173, 22);
-            this.txtBuscarApellidosCliente.TabIndex = 36;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(572, 144);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(219, 19);
-            this.label27.TabIndex = 35;
-            this.label27.Text = "Apellidos de Cliente:";
-            // 
-            // txtBuscarNombreCliente
-            // 
-            this.txtBuscarNombreCliente.Enabled = false;
-            this.txtBuscarNombreCliente.Location = new System.Drawing.Point(364, 147);
-            this.txtBuscarNombreCliente.Name = "txtBuscarNombreCliente";
-            this.txtBuscarNombreCliente.Size = new System.Drawing.Size(177, 22);
-            this.txtBuscarNombreCliente.TabIndex = 34;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(25, 147);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(209, 19);
-            this.label28.TabIndex = 33;
-            this.label28.Text = "Nombres de Cliente: ";
-            // 
-            // txtBuscarFechaNacCliente
-            // 
-            this.txtBuscarFechaNacCliente.Enabled = false;
-            this.txtBuscarFechaNacCliente.Location = new System.Drawing.Point(850, 271);
-            this.txtBuscarFechaNacCliente.Name = "txtBuscarFechaNacCliente";
-            this.txtBuscarFechaNacCliente.Size = new System.Drawing.Size(177, 22);
-            this.txtBuscarFechaNacCliente.TabIndex = 42;
-            // 
-            // txtBuscarFechaRegistroCliente
-            // 
-            this.txtBuscarFechaRegistroCliente.Enabled = false;
-            this.txtBuscarFechaRegistroCliente.Location = new System.Drawing.Point(364, 268);
-            this.txtBuscarFechaRegistroCliente.Name = "txtBuscarFechaRegistroCliente";
-            this.txtBuscarFechaRegistroCliente.Size = new System.Drawing.Size(173, 22);
-            this.txtBuscarFechaRegistroCliente.TabIndex = 44;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label32.Location = new System.Drawing.Point(578, 271);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(189, 19);
-            this.label32.TabIndex = 43;
-            this.label32.Text = "Fecha de Registro:";
+            this.btnCancelarModificar.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelarModificar.Location = new System.Drawing.Point(321, 348);
+            this.btnCancelarModificar.Name = "btnCancelarModificar";
+            this.btnCancelarModificar.Size = new System.Drawing.Size(145, 35);
+            this.btnCancelarModificar.TabIndex = 63;
+            this.btnCancelarModificar.Text = "Cancelar";
+            this.btnCancelarModificar.UseVisualStyleBackColor = true;
+            this.btnCancelarModificar.Click += new System.EventHandler(this.btnCancelarModificar_Click);
             // 
             // txtModificarFechaNacCliente
             // 
@@ -1155,37 +994,217 @@
             this.label34.TabIndex = 47;
             this.label34.Text = "Buscar Cliente:";
             // 
-            // btnModificarClient
+            // clientesTableAdapter
             // 
-            this.btnModificarClient.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModificarClient.Location = new System.Drawing.Point(561, 348);
-            this.btnModificarClient.Name = "btnModificarClient";
-            this.btnModificarClient.Size = new System.Drawing.Size(145, 35);
-            this.btnModificarClient.TabIndex = 64;
-            this.btnModificarClient.Text = "Modificar";
-            this.btnModificarClient.UseVisualStyleBackColor = true;
-            this.btnModificarClient.Click += new System.EventHandler(this.btnModificarClient_Click);
+            this.clientesTableAdapter.ClearBeforeFill = true;
             // 
-            // btnCancelarModificar
+            // gbBuscarCliente
             // 
-            this.btnCancelarModificar.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelarModificar.Location = new System.Drawing.Point(321, 348);
-            this.btnCancelarModificar.Name = "btnCancelarModificar";
-            this.btnCancelarModificar.Size = new System.Drawing.Size(145, 35);
-            this.btnCancelarModificar.TabIndex = 63;
-            this.btnCancelarModificar.Text = "Cancelar";
-            this.btnCancelarModificar.UseVisualStyleBackColor = true;
-            this.btnCancelarModificar.Click += new System.EventHandler(this.btnCancelarModificar_Click);
+            this.gbBuscarCliente.Controls.Add(this.txtBuscarFechaRegistroCliente);
+            this.gbBuscarCliente.Controls.Add(this.label32);
+            this.gbBuscarCliente.Controls.Add(this.txtBuscarFechaNacCliente);
+            this.gbBuscarCliente.Controls.Add(this.label23);
+            this.gbBuscarCliente.Controls.Add(this.txtBuscarTelefonoCliente);
+            this.gbBuscarCliente.Controls.Add(this.label25);
+            this.gbBuscarCliente.Controls.Add(this.txtBuscarCorreoCliente);
+            this.gbBuscarCliente.Controls.Add(this.label26);
+            this.gbBuscarCliente.Controls.Add(this.txtBuscarApellidosCliente);
+            this.gbBuscarCliente.Controls.Add(this.label27);
+            this.gbBuscarCliente.Controls.Add(this.txtBuscarNombreCliente);
+            this.gbBuscarCliente.Controls.Add(this.label28);
+            this.gbBuscarCliente.Controls.Add(this.label31);
+            this.gbBuscarCliente.Controls.Add(this.btnBuscarIDCLiente);
+            this.gbBuscarCliente.Controls.Add(this.txtBuscarIDCliente);
+            this.gbBuscarCliente.Controls.Add(this.label24);
+            this.gbBuscarCliente.Controls.Add(this.btnSalirBuscarCliente);
+            this.gbBuscarCliente.Controls.Add(this.label29);
+            this.gbBuscarCliente.Location = new System.Drawing.Point(8, 53);
+            this.gbBuscarCliente.Name = "gbBuscarCliente";
+            this.gbBuscarCliente.Size = new System.Drawing.Size(1126, 423);
+            this.gbBuscarCliente.TabIndex = 35;
+            this.gbBuscarCliente.TabStop = false;
+            this.gbBuscarCliente.Text = "Buscar Cliente";
+            this.gbBuscarCliente.Visible = false;
             // 
-            // label35
+            // txtBuscarFechaRegistroCliente
             // 
-            this.label35.AutoSize = true;
-            this.label35.Font = new System.Drawing.Font("Lucida Sans Typewriter", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label35.Location = new System.Drawing.Point(349, 100);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(116, 17);
-            this.label35.TabIndex = 15;
-            this.label35.Text = "ID Cliente: ";
+            this.txtBuscarFechaRegistroCliente.Enabled = false;
+            this.txtBuscarFechaRegistroCliente.Location = new System.Drawing.Point(364, 268);
+            this.txtBuscarFechaRegistroCliente.Name = "txtBuscarFechaRegistroCliente";
+            this.txtBuscarFechaRegistroCliente.Size = new System.Drawing.Size(173, 22);
+            this.txtBuscarFechaRegistroCliente.TabIndex = 44;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.Location = new System.Drawing.Point(578, 271);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(189, 19);
+            this.label32.TabIndex = 43;
+            this.label32.Text = "Fecha de Registro:";
+            // 
+            // txtBuscarFechaNacCliente
+            // 
+            this.txtBuscarFechaNacCliente.Enabled = false;
+            this.txtBuscarFechaNacCliente.Location = new System.Drawing.Point(850, 271);
+            this.txtBuscarFechaNacCliente.Name = "txtBuscarFechaNacCliente";
+            this.txtBuscarFechaNacCliente.Size = new System.Drawing.Size(177, 22);
+            this.txtBuscarFechaNacCliente.TabIndex = 42;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(25, 271);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(319, 19);
+            this.label23.TabIndex = 41;
+            this.label23.Text = "Fecha de Nacimiento de Cliente:";
+            // 
+            // txtBuscarTelefonoCliente
+            // 
+            this.txtBuscarTelefonoCliente.Enabled = false;
+            this.txtBuscarTelefonoCliente.Location = new System.Drawing.Point(844, 207);
+            this.txtBuscarTelefonoCliente.Name = "txtBuscarTelefonoCliente";
+            this.txtBuscarTelefonoCliente.Size = new System.Drawing.Size(173, 22);
+            this.txtBuscarTelefonoCliente.TabIndex = 40;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(572, 210);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(209, 19);
+            this.label25.TabIndex = 39;
+            this.label25.Text = "Teléfono de Cliente:";
+            // 
+            // txtBuscarCorreoCliente
+            // 
+            this.txtBuscarCorreoCliente.Enabled = false;
+            this.txtBuscarCorreoCliente.Location = new System.Drawing.Point(364, 207);
+            this.txtBuscarCorreoCliente.Name = "txtBuscarCorreoCliente";
+            this.txtBuscarCorreoCliente.Size = new System.Drawing.Size(177, 22);
+            this.txtBuscarCorreoCliente.TabIndex = 38;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(25, 210);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(189, 19);
+            this.label26.TabIndex = 37;
+            this.label26.Text = "Correo de Cliente:";
+            // 
+            // txtBuscarApellidosCliente
+            // 
+            this.txtBuscarApellidosCliente.Enabled = false;
+            this.txtBuscarApellidosCliente.Location = new System.Drawing.Point(844, 144);
+            this.txtBuscarApellidosCliente.Name = "txtBuscarApellidosCliente";
+            this.txtBuscarApellidosCliente.Size = new System.Drawing.Size(173, 22);
+            this.txtBuscarApellidosCliente.TabIndex = 36;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(572, 144);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(219, 19);
+            this.label27.TabIndex = 35;
+            this.label27.Text = "Apellidos de Cliente:";
+            // 
+            // txtBuscarNombreCliente
+            // 
+            this.txtBuscarNombreCliente.Enabled = false;
+            this.txtBuscarNombreCliente.Location = new System.Drawing.Point(364, 147);
+            this.txtBuscarNombreCliente.Name = "txtBuscarNombreCliente";
+            this.txtBuscarNombreCliente.Size = new System.Drawing.Size(177, 22);
+            this.txtBuscarNombreCliente.TabIndex = 34;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(25, 147);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(209, 19);
+            this.label28.TabIndex = 33;
+            this.label28.Text = "Nombres de Cliente: ";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Lucida Sans Typewriter", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(225, 100);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(95, 15);
+            this.label31.TabIndex = 19;
+            this.label31.Text = "ID CLiente:";
+            // 
+            // btnBuscarIDCLiente
+            // 
+            this.btnBuscarIDCLiente.Location = new System.Drawing.Point(492, 94);
+            this.btnBuscarIDCLiente.Name = "btnBuscarIDCLiente";
+            this.btnBuscarIDCLiente.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscarIDCLiente.TabIndex = 16;
+            this.btnBuscarIDCLiente.Text = "Buscar";
+            this.btnBuscarIDCLiente.UseVisualStyleBackColor = true;
+            this.btnBuscarIDCLiente.Click += new System.EventHandler(this.btnBuscarIDCLiente_Click);
+            // 
+            // txtBuscarIDCliente
+            // 
+            this.txtBuscarIDCliente.Location = new System.Drawing.Point(342, 93);
+            this.txtBuscarIDCliente.Name = "txtBuscarIDCliente";
+            this.txtBuscarIDCliente.Size = new System.Drawing.Size(105, 22);
+            this.txtBuscarIDCliente.TabIndex = 14;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(21, 97);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(159, 19);
+            this.label24.TabIndex = 11;
+            this.label24.Text = "Buscar Cliente:";
+            // 
+            // btnSalirBuscarCliente
+            // 
+            this.btnSalirBuscarCliente.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalirBuscarCliente.Location = new System.Drawing.Point(772, 342);
+            this.btnSalirBuscarCliente.Name = "btnSalirBuscarCliente";
+            this.btnSalirBuscarCliente.Size = new System.Drawing.Size(145, 35);
+            this.btnSalirBuscarCliente.TabIndex = 9;
+            this.btnSalirBuscarCliente.Text = "Salir";
+            this.btnSalirBuscarCliente.UseVisualStyleBackColor = true;
+            this.btnSalirBuscarCliente.Click += new System.EventHandler(this.btnSalirBuscarCliente_Click);
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label29.Location = new System.Drawing.Point(342, 25);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(164, 22);
+            this.label29.TabIndex = 0;
+            this.label29.Text = "Buscar Cliente";
+            // 
+            // serviciosPorReservaToolStripMenuItem
+            // 
+            this.serviciosPorReservaToolStripMenuItem.Name = "serviciosPorReservaToolStripMenuItem";
+            this.serviciosPorReservaToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
+            this.serviciosPorReservaToolStripMenuItem.Text = "Servicios por Reserva";
+            this.serviciosPorReservaToolStripMenuItem.Click += new System.EventHandler(this.serviciosPorReservaToolStripMenuItem_Click);
+            // 
+            // habitacionesPorReservaToolStripMenuItem
+            // 
+            this.habitacionesPorReservaToolStripMenuItem.Name = "habitacionesPorReservaToolStripMenuItem";
+            this.habitacionesPorReservaToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
+            this.habitacionesPorReservaToolStripMenuItem.Text = "Habitaciones por Reserva";
+            this.habitacionesPorReservaToolStripMenuItem.Click += new System.EventHandler(this.habitacionesPorReservaToolStripMenuItem_Click);
             // 
             // Clientes
             // 
@@ -1342,5 +1361,7 @@
         private System.Windows.Forms.Button btnModificarClient;
         private System.Windows.Forms.Button btnCancelarModificar;
         private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.ToolStripMenuItem serviciosPorReservaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem habitacionesPorReservaToolStripMenuItem;
     }
 }
