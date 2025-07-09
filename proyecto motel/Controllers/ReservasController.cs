@@ -295,6 +295,48 @@ namespace proyecto_motel.Controllers
             }
         }
         [HttpGet("disponibles")]
+
+        [HttpGet("reservasActivas")]
+        public async Task<ActionResult<List<Reservas>>> GetReservasActivas()
+        {
+            try
+            {
+                using var connection = new SqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                // Usamos un filtro SQL para obtener todas las reservas cuyo estado no sea "Cancelada" ni "Completada"
+                const string sql = @"
+            SELECT * 
+            FROM Reservas
+            WHERE EstadoReserva NOT IN ('Cancelada', 'Completada')";
+
+                using var cmd = new SqlCommand(sql, connection);
+                using var reader = await cmd.ExecuteReaderAsync();
+
+                var reservasActivas = new List<Reservas>();
+                while (await reader.ReadAsync())
+                {
+                    reservasActivas.Add(new Reservas
+                    {
+                        NumReserva = reader.GetInt32(0),
+                        NumCliente = reader.GetInt32(1),
+                        FechaReserva = reader.GetDateTime(2),
+                        FechaEntrada = reader.GetDateTime(3),
+                        FechaSalida = reader.GetDateTime(4),
+                        EstadoReserva = reader.GetString(5),
+                        TotalReserva = reader.GetDecimal(6),
+                        ComentarioReserva = reader.IsDBNull(7) ? null : reader.GetString(7)
+                    });
+                }
+
+                return Ok(reservasActivas);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error en el servidor: {ex.Message}");
+            }
+        }
+
         public async Task<IActionResult> GetHabitacionesDisponibles(
     [FromQuery] DateTime fechaInicio,
     [FromQuery] DateTime fechaFin)

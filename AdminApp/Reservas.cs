@@ -123,6 +123,7 @@ namespace AdminApp
                         // Cargar los IDs de las reservas en el ComboBox
                         cmBoxIdsReserva.DataSource = idsReservas;
                         cmBoxModificarIdReserva.DataSource = idsReservas;
+                        cmBoXCancelarIDReserva.DataSource = idsReservas;
                     }
                     else
                     {
@@ -136,39 +137,6 @@ namespace AdminApp
             }
         }
 
-
-        // Método para obtener el cliente por correo (realizar un GET a la API)
-        private async Task<ClaseClientes> ObtenerClientePorCorreo(string correo)
-        {
-            try
-            {
-                // Verificar el correo antes de enviarlo
-                MessageBox.Show($"Correo que se está enviando: {correo}");
-
-                using (var client = new HttpClient())
-                {
-                    string url = $"http://localhost:5264/api/clientes/buscarPorEmail?email={correo}";
-                    var response = await client.GetAsync(url);  // Hacemos la llamada asincrónica
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var jsonResponse = await response.Content.ReadAsStringAsync();  // También se hace de forma asincrónica
-                        var cliente = JsonConvert.DeserializeObject<ClaseClientes>(jsonResponse);
-                        return cliente;
-                    }
-                    else
-                    {
-                        MessageBox.Show($"No se pudo obtener el cliente. Estado: {response.StatusCode}");
-                        return null;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al obtener cliente: {ex.Message}");
-                return null;
-            }
-        }
 
         private async Task<bool> CrearReservaApi(int numHabitaciones, TipoHabitacion tipoSeleccionado, decimal totalReserva, int numCliente)
         {

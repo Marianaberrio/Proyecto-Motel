@@ -30,6 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gbBuscarReserva = new System.Windows.Forms.GroupBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.txtBoxBuscarIDCliente = new System.Windows.Forms.TextBox();
+            this.txtEstadoReserva = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.dtPickerFechaSalida = new System.Windows.Forms.DateTimePicker();
+            this.dtPickerFechaEntrada = new System.Windows.Forms.DateTimePicker();
+            this.txtBuscarComentarioReserva = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtBuscarTotalReserva = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtFechaCreada = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.cmBoxIdsReserva = new System.Windows.Forms.ComboBox();
             this.btnBuscarReserv = new System.Windows.Forms.Button();
             this.label24 = new System.Windows.Forms.Label();
             this.btnSalirBuscarReserva = new System.Windows.Forms.Button();
@@ -37,19 +53,33 @@
             this.clientesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dbMotelDataSet = new AdminApp.dbMotelDataSet();
             this.gbModificarReserva = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtModificarIdCliente = new System.Windows.Forms.TextBox();
+            this.txtModificarEstadoReserva = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.dtPickerModificarFechaSalida = new System.Windows.Forms.DateTimePicker();
+            this.dtPickerModificarFechaEntrada = new System.Windows.Forms.DateTimePicker();
+            this.txtModificarComentarioReserva = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtTotalReserva = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtModificarFechaCreada = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.cmBoxModificarIdReserva = new System.Windows.Forms.ComboBox();
+            this.btnBuscarModificarReserva = new System.Windows.Forms.Button();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
             this.btnModificarUser = new System.Windows.Forms.Button();
             this.btnCancelarModificar = new System.Windows.Forms.Button();
             this.usuariosTableAdapter = new AdminApp.dbMotelUsuariosDataSet1TableAdapters.UsuariosTableAdapter();
             this.habitacionesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dbMotelHabitacionesDataSet = new AdminApp.dbMotelHabitacionesDataSet();
-            this.btnEliminarNombreUsuario = new System.Windows.Forms.RadioButton();
-            this.txtEliminarNombreUsuario = new System.Windows.Forms.TextBox();
-            this.btnEliminarIdUsuario = new System.Windows.Forms.RadioButton();
-            this.txtEliminarIDUsuario = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.gbEliminarReserva = new System.Windows.Forms.GroupBox();
-            this.btnEliminar = new System.Windows.Forms.Button();
+            this.btnCancelarReserva = new System.Windows.Forms.Button();
             this.btnCancelarEliminar = new System.Windows.Forms.Button();
             this.gbAgregarReserva = new System.Windows.Forms.GroupBox();
             this.dateTimePickerFechaSalida = new System.Windows.Forms.DateTimePicker();
@@ -105,41 +135,9 @@
             this.clientesTableAdapter = new AdminApp.dbMotelDataSetTableAdapters.ClientesTableAdapter();
             this.CerrarApp = new System.Windows.Forms.Button();
             this.reservasTableAdapter = new AdminApp.dbMotelDataSet1TableAdapters.ReservasTableAdapter();
-            this.cmBoxIdsReserva = new System.Windows.Forms.ComboBox();
-            this.txtBuscarComentarioReserva = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.txtBuscarTotalReserva = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.txtFechaCreada = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.dtPickerFechaSalida = new System.Windows.Forms.DateTimePicker();
-            this.dtPickerFechaEntrada = new System.Windows.Forms.DateTimePicker();
-            this.txtEstadoReserva = new System.Windows.Forms.TextBox();
-            this.txtBoxBuscarIDCliente = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtModificarIdCliente = new System.Windows.Forms.TextBox();
-            this.txtModificarEstadoReserva = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.dtPickerModificarFechaSalida = new System.Windows.Forms.DateTimePicker();
-            this.dtPickerModificarFechaEntrada = new System.Windows.Forms.DateTimePicker();
-            this.txtModificarComentarioReserva = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtTotalReserva = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.txtModificarFechaCreada = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.cmBoxModificarIdReserva = new System.Windows.Forms.ComboBox();
-            this.btnBuscarModificarReserva = new System.Windows.Forms.Button();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cmBoXCancelarIDReserva = new System.Windows.Forms.ComboBox();
+            this.label31 = new System.Windows.Forms.Label();
             this.gbBuscarReserva.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dbMotelDataSet)).BeginInit();
@@ -180,13 +178,157 @@
             this.gbBuscarReserva.Controls.Add(this.label24);
             this.gbBuscarReserva.Controls.Add(this.btnSalirBuscarReserva);
             this.gbBuscarReserva.Controls.Add(this.label29);
-            this.gbBuscarReserva.Location = new System.Drawing.Point(12, 78);
+            this.gbBuscarReserva.Location = new System.Drawing.Point(12, 83);
             this.gbBuscarReserva.Name = "gbBuscarReserva";
             this.gbBuscarReserva.Size = new System.Drawing.Size(1126, 511);
             this.gbBuscarReserva.TabIndex = 71;
             this.gbBuscarReserva.TabStop = false;
             this.gbBuscarReserva.Text = "Buscar Reserva";
             this.gbBuscarReserva.Visible = false;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(600, 86);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(119, 19);
+            this.label25.TabIndex = 97;
+            this.label25.Text = "ID Cliente:";
+            // 
+            // txtBoxBuscarIDCliente
+            // 
+            this.txtBoxBuscarIDCliente.Enabled = false;
+            this.txtBoxBuscarIDCliente.Location = new System.Drawing.Point(840, 84);
+            this.txtBoxBuscarIDCliente.Name = "txtBoxBuscarIDCliente";
+            this.txtBoxBuscarIDCliente.Size = new System.Drawing.Size(105, 22);
+            this.txtBoxBuscarIDCliente.TabIndex = 96;
+            // 
+            // txtEstadoReserva
+            // 
+            this.txtEstadoReserva.Enabled = false;
+            this.txtEstadoReserva.Location = new System.Drawing.Point(840, 198);
+            this.txtEstadoReserva.Name = "txtEstadoReserva";
+            this.txtEstadoReserva.Size = new System.Drawing.Size(105, 22);
+            this.txtEstadoReserva.TabIndex = 94;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(234, 84);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(81, 18);
+            this.label23.TabIndex = 93;
+            this.label23.Text = "ID Reserva";
+            // 
+            // dtPickerFechaSalida
+            // 
+            this.dtPickerFechaSalida.Enabled = false;
+            this.dtPickerFechaSalida.Location = new System.Drawing.Point(745, 133);
+            this.dtPickerFechaSalida.Name = "dtPickerFechaSalida";
+            this.dtPickerFechaSalida.Size = new System.Drawing.Size(200, 22);
+            this.dtPickerFechaSalida.TabIndex = 91;
+            // 
+            // dtPickerFechaEntrada
+            // 
+            this.dtPickerFechaEntrada.Enabled = false;
+            this.dtPickerFechaEntrada.Location = new System.Drawing.Point(175, 136);
+            this.dtPickerFechaEntrada.Name = "dtPickerFechaEntrada";
+            this.dtPickerFechaEntrada.Size = new System.Drawing.Size(200, 22);
+            this.dtPickerFechaEntrada.TabIndex = 90;
+            // 
+            // txtBuscarComentarioReserva
+            // 
+            this.txtBuscarComentarioReserva.Location = new System.Drawing.Point(157, 288);
+            this.txtBuscarComentarioReserva.Multiline = true;
+            this.txtBuscarComentarioReserva.Name = "txtBuscarComentarioReserva";
+            this.txtBuscarComentarioReserva.Size = new System.Drawing.Size(372, 129);
+            this.txtBuscarComentarioReserva.TabIndex = 89;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(23, 288);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(119, 19);
+            this.label13.TabIndex = 88;
+            this.label13.Text = "Comentario:";
+            // 
+            // txtBuscarTotalReserva
+            // 
+            this.txtBuscarTotalReserva.Enabled = false;
+            this.txtBuscarTotalReserva.Location = new System.Drawing.Point(840, 259);
+            this.txtBuscarTotalReserva.Name = "txtBuscarTotalReserva";
+            this.txtBuscarTotalReserva.Size = new System.Drawing.Size(105, 22);
+            this.txtBuscarTotalReserva.TabIndex = 87;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(600, 262);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(149, 19);
+            this.label14.TabIndex = 86;
+            this.label14.Text = "Total Reserva:";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(600, 198);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(159, 19);
+            this.label16.TabIndex = 84;
+            this.label16.Text = "Estado Reserva:";
+            // 
+            // txtFechaCreada
+            // 
+            this.txtFechaCreada.Enabled = false;
+            this.txtFechaCreada.Location = new System.Drawing.Point(269, 198);
+            this.txtFechaCreada.Name = "txtFechaCreada";
+            this.txtFechaCreada.Size = new System.Drawing.Size(105, 22);
+            this.txtFechaCreada.TabIndex = 83;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(20, 198);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(139, 19);
+            this.label19.TabIndex = 82;
+            this.label19.Text = "Fecha Creada:";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(600, 135);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(139, 19);
+            this.label21.TabIndex = 81;
+            this.label21.Text = "Fecha salida:";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(20, 136);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(149, 19);
+            this.label22.TabIndex = 80;
+            this.label22.Text = "Fecha entrada:";
+            // 
+            // cmBoxIdsReserva
+            // 
+            this.cmBoxIdsReserva.FormattingEnabled = true;
+            this.cmBoxIdsReserva.Location = new System.Drawing.Point(339, 81);
+            this.cmBoxIdsReserva.Name = "cmBoxIdsReserva";
+            this.cmBoxIdsReserva.Size = new System.Drawing.Size(121, 24);
+            this.cmBoxIdsReserva.TabIndex = 27;
             // 
             // btnBuscarReserv
             // 
@@ -262,13 +404,183 @@
             this.gbModificarReserva.Controls.Add(this.label30);
             this.gbModificarReserva.Controls.Add(this.btnModificarUser);
             this.gbModificarReserva.Controls.Add(this.btnCancelarModificar);
-            this.gbModificarReserva.Location = new System.Drawing.Point(12, 78);
+            this.gbModificarReserva.Location = new System.Drawing.Point(12, 83);
             this.gbModificarReserva.Name = "gbModificarReserva";
             this.gbModificarReserva.Size = new System.Drawing.Size(1126, 505);
             this.gbModificarReserva.TabIndex = 66;
             this.gbModificarReserva.TabStop = false;
             this.gbModificarReserva.Text = "Modificar Reserva";
             this.gbModificarReserva.Visible = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(625, 81);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(119, 19);
+            this.label6.TabIndex = 117;
+            this.label6.Text = "ID Cliente:";
+            // 
+            // txtModificarIdCliente
+            // 
+            this.txtModificarIdCliente.Enabled = false;
+            this.txtModificarIdCliente.Location = new System.Drawing.Point(865, 79);
+            this.txtModificarIdCliente.Name = "txtModificarIdCliente";
+            this.txtModificarIdCliente.Size = new System.Drawing.Size(105, 22);
+            this.txtModificarIdCliente.TabIndex = 116;
+            // 
+            // txtModificarEstadoReserva
+            // 
+            this.txtModificarEstadoReserva.Location = new System.Drawing.Point(865, 193);
+            this.txtModificarEstadoReserva.Name = "txtModificarEstadoReserva";
+            this.txtModificarEstadoReserva.Size = new System.Drawing.Size(105, 22);
+            this.txtModificarEstadoReserva.TabIndex = 115;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(259, 79);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(81, 18);
+            this.label7.TabIndex = 114;
+            this.label7.Text = "ID Reserva";
+            // 
+            // dtPickerModificarFechaSalida
+            // 
+            this.dtPickerModificarFechaSalida.Location = new System.Drawing.Point(770, 128);
+            this.dtPickerModificarFechaSalida.Name = "dtPickerModificarFechaSalida";
+            this.dtPickerModificarFechaSalida.Size = new System.Drawing.Size(200, 22);
+            this.dtPickerModificarFechaSalida.TabIndex = 113;
+            // 
+            // dtPickerModificarFechaEntrada
+            // 
+            this.dtPickerModificarFechaEntrada.Location = new System.Drawing.Point(200, 131);
+            this.dtPickerModificarFechaEntrada.Name = "dtPickerModificarFechaEntrada";
+            this.dtPickerModificarFechaEntrada.Size = new System.Drawing.Size(200, 22);
+            this.dtPickerModificarFechaEntrada.TabIndex = 112;
+            // 
+            // txtModificarComentarioReserva
+            // 
+            this.txtModificarComentarioReserva.Location = new System.Drawing.Point(182, 283);
+            this.txtModificarComentarioReserva.Multiline = true;
+            this.txtModificarComentarioReserva.Name = "txtModificarComentarioReserva";
+            this.txtModificarComentarioReserva.Size = new System.Drawing.Size(372, 129);
+            this.txtModificarComentarioReserva.TabIndex = 111;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(48, 283);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(119, 19);
+            this.label8.TabIndex = 110;
+            this.label8.Text = "Comentario:";
+            // 
+            // txtTotalReserva
+            // 
+            this.txtTotalReserva.Location = new System.Drawing.Point(865, 254);
+            this.txtTotalReserva.Name = "txtTotalReserva";
+            this.txtTotalReserva.Size = new System.Drawing.Size(105, 22);
+            this.txtTotalReserva.TabIndex = 109;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(625, 257);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(149, 19);
+            this.label9.TabIndex = 108;
+            this.label9.Text = "Total Reserva:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(625, 193);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(159, 19);
+            this.label10.TabIndex = 107;
+            this.label10.Text = "Estado Reserva:";
+            // 
+            // txtModificarFechaCreada
+            // 
+            this.txtModificarFechaCreada.Enabled = false;
+            this.txtModificarFechaCreada.Location = new System.Drawing.Point(294, 193);
+            this.txtModificarFechaCreada.Name = "txtModificarFechaCreada";
+            this.txtModificarFechaCreada.Size = new System.Drawing.Size(105, 22);
+            this.txtModificarFechaCreada.TabIndex = 106;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(45, 193);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(139, 19);
+            this.label11.TabIndex = 105;
+            this.label11.Text = "Fecha Creada:";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(625, 130);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(139, 19);
+            this.label26.TabIndex = 104;
+            this.label26.Text = "Fecha salida:";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(45, 131);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(149, 19);
+            this.label27.TabIndex = 103;
+            this.label27.Text = "Fecha entrada:";
+            // 
+            // cmBoxModificarIdReserva
+            // 
+            this.cmBoxModificarIdReserva.FormattingEnabled = true;
+            this.cmBoxModificarIdReserva.Location = new System.Drawing.Point(364, 76);
+            this.cmBoxModificarIdReserva.Name = "cmBoxModificarIdReserva";
+            this.cmBoxModificarIdReserva.Size = new System.Drawing.Size(121, 24);
+            this.cmBoxModificarIdReserva.TabIndex = 102;
+            // 
+            // btnBuscarModificarReserva
+            // 
+            this.btnBuscarModificarReserva.Location = new System.Drawing.Point(518, 77);
+            this.btnBuscarModificarReserva.Name = "btnBuscarModificarReserva";
+            this.btnBuscarModificarReserva.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscarModificarReserva.TabIndex = 101;
+            this.btnBuscarModificarReserva.Text = "Buscar";
+            this.btnBuscarModificarReserva.UseVisualStyleBackColor = true;
+            this.btnBuscarModificarReserva.Click += new System.EventHandler(this.btnBuscarModificarReserva_Click);
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(48, 77);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(159, 19);
+            this.label28.TabIndex = 100;
+            this.label28.Text = "Buscar Reserva:";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.Location = new System.Drawing.Point(489, 18);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(197, 22);
+            this.label30.TabIndex = 98;
+            this.label30.Text = "Modificar Reserva";
             // 
             // btnModificarUser
             // 
@@ -306,52 +618,6 @@
             this.dbMotelHabitacionesDataSet.DataSetName = "dbMotelHabitacionesDataSet";
             this.dbMotelHabitacionesDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // btnEliminarNombreUsuario
-            // 
-            this.btnEliminarNombreUsuario.AutoSize = true;
-            this.btnEliminarNombreUsuario.Location = new System.Drawing.Point(515, 94);
-            this.btnEliminarNombreUsuario.Name = "btnEliminarNombreUsuario";
-            this.btnEliminarNombreUsuario.Size = new System.Drawing.Size(127, 20);
-            this.btnEliminarNombreUsuario.TabIndex = 82;
-            this.btnEliminarNombreUsuario.TabStop = true;
-            this.btnEliminarNombreUsuario.Text = "Nombre Usuario";
-            this.btnEliminarNombreUsuario.UseVisualStyleBackColor = true;
-            // 
-            // txtEliminarNombreUsuario
-            // 
-            this.txtEliminarNombreUsuario.Location = new System.Drawing.Point(670, 92);
-            this.txtEliminarNombreUsuario.Name = "txtEliminarNombreUsuario";
-            this.txtEliminarNombreUsuario.Size = new System.Drawing.Size(105, 22);
-            this.txtEliminarNombreUsuario.TabIndex = 81;
-            // 
-            // btnEliminarIdUsuario
-            // 
-            this.btnEliminarIdUsuario.AutoSize = true;
-            this.btnEliminarIdUsuario.Location = new System.Drawing.Point(231, 97);
-            this.btnEliminarIdUsuario.Name = "btnEliminarIdUsuario";
-            this.btnEliminarIdUsuario.Size = new System.Drawing.Size(91, 20);
-            this.btnEliminarIdUsuario.TabIndex = 80;
-            this.btnEliminarIdUsuario.TabStop = true;
-            this.btnEliminarIdUsuario.Text = "ID Usuario";
-            this.btnEliminarIdUsuario.UseVisualStyleBackColor = true;
-            // 
-            // txtEliminarIDUsuario
-            // 
-            this.txtEliminarIDUsuario.Location = new System.Drawing.Point(348, 95);
-            this.txtEliminarIDUsuario.Name = "txtEliminarIDUsuario";
-            this.txtEliminarIDUsuario.Size = new System.Drawing.Size(105, 22);
-            this.txtEliminarIDUsuario.TabIndex = 78;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(31, 94);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(159, 19);
-            this.label15.TabIndex = 77;
-            this.label15.Text = "Buscar Usuario:";
-            // 
             // label20
             // 
             this.label20.AutoSize = true;
@@ -364,31 +630,29 @@
             // 
             // gbEliminarReserva
             // 
-            this.gbEliminarReserva.Controls.Add(this.btnEliminarNombreUsuario);
-            this.gbEliminarReserva.Controls.Add(this.txtEliminarNombreUsuario);
-            this.gbEliminarReserva.Controls.Add(this.btnEliminarIdUsuario);
-            this.gbEliminarReserva.Controls.Add(this.txtEliminarIDUsuario);
             this.gbEliminarReserva.Controls.Add(this.label15);
-            this.gbEliminarReserva.Controls.Add(this.btnEliminar);
+            this.gbEliminarReserva.Controls.Add(this.cmBoXCancelarIDReserva);
+            this.gbEliminarReserva.Controls.Add(this.label31);
+            this.gbEliminarReserva.Controls.Add(this.btnCancelarReserva);
             this.gbEliminarReserva.Controls.Add(this.btnCancelarEliminar);
             this.gbEliminarReserva.Controls.Add(this.label20);
-            this.gbEliminarReserva.Location = new System.Drawing.Point(45, 662);
+            this.gbEliminarReserva.Location = new System.Drawing.Point(12, 77);
             this.gbEliminarReserva.Name = "gbEliminarReserva";
             this.gbEliminarReserva.Size = new System.Drawing.Size(1126, 423);
             this.gbEliminarReserva.TabIndex = 67;
             this.gbEliminarReserva.TabStop = false;
-            this.gbEliminarReserva.Text = "Eliminar Cliente";
+            this.gbEliminarReserva.Text = "Cancelar Reserva";
             this.gbEliminarReserva.Visible = false;
             // 
-            // btnEliminar
+            // btnCancelarReserva
             // 
-            this.btnEliminar.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminar.Location = new System.Drawing.Point(521, 165);
-            this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(145, 35);
-            this.btnEliminar.TabIndex = 10;
-            this.btnEliminar.Text = "Eliminar";
-            this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnCancelarReserva.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelarReserva.Location = new System.Drawing.Point(521, 165);
+            this.btnCancelarReserva.Name = "btnCancelarReserva";
+            this.btnCancelarReserva.Size = new System.Drawing.Size(145, 35);
+            this.btnCancelarReserva.TabIndex = 10;
+            this.btnCancelarReserva.Text = "Eliminar";
+            this.btnCancelarReserva.UseVisualStyleBackColor = true;
             // 
             // btnCancelarEliminar
             // 
@@ -419,7 +683,7 @@
             this.gbAgregarReserva.Controls.Add(this.btnAgregar);
             this.gbAgregarReserva.Controls.Add(this.btnCancelarAgregar);
             this.gbAgregarReserva.Controls.Add(this.label2);
-            this.gbAgregarReserva.Location = new System.Drawing.Point(12, 83);
+            this.gbAgregarReserva.Location = new System.Drawing.Point(12, 88);
             this.gbAgregarReserva.Name = "gbAgregarReserva";
             this.gbAgregarReserva.Size = new System.Drawing.Size(1126, 512);
             this.gbAgregarReserva.TabIndex = 65;
@@ -657,7 +921,7 @@
             this.btnEliminarReserva.Name = "btnEliminarReserva";
             this.btnEliminarReserva.Size = new System.Drawing.Size(224, 43);
             this.btnEliminarReserva.TabIndex = 64;
-            this.btnEliminarReserva.Text = "Eliminar Reserva";
+            this.btnEliminarReserva.Text = "Cancelar Reserva";
             this.btnEliminarReserva.UseVisualStyleBackColor = true;
             this.btnEliminarReserva.Click += new System.EventHandler(this.btnEliminarReserva_Click);
             // 
@@ -868,329 +1132,43 @@
             // 
             this.reservasTableAdapter.ClearBeforeFill = true;
             // 
-            // cmBoxIdsReserva
-            // 
-            this.cmBoxIdsReserva.FormattingEnabled = true;
-            this.cmBoxIdsReserva.Location = new System.Drawing.Point(339, 81);
-            this.cmBoxIdsReserva.Name = "cmBoxIdsReserva";
-            this.cmBoxIdsReserva.Size = new System.Drawing.Size(121, 24);
-            this.cmBoxIdsReserva.TabIndex = 27;
-            // 
-            // txtBuscarComentarioReserva
-            // 
-            this.txtBuscarComentarioReserva.Location = new System.Drawing.Point(157, 288);
-            this.txtBuscarComentarioReserva.Multiline = true;
-            this.txtBuscarComentarioReserva.Name = "txtBuscarComentarioReserva";
-            this.txtBuscarComentarioReserva.Size = new System.Drawing.Size(372, 129);
-            this.txtBuscarComentarioReserva.TabIndex = 89;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(23, 288);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(119, 19);
-            this.label13.TabIndex = 88;
-            this.label13.Text = "Comentario:";
-            // 
-            // txtBuscarTotalReserva
-            // 
-            this.txtBuscarTotalReserva.Enabled = false;
-            this.txtBuscarTotalReserva.Location = new System.Drawing.Point(840, 259);
-            this.txtBuscarTotalReserva.Name = "txtBuscarTotalReserva";
-            this.txtBuscarTotalReserva.Size = new System.Drawing.Size(105, 22);
-            this.txtBuscarTotalReserva.TabIndex = 87;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(600, 262);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(149, 19);
-            this.label14.TabIndex = 86;
-            this.label14.Text = "Total Reserva:";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(600, 198);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(159, 19);
-            this.label16.TabIndex = 84;
-            this.label16.Text = "Estado Reserva:";
-            // 
-            // txtFechaCreada
-            // 
-            this.txtFechaCreada.Enabled = false;
-            this.txtFechaCreada.Location = new System.Drawing.Point(269, 198);
-            this.txtFechaCreada.Name = "txtFechaCreada";
-            this.txtFechaCreada.Size = new System.Drawing.Size(105, 22);
-            this.txtFechaCreada.TabIndex = 83;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(20, 198);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(139, 19);
-            this.label19.TabIndex = 82;
-            this.label19.Text = "Fecha Creada:";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(600, 135);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(139, 19);
-            this.label21.TabIndex = 81;
-            this.label21.Text = "Fecha salida:";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(20, 136);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(149, 19);
-            this.label22.TabIndex = 80;
-            this.label22.Text = "Fecha entrada:";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(234, 84);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(81, 18);
-            this.label23.TabIndex = 93;
-            this.label23.Text = "ID Reserva";
-            // 
-            // dtPickerFechaSalida
-            // 
-            this.dtPickerFechaSalida.Enabled = false;
-            this.dtPickerFechaSalida.Location = new System.Drawing.Point(745, 133);
-            this.dtPickerFechaSalida.Name = "dtPickerFechaSalida";
-            this.dtPickerFechaSalida.Size = new System.Drawing.Size(200, 22);
-            this.dtPickerFechaSalida.TabIndex = 91;
-            // 
-            // dtPickerFechaEntrada
-            // 
-            this.dtPickerFechaEntrada.Enabled = false;
-            this.dtPickerFechaEntrada.Location = new System.Drawing.Point(175, 136);
-            this.dtPickerFechaEntrada.Name = "dtPickerFechaEntrada";
-            this.dtPickerFechaEntrada.Size = new System.Drawing.Size(200, 22);
-            this.dtPickerFechaEntrada.TabIndex = 90;
-            // 
-            // txtEstadoReserva
-            // 
-            this.txtEstadoReserva.Enabled = false;
-            this.txtEstadoReserva.Location = new System.Drawing.Point(840, 198);
-            this.txtEstadoReserva.Name = "txtEstadoReserva";
-            this.txtEstadoReserva.Size = new System.Drawing.Size(105, 22);
-            this.txtEstadoReserva.TabIndex = 94;
-            // 
-            // txtBoxBuscarIDCliente
-            // 
-            this.txtBoxBuscarIDCliente.Enabled = false;
-            this.txtBoxBuscarIDCliente.Location = new System.Drawing.Point(840, 84);
-            this.txtBoxBuscarIDCliente.Name = "txtBoxBuscarIDCliente";
-            this.txtBoxBuscarIDCliente.Size = new System.Drawing.Size(105, 22);
-            this.txtBoxBuscarIDCliente.TabIndex = 96;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(600, 86);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(119, 19);
-            this.label25.TabIndex = 97;
-            this.label25.Text = "ID Cliente:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(625, 81);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(119, 19);
-            this.label6.TabIndex = 117;
-            this.label6.Text = "ID Cliente:";
-            // 
-            // txtModificarIdCliente
-            // 
-            this.txtModificarIdCliente.Enabled = false;
-            this.txtModificarIdCliente.Location = new System.Drawing.Point(865, 79);
-            this.txtModificarIdCliente.Name = "txtModificarIdCliente";
-            this.txtModificarIdCliente.Size = new System.Drawing.Size(105, 22);
-            this.txtModificarIdCliente.TabIndex = 116;
-            // 
-            // txtModificarEstadoReserva
-            // 
-            this.txtModificarEstadoReserva.Location = new System.Drawing.Point(865, 193);
-            this.txtModificarEstadoReserva.Name = "txtModificarEstadoReserva";
-            this.txtModificarEstadoReserva.Size = new System.Drawing.Size(105, 22);
-            this.txtModificarEstadoReserva.TabIndex = 115;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(259, 79);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(81, 18);
-            this.label7.TabIndex = 114;
-            this.label7.Text = "ID Reserva";
-            // 
-            // dtPickerModificarFechaSalida
-            // 
-            this.dtPickerModificarFechaSalida.Location = new System.Drawing.Point(770, 128);
-            this.dtPickerModificarFechaSalida.Name = "dtPickerModificarFechaSalida";
-            this.dtPickerModificarFechaSalida.Size = new System.Drawing.Size(200, 22);
-            this.dtPickerModificarFechaSalida.TabIndex = 113;
-            // 
-            // dtPickerModificarFechaEntrada
-            // 
-            this.dtPickerModificarFechaEntrada.Location = new System.Drawing.Point(200, 131);
-            this.dtPickerModificarFechaEntrada.Name = "dtPickerModificarFechaEntrada";
-            this.dtPickerModificarFechaEntrada.Size = new System.Drawing.Size(200, 22);
-            this.dtPickerModificarFechaEntrada.TabIndex = 112;
-            // 
-            // txtModificarComentarioReserva
-            // 
-            this.txtModificarComentarioReserva.Location = new System.Drawing.Point(182, 283);
-            this.txtModificarComentarioReserva.Multiline = true;
-            this.txtModificarComentarioReserva.Name = "txtModificarComentarioReserva";
-            this.txtModificarComentarioReserva.Size = new System.Drawing.Size(372, 129);
-            this.txtModificarComentarioReserva.TabIndex = 111;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(48, 283);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(119, 19);
-            this.label8.TabIndex = 110;
-            this.label8.Text = "Comentario:";
-            // 
-            // txtTotalReserva
-            // 
-            this.txtTotalReserva.Location = new System.Drawing.Point(865, 254);
-            this.txtTotalReserva.Name = "txtTotalReserva";
-            this.txtTotalReserva.Size = new System.Drawing.Size(105, 22);
-            this.txtTotalReserva.TabIndex = 109;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(625, 257);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(149, 19);
-            this.label9.TabIndex = 108;
-            this.label9.Text = "Total Reserva:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(625, 193);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(159, 19);
-            this.label10.TabIndex = 107;
-            this.label10.Text = "Estado Reserva:";
-            // 
-            // txtModificarFechaCreada
-            // 
-            this.txtModificarFechaCreada.Enabled = false;
-            this.txtModificarFechaCreada.Location = new System.Drawing.Point(294, 193);
-            this.txtModificarFechaCreada.Name = "txtModificarFechaCreada";
-            this.txtModificarFechaCreada.Size = new System.Drawing.Size(105, 22);
-            this.txtModificarFechaCreada.TabIndex = 106;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(45, 193);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(139, 19);
-            this.label11.TabIndex = 105;
-            this.label11.Text = "Fecha Creada:";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(625, 130);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(139, 19);
-            this.label26.TabIndex = 104;
-            this.label26.Text = "Fecha salida:";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(45, 131);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(149, 19);
-            this.label27.TabIndex = 103;
-            this.label27.Text = "Fecha entrada:";
-            // 
-            // cmBoxModificarIdReserva
-            // 
-            this.cmBoxModificarIdReserva.FormattingEnabled = true;
-            this.cmBoxModificarIdReserva.Location = new System.Drawing.Point(364, 76);
-            this.cmBoxModificarIdReserva.Name = "cmBoxModificarIdReserva";
-            this.cmBoxModificarIdReserva.Size = new System.Drawing.Size(121, 24);
-            this.cmBoxModificarIdReserva.TabIndex = 102;
-            // 
-            // btnBuscarModificarReserva
-            // 
-            this.btnBuscarModificarReserva.Location = new System.Drawing.Point(518, 77);
-            this.btnBuscarModificarReserva.Name = "btnBuscarModificarReserva";
-            this.btnBuscarModificarReserva.Size = new System.Drawing.Size(75, 23);
-            this.btnBuscarModificarReserva.TabIndex = 101;
-            this.btnBuscarModificarReserva.Text = "Buscar";
-            this.btnBuscarModificarReserva.UseVisualStyleBackColor = true;
-            this.btnBuscarModificarReserva.Click += new System.EventHandler(this.btnBuscarModificarReserva_Click);
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(48, 77);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(159, 19);
-            this.label28.TabIndex = 100;
-            this.label28.Text = "Buscar Reserva:";
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.Location = new System.Drawing.Point(489, 18);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(164, 22);
-            this.label30.TabIndex = 98;
-            this.label30.Text = "Buscar Reserva";
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(472, 105);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(81, 18);
+            this.label15.TabIndex = 117;
+            this.label15.Text = "ID Reserva";
+            // 
+            // cmBoXCancelarIDReserva
+            // 
+            this.cmBoXCancelarIDReserva.FormattingEnabled = true;
+            this.cmBoXCancelarIDReserva.Location = new System.Drawing.Point(577, 102);
+            this.cmBoXCancelarIDReserva.Name = "cmBoXCancelarIDReserva";
+            this.cmBoXCancelarIDReserva.Size = new System.Drawing.Size(121, 24);
+            this.cmBoXCancelarIDReserva.TabIndex = 116;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(261, 103);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(159, 19);
+            this.label31.TabIndex = 115;
+            this.label31.Text = "Buscar Reserva:";
             // 
             // Reservas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1251, 1055);
+            this.Controls.Add(this.gbEliminarReserva);
             this.Controls.Add(this.gbModificarReserva);
             this.Controls.Add(this.gbBuscarReserva);
             this.Controls.Add(this.gbAgregarReserva);
-            this.Controls.Add(this.gbEliminarReserva);
             this.Controls.Add(this.btnAgregarReserva);
             this.Controls.Add(this.btnBuscarReserva);
             this.Controls.Add(this.btnEliminarReserva);
@@ -1244,14 +1222,9 @@
         private dbMotelUsuariosDataSet1TableAdapters.UsuariosTableAdapter usuariosTableAdapter;
         private System.Windows.Forms.BindingSource habitacionesBindingSource;
         private dbMotelHabitacionesDataSet dbMotelHabitacionesDataSet;
-        private System.Windows.Forms.RadioButton btnEliminarNombreUsuario;
-        private System.Windows.Forms.TextBox txtEliminarNombreUsuario;
-        private System.Windows.Forms.RadioButton btnEliminarIdUsuario;
-        private System.Windows.Forms.TextBox txtEliminarIDUsuario;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.GroupBox gbEliminarReserva;
-        private System.Windows.Forms.Button btnEliminar;
+        private System.Windows.Forms.Button btnCancelarReserva;
         private System.Windows.Forms.Button btnCancelarEliminar;
         private System.Windows.Forms.GroupBox gbAgregarReserva;
         private System.Windows.Forms.Button btnAgregar;
@@ -1342,5 +1315,8 @@
         private System.Windows.Forms.Button btnBuscarModificarReserva;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox cmBoXCancelarIDReserva;
+        private System.Windows.Forms.Label label31;
     }
 }
