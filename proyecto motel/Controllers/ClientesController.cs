@@ -18,39 +18,35 @@ namespace proyecto_motel.Controllers
             _connectionString = configuration.GetConnectionString("ConexionMotel");
         }
 
-        // POST: api/Clientes
+        // POST: api/clientes
         [HttpPost]
         public async Task<IActionResult> CrearCliente([FromBody] Cliente cliente)
         {
             if (cliente == null)
+            {
                 return BadRequest("Cliente no puede ser nulo.");
+            }
 
             try
             {
-                using var conn = new SqlConnection(_connectionString);
-                await conn.OpenAsync();
-
-                using var cmd = new SqlCommand("CrearCliente", conn)
+                using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
-                    CommandType = CommandType.StoredProcedure
-                };
-                cmd.Parameters.AddWithValue("@NombreCliente", cliente.NombreCliente);
-                cmd.Parameters.AddWithValue("@ApellidoCliente", cliente.ApellidoCliente);
-                cmd.Parameters.AddWithValue("@CorreoCliente", cliente.CorreoCliente);
-                cmd.Parameters.AddWithValue("@TelefonoCliente", cliente.TelefonoCliente);
-                cmd.Parameters.AddWithValue("@FechaNacimiento", cliente.FechaNacimiento);
+                    await connection.OpenAsync();
 
-                // OUTPUT parameter
-                var outId = new SqlParameter("@NumCliente", SqlDbType.Int)
-                {
-                    Direction = ParameterDirection.Output
-                };
-                cmd.Parameters.Add(outId);
+                    using (SqlCommand command = new SqlCommand("CrearCliente", connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@NombreCliente", cliente.NombreCliente);
+                        command.Parameters.AddWithValue("@ApellidoCliente", cliente.ApellidoCliente);
+                        command.Parameters.AddWithValue("@CorreoCliente", cliente.CorreoCliente);
+                        command.Parameters.AddWithValue("@TelefonoCliente", cliente.TelefonoCliente);
+                        command.Parameters.AddWithValue("@FechaNacimiento", cliente.FechaNacimiento);
 
-                await cmd.ExecuteNonQueryAsync();
-                cliente.NumCliente = (int)outId.Value;
+                        await command.ExecuteNonQueryAsync();
+                    }
+                }
 
-                return CreatedAtAction(nameof(Get), new { id = cliente.NumCliente }, cliente);
+                return CreatedAtAction(nameof(CrearCliente), new { id = cliente.NumCliente }, cliente);
             }
             catch (Exception ex)
             {
@@ -294,6 +290,60 @@ namespace proyecto_motel.Controllers
                 return StatusCode(500, $"Error en el servidor: {ex.Message}");
             }
         }
+
+        // GET: api/clientes
+        [HttpGet]
+        public async Task<IActionResult> GetAllClientes()
+        {
+            try
+            {
+                var lista = new List<Cliente>();
+                using (var conn = new SqlConnection(_connectionString))
+                {
+                    await conn.OpenAsync();
+
+                    const string sql = @"
+                SELECT 
+                    NumCliente, 
+                    NombreCliente, 
+                    ApellidoCliente, 
+                    TelefonoCliente, 
+                    CorreoCliente,
+                    FechaNacimiento,
+                    FechaRegistro
+                FROM Clientes";
+
+                    using (var cmd = new SqlCommand(sql, conn))
+                    using (var rdr = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await rdr.ReadAsync())
+                        {
+                            lista.Add(new Cliente
+                            {
+                                NumCliente = rdr.GetInt32(0),
+                                NombreCliente = rdr.GetString(1),
+                                ApellidoCliente = rdr.GetString(2),
+                                TelefonoCliente = rdr.IsDBNull(3) ? null : rdr.GetString(3),
+                                CorreoCliente = rdr.IsDBNull(4) ? null : rdr.GetString(4),
+                                FechaNacimiento = rdr.GetDateTime(5),
+                                FechaRegistro = rdr.GetDateTime(6)
+                            });
+                        }
+                    }
+                }
+
+                if (lista.Count == 0)
+                    return NotFound("No hay clientes registrados.");
+
+                return Ok(lista);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener clientes: {ex.Message}");
+            }
+        }
+
+
 
     }
 }

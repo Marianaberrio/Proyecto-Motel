@@ -159,13 +159,14 @@ namespace AdminApp
                     var content = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
                     var response = await client.PostAsync(url, content);
 
-                    return response.IsSuccessStatusCode;
+                    // Aquí estamos comprobando si la respuesta de la API es exitosa
+                    return response.IsSuccessStatusCode;  // Retornamos true si fue exitosa, de lo contrario false
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al crear la reserva: {ex.Message}");
-                return false;
+                return false;  // Retornamos false si hubo un error
             }
         }
 
@@ -264,6 +265,101 @@ namespace AdminApp
             }
         }
 
+        // Método para cancelar la reserva mediante API
+        private async Task<bool> CancelarReservaApi(int numReserva)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    // URL de la API para cancelar la reserva
+                    string url = $"http://localhost:5264/api/reservas/cancelar/{numReserva}";
+
+                    var response = await client.PutAsync(url, null); // PUT sin cuerpo, solo URL
+
+                    return response.IsSuccessStatusCode;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cancelar la reserva: {ex.Message}");
+                return false;
+            }
+        }
+
+        private async Task<List<ClaseHabitacion>> ObtenerHabitacionesDisponibles(string tipoHabitacion, int cantidad)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    // Llamada a la API con los dos parámetros
+                    string url = $"http://localhost:5264/api/habitaciones/disponibles/{tipoHabitacion}/{cantidad}";
+                    var response = await client.GetAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var jsonResponse = await response.Content.ReadAsStringAsync();
+                        return JsonConvert.DeserializeObject<List<ClaseHabitacion>>(jsonResponse);
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudieron obtener las habitaciones disponibles.");
+                        return new List<ClaseHabitacion>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al obtener habitaciones disponibles: {ex.Message}");
+                return new List<ClaseHabitacion>();
+            }
+        }
+
+        private async Task<bool> AsignarHabitacionesAReserva(int numReserva, List<ClaseHabitacion> habitaciones)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    string url = $"http://localhost:5264/api/habitaciones/asignar"; // URL de la API para asignar habitaciones
+
+                    var requestBody = new
+                    {
+                        ReservaId = numReserva,  // Usamos el numReserva que obtuvimos
+                        Habitaciones = habitaciones.Select(h => new
+                        {
+                            h.IdHabitacion,            // ID de la habitación
+                            h.NumHabitacion,           // Número de la habitación
+                            h.TipoHabitacion,          // Tipo de habitación
+                            h.EstadoHabitacion,        // Estado de la habitación
+                            h.PrecioHabitacion         // Precio de la habitación
+                        }).ToList()
+                    };
+
+                    var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+
+                    var response = await client.PostAsync(url, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al asignar habitaciones.");
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al asignar habitaciones: {ex.Message}");
+                return false;
+            }
+        }
+
+
         private void ActualizarTotalReserva()
         {
             int numHabitaciones;
@@ -303,6 +399,45 @@ namespace AdminApp
             cmBoxTipoHabitacion.ValueMember = "Precio";  // Usar el precio como el valor del ComboBox
         }
 
+        private async Task CargarReservasActivas()
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    // Llamada a la API para obtener las reservas activas
+                    string url = "http://localhost:5264/api/reservas/reservasActivas"; // URL correcta de tu API
+
+                    var response = await client.GetAsync(url);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Obtener respuesta
+                        var jsonResponse = await response.Content.ReadAsStringAsync();
+
+                        // Deserializar la respuesta
+                        var reservas = JsonConvert.DeserializeObject<List<ClaseReservas>>(jsonResponse);
+
+                        // Mostrar las reservas en el DataGridView o donde lo necesites
+                        cmBoXCancelarIDReserva.DataSource = reservas;
+
+                        // Asignamos la propiedad que queremos mostrar
+                        cmBoXCancelarIDReserva.DisplayMember = "NumReserva"; // Aquí se usa el ID de la reserva, puedes cambiarlo si es otro campo
+                        cmBoXCancelarIDReserva.ValueMember = "NumReserva"; // Aquí también asignamos el ID, o cualquier otra propiedad que desees usar como valor
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al cargar las reservas activas.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar las reservas: {ex.Message}");
+            }
+        }
+
+
+
         private void CerrarApp_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -315,6 +450,7 @@ namespace AdminApp
             CargarTiposDeHabitacion();
             await CargarClientesIdsYCorreosAsync();
             await CargarIdsReservasAsync();
+            await CargarReservasActivas();
 
         }
 
@@ -361,13 +497,31 @@ namespace AdminApp
             }
         }
 
-       
+        public class AsignarHabitacionesRequest
+        {
+            public int ReservaId { get; set; }
+            public List<ClaseHabitacion> Habitaciones { get; set; }
+        }
         private async void btnAgregar_Click(object sender, EventArgs e)
         {
             // Validación de número de habitaciones y tipo de habitación seleccionada
             if (string.IsNullOrWhiteSpace(txtNumHabitaciones.Text) || cmBoxTipoHabitacion.SelectedItem == null)
             {
                 MessageBox.Show("Por favor, ingresa el número de habitaciones y selecciona el tipo de habitación.");
+                return;
+            }
+
+            // Validación para comprobar que la fecha de salida no sea antes de la fecha de entrada
+            if (dateTimePickerFechaSalida.Value.Date < dateTimePickerFechaEntrada.Value.Date)
+            {
+                MessageBox.Show("La fecha de salida no puede ser antes de la fecha de entrada.");
+                return;
+            }
+
+            // Validación para comprobar que la fecha de entrada no sea anterior a hoy
+            if (dateTimePickerFechaEntrada.Value.Date < DateTime.Now.Date)
+            {
+                MessageBox.Show("La fecha de entrada no puede ser en el pasado.");
                 return;
             }
 
@@ -403,6 +557,7 @@ namespace AdminApp
 
                 MessageBox.Show("Reserva creada exitosamente!");
 
+                await CargarIdsReservasAsync();
                 // Cerrar el GroupBox
                 gbAgregarReserva.Visible = false;
                 this.reservasTableAdapter.Fill(this.dbMotelDataSet1.Reservas);
@@ -532,6 +687,7 @@ namespace AdminApp
                 txtTotalReserva.Clear();
                 txtModificarComentarioReserva.Clear();
 
+                
                 // Cerrar el GroupBox
                 gbModificarReserva.Visible = false;
                 this.reservasTableAdapter.Fill(this.dbMotelDataSet1.Reservas); // Actualizar el DataGrid con los nuevos datos
@@ -556,6 +712,157 @@ namespace AdminApp
 
             // Cerrar el GroupBox
             gbModificarReserva.Visible = false;
+        }
+
+        private async void btnCancelarReserva_Click(object sender, EventArgs e)
+        {
+            // Obtener el ID de la reserva seleccionada
+            int numReserva = (int)cmBoXCancelarIDReserva.SelectedValue;
+
+            // Verificar si se ha seleccionado una reserva
+            if (numReserva == 0)
+            {
+                MessageBox.Show("Por favor, seleccione una reserva para cancelar.");
+                return;
+            }
+
+            // Mostrar mensaje de confirmación
+            var confirmResult = MessageBox.Show($"¿Está seguro que desea cancelar la reserva {numReserva}?",
+                                                 "Confirmar cancelación",
+                                                 MessageBoxButtons.YesNo);
+
+            if (confirmResult == DialogResult.Yes)
+            {
+                try
+                {
+                    // Llamada a la API para cancelar la reserva
+                    var result = await CancelarReservaApi(numReserva);
+
+                    if (result)
+                    {
+                        // Deseleccionar el ComboBox
+                        cmBoXCancelarIDReserva.SelectedIndex = -1;
+
+                        // Actualizar el DataGridView
+                        this.reservasTableAdapter.Fill(this.dbMotelDataSet1.Reservas);
+
+                        // Actualizar las reservas activas en el ComboBox
+                        await CargarReservasActivas();
+
+                        // Cerrar el GroupBox
+                        gbEliminarReserva.Visible = false;
+
+                        MessageBox.Show("La reserva ha sido cancelada exitosamente.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hubo un error al cancelar la reserva.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al cancelar la reserva: {ex.Message}");
+                }
+            }
+        }
+
+        private void btnCancelarEliminar_Click(object sender, EventArgs e)
+        {
+            // Deseleccionar el ComboBox
+            cmBoXCancelarIDReserva.SelectedIndex = -1;
+
+            // Cerrar el GroupBox
+            gbEliminarReserva.Visible = false;
+        }
+
+        private void dateTimePickerFechaEntrada_ValueChanged(object sender, EventArgs e)
+        {
+            // Validar que la fecha de entrada no sea anterior a hoy
+            if (dateTimePickerFechaEntrada.Value.Date < DateTime.Now.Date)
+            {
+                MessageBox.Show("La fecha de entrada no puede ser en anterior al día de hoy.");
+                dateTimePickerFechaEntrada.Value = DateTime.Now; // Restablecer a la fecha actual
+            }
+        }
+
+        private void dateTimePickerFechaSalida_ValueChanged(object sender, EventArgs e)
+        {
+            // Validar que la fecha de salida no sea antes de la fecha de entrada
+            if (dateTimePickerFechaSalida.Value.Date < dateTimePickerFechaEntrada.Value.Date)
+            {
+                MessageBox.Show("La fecha de salida no puede ser antes de la fecha de entrada.");
+                dateTimePickerFechaSalida.Value = dateTimePickerFechaEntrada.Value; // Restablecer a la fecha de entrada
+            }
+        }
+
+        private void habitacionesPorReservaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var mainForm = new HabitacionesReserva();
+            mainForm.Show();
+            this.Hide();
+        }
+
+        private void menuprincipalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var mainForm = new DashboardForm();
+            mainForm.Show();
+            this.Hide();
+        }
+
+        private void habitacionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var mainForm = new Habitaciones();
+            mainForm.Show();
+            this.Hide();
+        }
+
+        private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var mainForm = new Clientes();
+            mainForm.Show();
+            this.Hide();
+        }
+
+        private void reservasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var mainForm = new Servicios();
+            mainForm.Show();
+            this.Hide();
+        }
+
+        private void serviciosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var mainForm = new Usuarios();
+            mainForm.Show();
+            this.Hide();
+        }
+
+        private void pagosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var mainForm = new Pagos();
+            mainForm.Show();
+            this.Hide();
+        }
+
+        private void reportesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var mainForm = new Reportes();
+            mainForm.Show();
+            this.Hide();
+        }
+
+        private void reservasToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var mainForm = new Reservas();
+            mainForm.Show();
+            this.Hide();
+        }
+
+        private void serviciosPorReservaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var mainForm = new ServiciosReserva();
+            mainForm.Show();
+            this.Hide();
         }
     }
 }

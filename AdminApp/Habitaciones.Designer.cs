@@ -84,7 +84,6 @@
             this.txteliminarhabnum = new System.Windows.Forms.TextBox();
             this.txtEliminarhabID = new System.Windows.Forms.TextBox();
             this.gbEliminarHabitación = new System.Windows.Forms.GroupBox();
-            this.btnBuscarHabitacion = new System.Windows.Forms.Button();
             this.gbBuscarHabitacion = new System.Windows.Forms.GroupBox();
             this.txtBuscarEstadoHabitacion = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -104,6 +103,7 @@
             this.txtBuscarNumeroHabitacion = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
+            this.btnBuscarHabitacion = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.habitacionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -395,7 +395,7 @@
             this.gbModificarHabitacion.Controls.Add(this.txtModificarNum);
             this.gbModificarHabitacion.Controls.Add(this.label10);
             this.gbModificarHabitacion.Controls.Add(this.label11);
-            this.gbModificarHabitacion.Location = new System.Drawing.Point(28, 77);
+            this.gbModificarHabitacion.Location = new System.Drawing.Point(42, 50);
             this.gbModificarHabitacion.Name = "gbModificarHabitacion";
             this.gbModificarHabitacion.Size = new System.Drawing.Size(1126, 423);
             this.gbModificarHabitacion.TabIndex = 11;
@@ -553,6 +553,7 @@
             // 
             // txtModificarNum
             // 
+            this.txtModificarNum.Enabled = false;
             this.txtModificarNum.Location = new System.Drawing.Point(299, 184);
             this.txtModificarNum.Name = "txtModificarNum";
             this.txtModificarNum.Size = new System.Drawing.Size(105, 22);
@@ -676,17 +677,6 @@
             this.gbEliminarHabitación.Text = "Eliminar Habitación";
             this.gbEliminarHabitación.Visible = false;
             // 
-            // btnBuscarHabitacion
-            // 
-            this.btnBuscarHabitacion.Font = new System.Drawing.Font("Lucida Sans Typewriter", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscarHabitacion.Location = new System.Drawing.Point(300, 313);
-            this.btnBuscarHabitacion.Name = "btnBuscarHabitacion";
-            this.btnBuscarHabitacion.Size = new System.Drawing.Size(224, 43);
-            this.btnBuscarHabitacion.TabIndex = 20;
-            this.btnBuscarHabitacion.Text = "Buscar Habitación";
-            this.btnBuscarHabitacion.UseVisualStyleBackColor = true;
-            this.btnBuscarHabitacion.Click += new System.EventHandler(this.btnBuscarHabitacion_Click);
-            // 
             // gbBuscarHabitacion
             // 
             this.gbBuscarHabitacion.Controls.Add(this.txtBuscarEstadoHabitacion);
@@ -707,7 +697,7 @@
             this.gbBuscarHabitacion.Controls.Add(this.txtBuscarNumeroHabitacion);
             this.gbBuscarHabitacion.Controls.Add(this.label21);
             this.gbBuscarHabitacion.Controls.Add(this.label22);
-            this.gbBuscarHabitacion.Location = new System.Drawing.Point(28, 71);
+            this.gbBuscarHabitacion.Location = new System.Drawing.Point(25, 64);
             this.gbBuscarHabitacion.Name = "gbBuscarHabitacion";
             this.gbBuscarHabitacion.Size = new System.Drawing.Size(1126, 423);
             this.gbBuscarHabitacion.TabIndex = 19;
@@ -878,6 +868,17 @@
             this.label22.Size = new System.Drawing.Size(197, 22);
             this.label22.TabIndex = 0;
             this.label22.Text = "Buscar Habitación";
+            // 
+            // btnBuscarHabitacion
+            // 
+            this.btnBuscarHabitacion.Font = new System.Drawing.Font("Lucida Sans Typewriter", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBuscarHabitacion.Location = new System.Drawing.Point(300, 313);
+            this.btnBuscarHabitacion.Name = "btnBuscarHabitacion";
+            this.btnBuscarHabitacion.Size = new System.Drawing.Size(224, 43);
+            this.btnBuscarHabitacion.TabIndex = 20;
+            this.btnBuscarHabitacion.Text = "Buscar Habitación";
+            this.btnBuscarHabitacion.UseVisualStyleBackColor = true;
+            this.btnBuscarHabitacion.Click += new System.EventHandler(this.btnBuscarHabitacion_Click);
             // 
             // menuStrip1
             // 

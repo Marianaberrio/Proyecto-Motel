@@ -38,12 +38,26 @@ namespace AdminApp
             }
 
             // Si ambos campos están llenos, proceder con la autenticación
-            if (AuthenticateUser(usuario, contrasena))
+            var (isAuthenticated, userRole) = AuthenticateUser(usuario, contrasena);
+
+            if (isAuthenticated)
             {
-                // Redirigir al dashboard principal o pantalla correspondiente
-                var mainForm = new DashboardForm();
-                mainForm.Show();
-                this.Hide();
+                // Verificar si el usuario tiene el rol de "Administrador"
+                if (userRole == "Administrador")
+                {
+                    // Redirigir al dashboard principal o pantalla correspondiente
+                    var mainForm = new DashboardForm();
+                    mainForm.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    // Mostrar mensaje de error si no tiene permisos de administrador
+                    MessageBox.Show("Usted no tiene los permisos necesarios para acceder a esta aplicación.",
+                                     "Acceso denegado",
+                                     MessageBoxButtons.OK,
+                                     MessageBoxIcon.Error);
+                }
             }
             else
             {
@@ -54,22 +68,23 @@ namespace AdminApp
                                  MessageBoxIcon.Error);
             }
         }
-
         // Método para autenticar al usuario en la base de datos
-        private bool AuthenticateUser(string usuario, string contrasena)
+        // Método para autenticar al usuario en la base de datos
+        private (bool, string) AuthenticateUser(string usuario, string contrasena)
         {
             // Obtener la cadena de conexión desde el archivo App.config
             string connectionString = ConfigurationManager.ConnectionStrings["MotelDbConnection"].ConnectionString;
 
-            // Llamar al método para verificar la contraseña
+            // Llamar al método para verificar la contraseña y obtener el rol
             return VerifyPasswordInDatabase(usuario, contrasena, connectionString);
         }
 
         // Verificar las credenciales en la base de datos
-        private bool VerifyPasswordInDatabase(string usuario, string contrasena, string connectionString)
+        // Verificar las credenciales y obtener el rol en la base de datos
+        private (bool, string) VerifyPasswordInDatabase(string usuario, string contrasena, string connectionString)
         {
-            // La consulta para obtener el hash de la contraseña para el usuario
-            string query = "SELECT Contraseña FROM Usuarios WHERE Usuario = @usuario";
+            // La consulta para obtener el hash de la contraseña y el rol del usuario
+            string query = "SELECT Contraseña, Rol FROM Usuarios WHERE Usuario = @usuario";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -82,21 +97,24 @@ namespace AdminApp
                     cmd.Parameters.AddWithValue("@usuario", usuario);
 
                     // Ejecutar la consulta y obtener el valor
-                    object result = cmd.ExecuteScalar();
-
-                    // Si no se encuentra el usuario, retornar falso
-                    if (result == null)
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        return false;
+                        if (reader.Read())
+                        {
+                            string storedPasswordHash = reader.GetString(0);  // Contraseña almacenada
+                            string userRole = reader.GetString(1);  // Rol del usuario
+
+                            // Comparar la contraseña ingresada con el hash almacenado
+                            if (VerifyPassword(contrasena, storedPasswordHash))
+                            {
+                                return (true, userRole);  // Usuario autenticado y rol obtenido
+                            }
+                        }
                     }
-
-                    // Obtener el hash de la contraseña almacenado en la base de datos
-                    string storedPasswordHash = result.ToString();
-
-                    // Comparar el hash de la contraseña ingresada con el hash almacenado
-                    return VerifyPassword(contrasena, storedPasswordHash);
                 }
             }
+
+            return (false, string.Empty);  // Usuario no encontrado o credenciales incorrectas
         }
 
         // Comparar la contraseña ingresada con la almacenada

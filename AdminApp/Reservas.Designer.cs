@@ -79,6 +79,9 @@
             this.dbMotelHabitacionesDataSet = new AdminApp.dbMotelHabitacionesDataSet();
             this.label20 = new System.Windows.Forms.Label();
             this.gbEliminarReserva = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cmBoXCancelarIDReserva = new System.Windows.Forms.ComboBox();
+            this.label31 = new System.Windows.Forms.Label();
             this.btnCancelarReserva = new System.Windows.Forms.Button();
             this.btnCancelarEliminar = new System.Windows.Forms.Button();
             this.gbAgregarReserva = new System.Windows.Forms.GroupBox();
@@ -135,9 +138,6 @@
             this.clientesTableAdapter = new AdminApp.dbMotelDataSetTableAdapters.ClientesTableAdapter();
             this.CerrarApp = new System.Windows.Forms.Button();
             this.reservasTableAdapter = new AdminApp.dbMotelDataSet1TableAdapters.ReservasTableAdapter();
-            this.label15 = new System.Windows.Forms.Label();
-            this.cmBoXCancelarIDReserva = new System.Windows.Forms.ComboBox();
-            this.label31 = new System.Windows.Forms.Label();
             this.gbBuscarReserva.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dbMotelDataSet)).BeginInit();
@@ -178,7 +178,7 @@
             this.gbBuscarReserva.Controls.Add(this.label24);
             this.gbBuscarReserva.Controls.Add(this.btnSalirBuscarReserva);
             this.gbBuscarReserva.Controls.Add(this.label29);
-            this.gbBuscarReserva.Location = new System.Drawing.Point(12, 83);
+            this.gbBuscarReserva.Location = new System.Drawing.Point(18, 88);
             this.gbBuscarReserva.Name = "gbBuscarReserva";
             this.gbBuscarReserva.Size = new System.Drawing.Size(1126, 511);
             this.gbBuscarReserva.TabIndex = 71;
@@ -404,7 +404,7 @@
             this.gbModificarReserva.Controls.Add(this.label30);
             this.gbModificarReserva.Controls.Add(this.btnModificarUser);
             this.gbModificarReserva.Controls.Add(this.btnCancelarModificar);
-            this.gbModificarReserva.Location = new System.Drawing.Point(12, 83);
+            this.gbModificarReserva.Location = new System.Drawing.Point(24, 88);
             this.gbModificarReserva.Name = "gbModificarReserva";
             this.gbModificarReserva.Size = new System.Drawing.Size(1126, 505);
             this.gbModificarReserva.TabIndex = 66;
@@ -626,7 +626,7 @@
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(186, 22);
             this.label20.TabIndex = 0;
-            this.label20.Text = "Eliminar Cliente";
+            this.label20.Text = "Cancelar Reserva";
             // 
             // gbEliminarReserva
             // 
@@ -636,7 +636,7 @@
             this.gbEliminarReserva.Controls.Add(this.btnCancelarReserva);
             this.gbEliminarReserva.Controls.Add(this.btnCancelarEliminar);
             this.gbEliminarReserva.Controls.Add(this.label20);
-            this.gbEliminarReserva.Location = new System.Drawing.Point(12, 77);
+            this.gbEliminarReserva.Location = new System.Drawing.Point(33, 88);
             this.gbEliminarReserva.Name = "gbEliminarReserva";
             this.gbEliminarReserva.Size = new System.Drawing.Size(1126, 423);
             this.gbEliminarReserva.TabIndex = 67;
@@ -644,25 +644,55 @@
             this.gbEliminarReserva.Text = "Cancelar Reserva";
             this.gbEliminarReserva.Visible = false;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(472, 105);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(81, 18);
+            this.label15.TabIndex = 117;
+            this.label15.Text = "ID Reserva";
+            // 
+            // cmBoXCancelarIDReserva
+            // 
+            this.cmBoXCancelarIDReserva.FormattingEnabled = true;
+            this.cmBoXCancelarIDReserva.Location = new System.Drawing.Point(577, 102);
+            this.cmBoXCancelarIDReserva.Name = "cmBoXCancelarIDReserva";
+            this.cmBoXCancelarIDReserva.Size = new System.Drawing.Size(142, 24);
+            this.cmBoXCancelarIDReserva.TabIndex = 116;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(261, 103);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(159, 19);
+            this.label31.TabIndex = 115;
+            this.label31.Text = "Buscar Reserva:";
+            // 
             // btnCancelarReserva
             // 
             this.btnCancelarReserva.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelarReserva.Location = new System.Drawing.Point(521, 165);
+            this.btnCancelarReserva.Location = new System.Drawing.Point(561, 179);
             this.btnCancelarReserva.Name = "btnCancelarReserva";
-            this.btnCancelarReserva.Size = new System.Drawing.Size(145, 35);
+            this.btnCancelarReserva.Size = new System.Drawing.Size(239, 35);
             this.btnCancelarReserva.TabIndex = 10;
-            this.btnCancelarReserva.Text = "Eliminar";
+            this.btnCancelarReserva.Text = "Cancelar Reserva";
             this.btnCancelarReserva.UseVisualStyleBackColor = true;
+            this.btnCancelarReserva.Click += new System.EventHandler(this.btnCancelarReserva_Click);
             // 
             // btnCancelarEliminar
             // 
             this.btnCancelarEliminar.Font = new System.Drawing.Font("Lucida Sans Typewriter", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelarEliminar.Location = new System.Drawing.Point(320, 165);
+            this.btnCancelarEliminar.Location = new System.Drawing.Point(237, 179);
             this.btnCancelarEliminar.Name = "btnCancelarEliminar";
-            this.btnCancelarEliminar.Size = new System.Drawing.Size(145, 35);
+            this.btnCancelarEliminar.Size = new System.Drawing.Size(239, 35);
             this.btnCancelarEliminar.TabIndex = 9;
             this.btnCancelarEliminar.Text = "Cancelar";
             this.btnCancelarEliminar.UseVisualStyleBackColor = true;
+            this.btnCancelarEliminar.Click += new System.EventHandler(this.btnCancelarEliminar_Click);
             // 
             // gbAgregarReserva
             // 
@@ -695,15 +725,17 @@
             // 
             this.dateTimePickerFechaSalida.Location = new System.Drawing.Point(695, 135);
             this.dateTimePickerFechaSalida.Name = "dateTimePickerFechaSalida";
-            this.dateTimePickerFechaSalida.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePickerFechaSalida.Size = new System.Drawing.Size(275, 22);
             this.dateTimePickerFechaSalida.TabIndex = 79;
+            this.dateTimePickerFechaSalida.ValueChanged += new System.EventHandler(this.dateTimePickerFechaSalida_ValueChanged);
             // 
             // dateTimePickerFechaEntrada
             // 
             this.dateTimePickerFechaEntrada.Location = new System.Drawing.Point(172, 137);
             this.dateTimePickerFechaEntrada.Name = "dateTimePickerFechaEntrada";
-            this.dateTimePickerFechaEntrada.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePickerFechaEntrada.Size = new System.Drawing.Size(253, 22);
             this.dateTimePickerFechaEntrada.TabIndex = 78;
+            this.dateTimePickerFechaEntrada.ValueChanged += new System.EventHandler(this.dateTimePickerFechaEntrada_ValueChanged);
             // 
             // txtComentarioReserva
             // 
@@ -855,36 +887,42 @@
             this.habitacionesToolStripMenuItem.Name = "habitacionesToolStripMenuItem";
             this.habitacionesToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
             this.habitacionesToolStripMenuItem.Text = "Habitaciones";
+            this.habitacionesToolStripMenuItem.Click += new System.EventHandler(this.habitacionesToolStripMenuItem_Click);
             // 
             // clientesToolStripMenuItem
             // 
             this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
             this.clientesToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
             this.clientesToolStripMenuItem.Text = "Clientes";
+            this.clientesToolStripMenuItem.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
             // 
             // reservasToolStripMenuItem
             // 
             this.reservasToolStripMenuItem.Name = "reservasToolStripMenuItem";
             this.reservasToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
             this.reservasToolStripMenuItem.Text = "Servicios";
+            this.reservasToolStripMenuItem.Click += new System.EventHandler(this.reservasToolStripMenuItem_Click);
             // 
             // serviciosToolStripMenuItem
             // 
             this.serviciosToolStripMenuItem.Name = "serviciosToolStripMenuItem";
             this.serviciosToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
             this.serviciosToolStripMenuItem.Text = "Usuarios";
+            this.serviciosToolStripMenuItem.Click += new System.EventHandler(this.serviciosToolStripMenuItem_Click);
             // 
             // pagosToolStripMenuItem
             // 
             this.pagosToolStripMenuItem.Name = "pagosToolStripMenuItem";
             this.pagosToolStripMenuItem.Size = new System.Drawing.Size(62, 24);
             this.pagosToolStripMenuItem.Text = "Pagos";
+            this.pagosToolStripMenuItem.Click += new System.EventHandler(this.pagosToolStripMenuItem_Click);
             // 
             // reportesToolStripMenuItem
             // 
             this.reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
             this.reportesToolStripMenuItem.Size = new System.Drawing.Size(82, 24);
             this.reportesToolStripMenuItem.Text = "Reportes";
+            this.reportesToolStripMenuItem.Click += new System.EventHandler(this.reportesToolStripMenuItem_Click);
             // 
             // btnAgregarReserva
             // 
@@ -902,6 +940,7 @@
             this.menuprincipalToolStripMenuItem.Name = "menuprincipalToolStripMenuItem";
             this.menuprincipalToolStripMenuItem.Size = new System.Drawing.Size(121, 24);
             this.menuprincipalToolStripMenuItem.Text = "Menú Principal";
+            this.menuprincipalToolStripMenuItem.Click += new System.EventHandler(this.menuprincipalToolStripMenuItem_Click);
             // 
             // btnBuscarReserva
             // 
@@ -980,18 +1019,21 @@
             this.reservasToolStripMenuItem1.Name = "reservasToolStripMenuItem1";
             this.reservasToolStripMenuItem1.Size = new System.Drawing.Size(80, 24);
             this.reservasToolStripMenuItem1.Text = "Reservas";
+            this.reservasToolStripMenuItem1.Click += new System.EventHandler(this.reservasToolStripMenuItem1_Click);
             // 
             // serviciosPorReservaToolStripMenuItem
             // 
             this.serviciosPorReservaToolStripMenuItem.Name = "serviciosPorReservaToolStripMenuItem";
             this.serviciosPorReservaToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
             this.serviciosPorReservaToolStripMenuItem.Text = "Servicios por Reserva";
+            this.serviciosPorReservaToolStripMenuItem.Click += new System.EventHandler(this.serviciosPorReservaToolStripMenuItem_Click);
             // 
             // habitacionesPorReservaToolStripMenuItem
             // 
             this.habitacionesPorReservaToolStripMenuItem.Name = "habitacionesPorReservaToolStripMenuItem";
             this.habitacionesPorReservaToolStripMenuItem.Size = new System.Drawing.Size(261, 26);
             this.habitacionesPorReservaToolStripMenuItem.Text = "Habitaciones por Reserva";
+            this.habitacionesPorReservaToolStripMenuItem.Click += new System.EventHandler(this.habitacionesPorReservaToolStripMenuItem_Click);
             // 
             // dbMotelServiciosDataSet
             // 
@@ -1132,34 +1174,6 @@
             // 
             this.reservasTableAdapter.ClearBeforeFill = true;
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(472, 105);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(81, 18);
-            this.label15.TabIndex = 117;
-            this.label15.Text = "ID Reserva";
-            // 
-            // cmBoXCancelarIDReserva
-            // 
-            this.cmBoXCancelarIDReserva.FormattingEnabled = true;
-            this.cmBoXCancelarIDReserva.Location = new System.Drawing.Point(577, 102);
-            this.cmBoXCancelarIDReserva.Name = "cmBoXCancelarIDReserva";
-            this.cmBoXCancelarIDReserva.Size = new System.Drawing.Size(121, 24);
-            this.cmBoXCancelarIDReserva.TabIndex = 116;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("Lucida Sans Typewriter", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.Location = new System.Drawing.Point(261, 103);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(159, 19);
-            this.label31.TabIndex = 115;
-            this.label31.Text = "Buscar Reserva:";
-            // 
             // Reservas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1167,9 +1181,9 @@
             this.ClientSize = new System.Drawing.Size(1251, 1055);
             this.Controls.Add(this.gbEliminarReserva);
             this.Controls.Add(this.gbModificarReserva);
-            this.Controls.Add(this.gbBuscarReserva);
             this.Controls.Add(this.gbAgregarReserva);
             this.Controls.Add(this.btnAgregarReserva);
+            this.Controls.Add(this.gbBuscarReserva);
             this.Controls.Add(this.btnBuscarReserva);
             this.Controls.Add(this.btnEliminarReserva);
             this.Controls.Add(this.btnModificarReserva);

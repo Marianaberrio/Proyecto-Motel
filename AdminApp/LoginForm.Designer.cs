@@ -119,6 +119,7 @@
             this.Controls.Add(this.lblUsuario);
             this.Name = "LoginForm";
             this.Text = "Login";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
             this.PerformLayout();
 

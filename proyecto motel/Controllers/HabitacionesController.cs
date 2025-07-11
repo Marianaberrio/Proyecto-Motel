@@ -53,38 +53,61 @@ namespace proyecto_motel.Controllers
             }
         }
 
+        // PATCH api/Habitaciones/cambiarEstado/5
+        [HttpPut("cambiarEstado/{idHabitacion}")]
+        public async Task<IActionResult> CambiarEstadoHabitacion(int idHabitacion, [FromBody] string nuevoEstado)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    var query = @"
+                UPDATE Habitaciones
+                SET EstadoHabitacion = @Estado
+                WHERE IdHabitacion = @IdHabitacion
+            ";
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Estado", nuevoEstado);
+                        command.Parameters.AddWithValue("@IdHabitacion", idHabitacion);
+
+                        int rows = await command.ExecuteNonQueryAsync();
+                        if (rows > 0) return NoContent();
+                        return NotFound("Habitación no encontrada.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al cambiar el estado: {ex.Message}");
+            }
+        }
+
         // GET: api/habitaciones/{numHabitacion}
         [HttpGet("{numHabitacion}")]
         public ActionResult<Habitacion> Get(string numHabitacion)
         {
             try
             {
-                // 1. Verificación de lo que recibimos en el parámetro
-                Console.WriteLine("Recibido numHabitacion: " + numHabitacion);  // Verificar si estamos recibiendo el valor correctamente
+                // Verificación de lo que recibimos en el parámetro
+                Console.WriteLine("Recibido numHabitacion: " + numHabitacion);
 
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
 
-                    using (SqlCommand command = new SqlCommand("ConsultarHabitacion", connection))
+                    // Usamos una consulta directa para obtener la habitación por número
+                    string sql = @"SELECT IdHabitacion, NumHabitacion, TipoHabitacion, 
+                                  PrecioHabitacion, EstadoHabitacion, CapacidadHabitacion
+                           FROM Habitaciones 
+                           WHERE NumHabitacion = @NumHabitacion";
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@NumHabitacion", numHabitacion);
 
-                        // 2. Asegurarse de que pasamos el valor de numHabitacion o DBNull
-                        if (string.IsNullOrEmpty(numHabitacion))
-                        {
-                            Console.WriteLine("Pasando NULL para @NumHabitacion");  // Si está vacío, pasamos NULL
-                            command.Parameters.AddWithValue("@NumHabitacion", DBNull.Value);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Pasando el número de habitación: " + numHabitacion);  // Si no está vacío, lo pasamos
-                            command.Parameters.AddWithValue("@NumHabitacion", numHabitacion);
-                        }
-
-                        command.Parameters.AddWithValue("@IdHabitacion", DBNull.Value);  // No pasamos ID en este caso
-
-                        // 3. Ejecutar la consulta
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             if (reader.Read())
@@ -99,12 +122,11 @@ namespace proyecto_motel.Controllers
                                     CapacidadHabitacion = reader.GetInt32(5)
                                 };
 
-                                return Ok(habitacion); // Si la encontramos, devolvemos los datos
+                                return Ok(habitacion);  // Si la habitación existe, devolvemos la información
                             }
                             else
                             {
-                                Console.WriteLine("No se encontró la habitación con el número proporcionado.");  // Si no se encuentra la habitación
-                                return NotFound();  // Si no se encuentra
+                                return NotFound();  // Si no se encuentra la habitación
                             }
                         }
                     }
@@ -122,32 +144,23 @@ namespace proyecto_motel.Controllers
         {
             try
             {
-                // 1. Verificación de lo que recibimos en el parámetro
-                Console.WriteLine("Recibido idHabitacion: " + idHabitacion);  // Verificar si estamos recibiendo el valor correctamente
+                // Verificación de lo que recibimos en el parámetro
+                Console.WriteLine("Recibido idHabitacion: " + idHabitacion);
 
                 using (SqlConnection connection = new SqlConnection(_connectionString))
                 {
                     connection.Open();
 
-                    using (SqlCommand command = new SqlCommand("ConsultarHabitacion", connection))  // Usando el SP para ID
+                    // Usamos una consulta directa para obtener la habitación por ID
+                    string sql = @"SELECT IdHabitacion, NumHabitacion, TipoHabitacion, 
+                                  PrecioHabitacion, EstadoHabitacion, CapacidadHabitacion
+                           FROM Habitaciones 
+                           WHERE IdHabitacion = @IdHabitacion";
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@IdHabitacion", idHabitacion);
 
-                        // 2. Asegurarse de que pasamos el valor de idHabitacion o DBNull
-                        if (idHabitacion <= 0)
-                        {
-                            Console.WriteLine("Pasando NULL para @IdHabitacion");  // Si el ID es <= 0, pasamos NULL
-                            command.Parameters.AddWithValue("@IdHabitacion", DBNull.Value);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Pasando el ID de habitación: " + idHabitacion);  // Si es válido, lo pasamos
-                            command.Parameters.AddWithValue("@IdHabitacion", idHabitacion);
-                        }
-
-                        command.Parameters.AddWithValue("@NumHabitacion", DBNull.Value);  // No pasamos numHabitacion en este caso
-
-                        // 3. Ejecutar la consulta
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             if (reader.Read())
@@ -162,12 +175,11 @@ namespace proyecto_motel.Controllers
                                     CapacidadHabitacion = reader.GetInt32(5)
                                 };
 
-                                return Ok(habitacion);  // Si la encontramos, devolvemos los datos
+                                return Ok(habitacion);  // Si la habitación existe, devolvemos la información
                             }
                             else
                             {
-                                Console.WriteLine("No se encontró la habitación con el ID proporcionado.");  // Si no se encuentra
-                                return NotFound();  // Si no se encuentra
+                                return NotFound();  // Si no se encuentra la habitación
                             }
                         }
                     }
@@ -179,9 +191,6 @@ namespace proyecto_motel.Controllers
             }
         }
 
-
-
-        // PUT: api/habitaciones/{numHabitacion}
         [HttpPut("{numHabitacion}")]
         public IActionResult Put(string numHabitacion, [FromBody] Habitacion habitacion)
         {
@@ -200,8 +209,8 @@ namespace proyecto_motel.Controllers
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                        // Cambiar el parámetro de @IdHabitacion a @NumHabitacion
-                        command.Parameters.AddWithValue("@IdHabitacion", habitacion.IdHabitacion);
+                        // Pasamos IdHabitacion solo si se ha proporcionado
+                        command.Parameters.AddWithValue("@IdHabitacion", habitacion.IdHabitacion != 0 ? habitacion.IdHabitacion : (object)DBNull.Value);
                         command.Parameters.AddWithValue("@NumHabitacion", numHabitacion);
                         command.Parameters.AddWithValue("@TipoHabitacion", habitacion.TipoHabitacion);
                         command.Parameters.AddWithValue("@PrecioHabitacion", habitacion.PrecioHabitacion);
@@ -216,7 +225,7 @@ namespace proyecto_motel.Controllers
                         }
                         else
                         {
-                            return NotFound(); // Si no se encuentra la habitación con ese número
+                            return NotFound(); // Si no se encuentra la habitación con ese número o ID
                         }
                     }
                 }
@@ -226,6 +235,7 @@ namespace proyecto_motel.Controllers
                 return StatusCode(500, $"Error en el servidor: {ex.Message}");
             }
         }
+
 
 
         // DELETE: api/habitaciones/{numHabitacion}
@@ -299,8 +309,57 @@ namespace proyecto_motel.Controllers
                 return StatusCode(500, $"Error en servidor: {ex.Message}");
             }
         }
-        [HttpGet("disponibles")]
-        public async Task<IActionResult> GetHabitacionesDisponibles([FromQuery] DateTime fechaInicio, [FromQuery] DateTime fechaFin)
+
+        // Obtener los números de las habitaciones disponibles
+        [HttpGet("habitacionesDisponibles")]
+        public async Task<IActionResult> ObtenerHabitacionesDisponibles()
+        {
+            try
+            {
+                using var connection = new SqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                var query = @"
+            SELECT 
+                IdHabitacion, 
+                NumHabitacion, 
+                TipoHabitacion, 
+                PrecioHabitacion, 
+                EstadoHabitacion, 
+                CapacidadHabitacion
+            FROM Habitaciones
+            WHERE EstadoHabitacion = 'Disponible'
+        ";
+
+                using var command = new SqlCommand(query, connection);
+                using var reader = await command.ExecuteReaderAsync();
+
+                var lista = new List<Habitacion>();
+                while (await reader.ReadAsync())
+                {
+                    lista.Add(new Habitacion
+                    {
+                        IdHabitacion = reader.GetInt32(0),
+                        NumHabitacion = reader.GetString(1),
+                        TipoHabitacion = reader.GetString(2),
+                        PrecioHabitacion = reader.GetDecimal(3),
+                        EstadoHabitacion = reader.GetString(4),
+                        CapacidadHabitacion = reader.GetInt32(5),
+                    });
+                }
+
+                return Ok(lista);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener habitaciones disponibles: {ex.Message}");
+            }
+        }
+
+
+        // GET: api/habitaciones/disponibles/{tipoHabitacion}/{cantidad}
+        [HttpGet("disponibles/{tipoHabitacion}/{cantidad}")]
+        public async Task<IActionResult> ObtenerHabitacionesDisponibles(string tipoHabitacion, int cantidad)
         {
             try
             {
@@ -308,15 +367,19 @@ namespace proyecto_motel.Controllers
                 {
                     await connection.OpenAsync();
 
-                    // 1. Obtener todas las habitaciones
-                    var habitaciones = new List<Habitacion>();
-                    using (SqlCommand command = new SqlCommand("SELECT * FROM Habitaciones WHERE EstadoHabitacion = 'Disponible'", connection))
+                    // Obtener las habitaciones disponibles por tipo y cantidad
+                    var habitacionesDisponibles = new List<Habitacion>();
+
+                    // Consulta SQL para obtener las habitaciones del tipo solicitado
+                    string sql = "SELECT * FROM Habitaciones WHERE TipoHabitacion = @TipoHabitacion AND EstadoHabitacion = 'Disponible'";
+                    using (var cmd = new SqlCommand(sql, connection))
                     {
-                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                        cmd.Parameters.AddWithValue("@TipoHabitacion", tipoHabitacion);
+                        using (var reader = await cmd.ExecuteReaderAsync())
                         {
-                            while (await reader.ReadAsync())
+                            while (await reader.ReadAsync() && habitacionesDisponibles.Count < cantidad)
                             {
-                                habitaciones.Add(new Habitacion
+                                habitacionesDisponibles.Add(new Habitacion
                                 {
                                     IdHabitacion = reader.GetInt32(0),
                                     NumHabitacion = reader.GetString(1),
@@ -329,59 +392,11 @@ namespace proyecto_motel.Controllers
                         }
                     }
 
-                    // 2. Obtener reservas activas en ese rango de fechas
-                    var reservasActivas = new List<Reservas>();
-                    using (SqlCommand command = new SqlCommand(
-                        @"SELECT r.* FROM Reservas r 
-                  WHERE r.EstadoReserva != 'Cancelada'
-                  AND ((@FechaInicio < r.FechaSalida) AND (@FechaFin > r.FechaEntrada))",
-                        connection))
+                    // Verificar si hay suficientes habitaciones disponibles
+                    if (habitacionesDisponibles.Count < cantidad)
                     {
-                        command.Parameters.AddWithValue("@FechaInicio", fechaInicio);
-                        command.Parameters.AddWithValue("@FechaFin", fechaFin);
-
-                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
-                        {
-                            while (await reader.ReadAsync())
-                            {
-                                reservasActivas.Add(new Reservas
-                                {
-                                    NumReserva = reader.GetInt32(0),
-                                    NumCliente = reader.GetInt32(1),
-                                    FechaReserva = reader.GetDateTime(2),
-                                    FechaEntrada = reader.GetDateTime(3),
-                                    FechaSalida = reader.GetDateTime(4),
-                                    EstadoReserva = reader.GetString(5),
-                                    TotalReserva = reader.GetDecimal(6),
-                                    ComentarioReserva = reader.IsDBNull(7) ? null : reader.GetString(7)
-                                });
-                            }
-                        }
+                        return BadRequest($"No hay suficientes habitaciones de tipo {tipoHabitacion}. Solo hay {habitacionesDisponibles.Count} disponibles.");
                     }
-
-                    // 3. Obtener las habitaciones ocupadas en esas reservas
-                    var habitacionesOcupadas = new List<int>();
-                    if (reservasActivas.Any())
-                    {
-                        var reservaIds = string.Join(",", reservasActivas.Select(r => r.NumReserva));
-                        using (SqlCommand command = new SqlCommand(
-                            $"SELECT DISTINCT IdHabitacion FROM ReservaHabitacion WHERE NumReserva IN ({reservaIds})",
-                            connection))
-                        {
-                            using (SqlDataReader reader = await command.ExecuteReaderAsync())
-                            {
-                                while (await reader.ReadAsync())
-                                {
-                                    habitacionesOcupadas.Add(reader.GetInt32(0));
-                                }
-                            }
-                        }
-                    }
-
-                    // 4. Filtrar habitaciones disponibles
-                    var habitacionesDisponibles = habitaciones
-                        .Where(h => !habitacionesOcupadas.Contains(h.IdHabitacion))
-                        .ToList();
 
                     return Ok(habitacionesDisponibles);
                 }
@@ -391,6 +406,102 @@ namespace proyecto_motel.Controllers
                 return StatusCode(500, $"Error en el servidor: {ex.Message}");
             }
         }
+
+
+        // PUT: api/habitaciones/ocupar
+        [HttpPut("ocupar")]
+        public async Task<IActionResult> MarcarHabitacionesComoOcupadas([FromBody] List<int> habitacionesIds)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    foreach (var idHabitacion in habitacionesIds)
+                    {
+                        string sql = "UPDATE Habitaciones SET EstadoHabitacion = 'Ocupada' WHERE IdHabitacion = @IdHabitacion";
+                        using (SqlCommand command = new SqlCommand(sql, connection))
+                        {
+                            command.Parameters.AddWithValue("@IdHabitacion", idHabitacion);
+                            await command.ExecuteNonQueryAsync();
+                        }
+                    }
+
+                    return NoContent();  // Devuelve 204 si las habitaciones fueron actualizadas correctamente
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error en el servidor: {ex.Message}");
+            }
+        }
+
+
+        // POST: api/habitaciones/asignar
+        [HttpPost("asignar")]
+        public async Task<IActionResult> AsignarHabitacionesAReserva([FromBody] AsignarHabitacionesRequest request)
+        {
+            if (request == null || request.Habitaciones == null || request.Habitaciones.Count == 0)
+            {
+                return BadRequest("No se proporcionaron habitaciones o la solicitud está vacía.");
+            }
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    // Iniciar una transacción
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            // Para cada habitación en la solicitud, cambiar su estado a "Ocupada" y asignarla a la reserva
+                            foreach (var habitacion in request.Habitaciones)
+                            {
+                                // Cambiar el estado de la habitación a "Ocupada"
+                                string updateHabitacionQuery = "UPDATE Habitaciones SET EstadoHabitacion = 'Ocupada' WHERE IdHabitacion = @IdHabitacion";
+                                using (var cmd = new SqlCommand(updateHabitacionQuery, connection, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@IdHabitacion", habitacion.IdHabitacion);
+                                    await cmd.ExecuteNonQueryAsync();
+                                }
+
+                                // Insertar la relación entre la reserva y la habitación en la tabla ReservaHabitacion
+                                string insertReservaHabitacionQuery = @"
+                            INSERT INTO ReservaHabitacion (NumReserva, IdHabitacion, PrecioHabitacion)
+                            VALUES (@NumReserva, @IdHabitacion, @PrecioHabitacion)";
+                                using (var cmd = new SqlCommand(insertReservaHabitacionQuery, connection, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@NumReserva", request.ReservaId);
+                                    cmd.Parameters.AddWithValue("@IdHabitacion", habitacion.IdHabitacion);
+                                    cmd.Parameters.AddWithValue("@PrecioHabitacion", habitacion.PrecioHabitacion);
+                                    await cmd.ExecuteNonQueryAsync();
+                                }
+                            }
+
+                            // Si todo fue bien, confirmamos la transacción
+                            transaction.Commit();
+                            return Ok("Habitaciones asignadas correctamente a la reserva.");
+                        }
+                        catch (Exception ex)
+                        {
+                            // Si hay un error, revertimos la transacción
+                            transaction.Rollback();
+                            return StatusCode(500, $"Error al asignar habitaciones: {ex.Message}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al procesar la solicitud: {ex.Message}");
+            }
+        }
+
+
     }
 
 }

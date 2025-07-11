@@ -44,6 +44,50 @@ namespace proyecto_motel.Controllers
             }
         }
 
+        // GET: api/usuarios
+        [HttpGet]
+        public async Task<IActionResult> ObtenerUsuariosAsync()
+        {
+            try
+            {
+                var listaUsuarios = new List<Usuarios>();
+
+                using (var conn = new SqlConnection(_connectionString))
+                {
+                    await conn.OpenAsync();
+
+                    // Consulta SQL para obtener todos los usuarios
+                    const string sql = "SELECT Id, Usuario, Contraseña, Rol FROM Usuarios";
+
+                    using (var cmd = new SqlCommand(sql, conn))
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            listaUsuarios.Add(new Usuarios
+                            {
+                                Id = reader.GetInt32(0),          // Id
+                                Usuario = reader.GetString(1),    // Usuario
+                                Contraseña = reader.GetString(2), // Contraseña
+                                Rol = reader.GetString(3)         // Rol
+                            });
+                        }
+                    }
+                }
+
+                // Si no encontramos usuarios, devolver un NotFound
+                if (listaUsuarios.Count == 0)
+                    return NotFound("No se encontraron usuarios.");
+
+                // Devolver la lista de usuarios
+                return Ok(listaUsuarios);
+            }
+            catch (Exception ex)
+            {
+                // Si ocurre un error, devolver un StatusCode 500 con el mensaje de error
+                return StatusCode(500, $"Error al obtener los usuarios: {ex.Message}");
+            }
+        }
         // GET: api/usuarios/buscarPorId/{id}
         [HttpGet("buscarPorId/{id}")]
         public ActionResult<Usuarios> BuscarUsuarioPorId(int id)
