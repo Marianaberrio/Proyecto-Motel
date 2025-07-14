@@ -1,36 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Motel.Web.Models;
-using Newtonsoft.Json;
-using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 
 namespace Motel.Web.Controllers
 {
     public class PagosController : Controller
     {
-        private readonly HttpClient _httpClient;
-
-        public PagosController()
-        {
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri("http://localhost:5264/") // Ajusta si tu puerto es diferente
-            };
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
+        private readonly HttpClient _api;
+        public PagosController(IHttpClientFactory factory)
+            => _api = factory.CreateClient("MotelApi");
 
         public async Task<IActionResult> Index()
         {
-            List<Pagos> listaPagos = new List<Pagos>();
-
-            HttpResponseMessage respuesta = await _httpClient.GetAsync("api/Pagos"); // Ruta exacta de tu API
-
-            if (respuesta.IsSuccessStatusCode)
+            var list = new List<Pagos>();
+            try
             {
-                string jsonRespuesta = await respuesta.Content.ReadAsStringAsync();
-                listaPagos = JsonConvert.DeserializeObject<List<Pagos>>(jsonRespuesta);
+                var resp = await _api.GetAsync("pagos");
+                if (resp.IsSuccessStatusCode)
+                    list = await resp.Content.ReadFromJsonAsync<List<Pagos>>();
+                else
+                    TempData["Error"] = $"API error {resp.StatusCode}";
             }
-
-            return View(listaPagos);
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error de conexión: {ex.Message}";
+            }
+            return View(list);
         }
     }
 }

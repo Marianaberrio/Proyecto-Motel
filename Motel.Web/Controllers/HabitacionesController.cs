@@ -1,36 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Motel.Web.Models;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 
 namespace Motel.Web.Controllers
 {
     public class HabitacionesController : Controller
     {
-        private readonly HttpClient _httpClient;
-
+        private readonly HttpClient _api;
         public HabitacionesController(IHttpClientFactory factory)
-        {
-            _httpClient = factory.CreateClient("MotelApi");
-        }
+            => _api = factory.CreateClient("MotelApi");
 
-        // GET: /Habitaciones
         public async Task<IActionResult> Index()
         {
-            List<Habitacion> habitaciones;
+            var list = new List<Habitacion>();
             try
             {
-                // Ahora existirá este endpoint en tu API Core:
-                habitaciones = await _httpClient.GetFromJsonAsync<List<Habitacion>>("Habitaciones");
+                var resp = await _api.GetAsync("habitaciones");
+                if (resp.IsSuccessStatusCode)
+                    list = await resp.Content.ReadFromJsonAsync<List<Habitacion>>();
+                else
+                    TempData["Error"] = $"API error {resp.StatusCode}";
             }
             catch (Exception ex)
             {
-                TempData["Error"] = $"No se pudieron cargar las habitaciones: {ex.Message}";
-                habitaciones = new List<Habitacion>();
+                TempData["Error"] = $"Error de conexión: {ex.Message}";
             }
-            return View(habitaciones);
+            return View(list);
         }
     }
 }

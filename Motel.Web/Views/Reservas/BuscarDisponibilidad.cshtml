@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Motel.Web.Models.BuscarHabitacionesViewModel
+
+@{
     ViewData["Title"] = "Buscar Disponibilidad";
 }
 
@@ -10,37 +12,43 @@
         <div class="card-body">
             @if (TempData["Error"] != null)
             {
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <h5>Error</h5>
-            <p>@TempData["Error"]</p>
-                    @if (TempData["ErrorDetails"] != null)
-                    {
-                    <details class="mt-2">
-                        <summary>Detalles técnicos</summary>
-                        <code>@TempData["ErrorDetails"]</code>
-                    </details>
-                    }
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h5>Error</h5>
+                    <p>@TempData["Error"]</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
             }
 
             <form asp-action="HabitacionesDisponibles" method="post" id="disponibilidadForm">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="fechaEntrada" class="form-label">Fecha de Entrada</label>
-                        <input type="datetime-local" id="fechaEntrada" name="fechaEntrada" class="form-control" required 
-                               min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                        <label asp-for="TipoHabitacion" class="form-label">Tipo de Habitación</label>
+                        <input asp-for="TipoHabitacion" class="form-control" placeholder="Ej. Doble" required />
+                        <span asp-validation-for="TipoHabitacion" class="text-danger"></span>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="fechaSalida" class="form-label">Fecha de Salida</label>
-                        <input type="datetime-local" id="fechaSalida" name="fechaSalida" class="form-control" required 
-                               min="@DateTime.Now.AddHours(1).ToString("yyyy-MM-ddTHH:mm")" />
+                        <label asp-for="Cantidad" class="form-label">Cantidad</label>
+                        <input asp-for="Cantidad" type="number" min="1" class="form-control" placeholder="Ej. 2" required />
+                        <span asp-validation-for="Cantidad" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="FechaEntrada" class="form-label">Fecha de Entrada</label>
+                        <input asp-for="FechaEntrada" type="datetime-local" class="form-control" required />
+                        <span asp-validation-for="FechaEntrada" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="FechaSalida" class="form-label">Fecha de Salida</label>
+                        <input asp-for="FechaSalida" type="datetime-local" class="form-control" required />
+                        <span asp-validation-for="FechaSalida" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary btn-lg">
-                        <i class="fas fa-search me-2"></i> Buscar Habitaciones Disponibles
+                        <i class="fas fa-search me-2"></i> Buscar Habitaciones
                     </button>
                 </div>
             </form>
@@ -49,44 +57,5 @@
 </div>
 
 @section Scripts {
-        <script>
-            $(document).ready(function() {
-                // Validación de fechas en el cliente
-                $('#disponibilidadForm').submit(function(e) {
-                    const fechaEntrada = new Date($('#fechaEntrada').val());
-                    const fechaSalida = new Date($('#fechaSalida').val());
-
-                    if (fechaEntrada >= fechaSalida) {
-                        alert('La fecha de salida debe ser posterior a la de entrada');
-                        e.preventDefault();
-                        return false;
-                    }
-
-                    // Mínimo 1 hora de estadía
-                    const diffHours = (fechaSalida - fechaEntrada) / (1000 * 60 * 60);
-                    if (diffHours < 1) {
-                        alert('La estadía mínima es de 1 hora');
-                        e.preventDefault();
-                        return false;
-                    }
-
-                    return true;
-                });
-
-                // Establecer fecha de salida mínima
-                $('#fechaEntrada').change(function() {
-                    const fechaEntrada = new Date($(this).val());
-                    if (fechaEntrada) {
-                        const minSalida = new Date(fechaEntrada.getTime() + 60 * 60 * 1000); // +1 hora
-                        $('#fechaSalida').attr('min', minSalida.toISOString().slice(0, 16));
-
-                        // Si la fecha de salida actual es menor que el nuevo mínimo, actualizarla
-                        const fechaSalida = new Date($('#fechaSalida').val());
-                        if (fechaSalida < minSalida) {
-                            $('#fechaSalida').val(minSalida.toISOString().slice(0, 16));
-                        }
-                    }
-                });
-            });
-        </script>
+    <partial name="_ValidationScriptsPartial" />
 }

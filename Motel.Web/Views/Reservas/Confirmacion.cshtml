@@ -1,80 +1,86 @@
 ﻿@model Motel.Web.Models.Reserva
+@using System.Linq
 @{
     ViewData["Title"] = "Confirmación de Reserva";
     var horas = (Model.FechaSalida - Model.FechaEntrada).TotalHours;
 }
 
 <div class="container mt-5">
-    @if (TempData["Mensaje"] != null)
-    {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @TempData["Mensaje"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-        </div>
-    }
-
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>¡Reserva realizada con éxito!</strong> Guarda este número de confirmación: <strong>#@Model.NumReserva</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    <div class="alert alert-success">
+        <strong>¡Reserva #@Model.NumReserva confirmada!</strong>
     </div>
 
-    <div class="card shadow">
-        <div class="card-header bg-success text-white">
-            <h3 class="mb-0"><i class="fas fa-check-circle me-2"></i>Reserva Confirmada</h3>
-        </div>
-
+    <div class="card mb-4">
         <div class="card-body">
-            <h4 class="mb-3">Resumen de la Reserva</h4>
-            <p><strong><i class="fas fa-calendar-check me-1"></i>Check-in:</strong> @Model.FechaEntrada.ToString("g")</p>
-            <p><strong><i class="fas fa-calendar-times me-1"></i>Check-out:</strong> @Model.FechaSalida.ToString("g")</p>
-            <p><strong><i class="fas fa-clock me-1"></i>Duración:</strong> @horas.ToString("0.00") horas</p>
-            <p><strong><i class="fas fa-info-circle me-1"></i>Estado:</strong> <span class="badge bg-success">@Model.EstadoReserva</span></p>
-
-            <hr />
-
-            <h5><i class="fas fa-bed me-2"></i>Habitaciones</h5>
-            @if (Model.Habitaciones != null && Model.Habitaciones.Any())
-            {
-                <ul class="list-group mb-4">
-                    @foreach (var h in Model.Habitaciones)
-                    {
-                        <li class="list-group-item">
-                            <strong>@h.NumHabitacion</strong> - @h.TipoHabitacion - @h.PrecioHabitacion.ToString("C2")
-                        </li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <div class="alert alert-warning">No se encontraron habitaciones asociadas.</div>
-            }
-
-            @if (Model.Servicios != null && Model.Servicios.Any())
-            {
-                <h5><i class="fas fa-concierge-bell me-2"></i>Servicios Adicionales</h5>
-                <ul class="list-group mb-4">
-                    @foreach (var s in Model.Servicios)
-                    {
-                        <li class="list-group-item">
-                            @s.NombreServicio - @s.PrecioServicio.ToString("C2")
-                        </li>
-                    }
-                </ul>
-            }
-
-            <div class="alert alert-info text-end">
-                <h5 class="mb-0">Total a pagar: <strong>@Model.TotalReserva.ToString("C2")</strong></h5>
-            </div>
-
-            <div class="d-flex justify-content-between mt-4">
-                <a asp-action="Index" class="btn btn-outline-primary">
-                    <i class="fas fa-list me-1"></i> Ver Mis Reservas
-                </a>
-                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
-                    <i class="fas fa-home me-1"></i> Volver al Inicio
-                </a>
-            </div>
+            <p><strong>Check-in:</strong> @Model.FechaEntrada:g</p>
+            <p><strong>Check-out:</strong> @Model.FechaSalida:g</p>
+            <p><strong>Duración:</strong> @horas:0.## horas</p>
+            <p><strong>Estado:</strong> @Model.EstadoReserva</p>
         </div>
+    </div>
+
+    <h5>Detalle de Habitaciones</h5>
+    @if (Model.DetalleHabitaciones.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr><th>#</th><th>Hab.</th><th>Precio</th></tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.DetalleHabitaciones.Count; i++)
+                {
+                    var d = Model.DetalleHabitaciones[i];
+                    var hab = Model.Habitaciones
+                    .FirstOrDefault(h => h.IdHabitacion == d.IdHabitacion);
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@(hab?.NumHabitacion ?? d.IdHabitacion.ToString())</td>
+                        <td>@d.PrecioHabitacion.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning">No hay habitaciones asociadas.</div>
+    }
+
+    <h5 class="mt-4">Detalle de Servicios</h5>
+    @if (Model.DetalleServicios.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr><th>#</th><th>Servicio</th><th>Precio</th></tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.DetalleServicios.Count; i++)
+                {
+                    var sd = Model.DetalleServicios[i];
+                    // Buscamos el servicio completo por su ID
+                    var svc = Model.Servicios
+                    .FirstOrDefault(s => s.NumServicio == sd.NumServicio);
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@(svc?.NombreServicio ?? sd.NumServicio.ToString())</td>
+                        <td>@sd.PrecioServicio.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning">No hay servicios asociados.</div>
+    }
+
+    <div class="alert alert-info text-end mt-4">
+        <h4>Total a pagar: <strong>@Model.TotalReserva.ToString("C")</strong></h4>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a asp-action="Index" class="btn btn-outline-primary">Mis Reservas</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Inicio</a>
     </div>
 </div>
 

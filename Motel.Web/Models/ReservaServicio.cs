@@ -1,10 +1,10 @@
 ﻿namespace Motel.Web.Models
 {
-    public class Servicios
+    public class ReservaServicio
     {
+        public int NumReserva { get; set; }
         public int NumServicio { get; set; }
-        public string NombreServicio { get; set; }
-        public string DescripcionServicio { get; set; }
         public decimal PrecioServicio { get; set; }
     }
+
 }

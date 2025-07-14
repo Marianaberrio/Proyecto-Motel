@@ -1,176 +1,77 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Motel.Web.Models;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Motel.Web.Controllers
 {
     public class ClientesController : Controller
     {
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient _api;
 
-        public ClientesController(HttpClient httpClient)
+        public ClientesController(IHttpClientFactory factory)
         {
-            _httpClient = httpClient;
-            _httpClient.BaseAddress = new System.Uri("http://localhost:5199/"); // Ajusta si tu puerto es distinto
+            _api = factory.CreateClient("MotelApi");
         }
 
-        // GET: /Clientes
-        public async Task<IActionResult> Index()
+        // GET: /Clientes/Profile
+        // Muestra el perfil (formulario de edición) del cliente logueado
+        public async Task<IActionResult> Profile()
         {
-            try
-            {
-                var clientes = await _httpClient.GetFromJsonAsync<List<Cliente>>("api/clientes");
-                return View(clientes);
-            }
-            catch
-            {
-                ModelState.AddModelError(string.Empty, "No se pudo obtener la lista de clientes.");
-                return View(new List<Cliente>());
-            }
-        }
-
-        // GET: /Clientes/Details/5
-        public async Task<IActionResult> Details(int id)
-        {
-            try
-            {
-                var cliente = await _httpClient.GetFromJsonAsync<Cliente>($"api/clientes/{id}");
-                if (cliente == null) return NotFound();
-                return View(cliente);
-            }
-            catch
-            {
-                return NotFound();
-            }
-        }
-
-        // GET: /Clientes/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: /Clientes/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Cliente cliente)
-        {
-            if (!ModelState.IsValid) return View(cliente);
-
-            try
-            {
-                var response = await _httpClient.PostAsJsonAsync("api/clientes", cliente);
-                if (response.IsSuccessStatusCode)
-                    return RedirectToAction(nameof(Index));
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Error al crear cliente.");
-                    return View(cliente);
-                }
-            }
-            catch
-            {
-                ModelState.AddModelError(string.Empty, "Error de conexión con el servidor.");
-                return View(cliente);
-            }
-        }
-
-        // NUEVO: /Clientes/Profile → redirige al Edit con tu sesión
-        public IActionResult Profile()
-        {
-            var id = HttpContext.Session.GetInt32("ClienteId");
-            if (!id.HasValue)
+            var clienteId = HttpContext.Session.GetInt32("ClienteId");
+            if (!clienteId.HasValue)
                 return RedirectToAction("Login", "Auth");
 
-            return RedirectToAction(nameof(Edit), new { id = id.Value });
+            var resp = await _api.GetAsync($"clientes/{clienteId.Value}");
+            if (!resp.IsSuccessStatusCode)
+            {
+                TempData["Error"] = "No se pudo cargar los datos del perfil.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var cliente = await resp.Content.ReadFromJsonAsync<Cliente>();
+            return View(cliente);
         }
 
-        // GET: /Clientes/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        // POST: /Clientes/UpdateProfile
+        // Recibe el formulario de edición de perfil
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateProfile(Cliente model)
         {
-            try
+            if (!ModelState.IsValid)
+                return View("Profile", model);
+
+            var resp = await _api.PutAsJsonAsync($"clientes/{model.NumCliente}", model);
+            if (!resp.IsSuccessStatusCode)
             {
-                var cliente = await _httpClient.GetFromJsonAsync<Cliente>($"api/clientes/{id}");
-                if (cliente == null) return NotFound();
-                return View(cliente);
+                TempData["Error"] = "No se pudo actualizar tu perfil.";
+                return View("Profile", model);
             }
-            catch
-            {
-                return NotFound();
-            }
+
+            TempData["Success"] = "Perfil actualizado con éxito.";
+            return RedirectToAction("Profile");
         }
 
-        // POST: /Clientes/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Cliente cliente)
+        // POST: /Clientes/DeleteAccount
+        // Elimina la cuenta del cliente logueado y cierra sesión
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAccount()
         {
-            if (id != cliente.NumCliente) return BadRequest();
-            if (!ModelState.IsValid) return View(cliente);
+            var clienteId = HttpContext.Session.GetInt32("ClienteId");
+            if (!clienteId.HasValue)
+                return RedirectToAction("Login", "Auth");
 
-            try
+            var resp = await _api.DeleteAsync($"clientes/{clienteId.Value}");
+            if (!resp.IsSuccessStatusCode)
             {
-                var response = await _httpClient.PutAsJsonAsync($"api/clientes/{id}", cliente);
-                if (response.IsSuccessStatusCode)
-                {
-                    TempData["Success"] = "Perfil actualizado correctamente.";
-                    // Volvemos a Edit para que veas tus cambios y el mensaje
-                    return RedirectToAction(nameof(Edit), new { id = id });
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Error al actualizar cliente.");
-                    return View(cliente);
-                }
+                TempData["Error"] = "No se pudo eliminar tu cuenta.";
+                return RedirectToAction("Profile");
             }
-            catch
-            {
-                ModelState.AddModelError(string.Empty, "Error de conexión con el servidor.");
-                return View(cliente);
-            }
-        }
 
-        // GET: /Clientes/Delete/5
-        public async Task<IActionResult> Delete(int id)
-        {
-            try
-            {
-                var cliente = await _httpClient.GetFromJsonAsync<Cliente>($"api/clientes/{id}");
-                if (cliente == null) return NotFound();
-                return View(cliente);
-            }
-            catch
-            {
-                return NotFound();
-            }
-        }
-
-        // POST: /Clientes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            try
-            {
-                var response = await _httpClient.DeleteAsync($"api/clientes/{id}");
-                if (response.IsSuccessStatusCode)
-                    return RedirectToAction(nameof(Index));
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Error al eliminar cliente.");
-                    var cliente = await _httpClient.GetFromJsonAsync<Cliente>($"api/clientes/{id}");
-                    return View(cliente);
-                }
-            }
-            catch
-            {
-                ModelState.AddModelError(string.Empty, "Error de conexión con el servidor.");
-                var cliente = await _httpClient.GetFromJsonAsync<Cliente>($"api/clientes/{id}");
-                return View(cliente);
-            }
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

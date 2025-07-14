@@ -1,354 +1,306 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Motel.Web.Models;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Motel.Web.Controllers
 {
     public class ReservasController : Controller
     {
-        private readonly HttpClient _httpClient;
-        private readonly ILogger<ReservasController> _logger;
+        private readonly HttpClient _api;
 
-        public ReservasController(HttpClient httpClient, ILogger<ReservasController> logger)
+        public ReservasController(IHttpClientFactory factory)
         {
-            _httpClient = httpClient;
-            _logger = logger;
-            _httpClient.BaseAddress = new Uri("http://localhost:5264/api/");
+            _api = factory.CreateClient("MotelApi");
         }
 
+        // 1) Lista todas las reservas del cliente
         public async Task<IActionResult> Index()
         {
-            var clienteId = HttpContext.Session.GetInt32("ClienteId");
-            if (clienteId == null) return RedirectToAction("Login", "Auth");
+            var cid = HttpContext.Session.GetInt32("ClienteId");
+            if (!cid.HasValue) return RedirectToAction("Login", "Auth");
 
+            List<Reserva> reservas = new();
             try
             {
-                var response = await _httpClient.GetAsync($"Reservas/cliente/{clienteId}");
-                if (response.IsSuccessStatusCode)
-                {
-                    var reservas = await response.Content.ReadFromJsonAsync<List<Reserva>>();
-
-                    // Obtener detalles completos de cada reserva
-                    var reservasCompletas = new List<Reserva>();
-                    foreach (var reserva in reservas)
-                    {
-                        // Obtener habitaciones
-                        var habitacionesResponse = await _httpClient.GetAsync($"Reservas/{reserva.NumReserva}/habitaciones");
-                        if (habitacionesResponse.IsSuccessStatusCode)
-                        {
-                            reserva.Habitaciones = await habitacionesResponse.Content.ReadFromJsonAsync<List<Habitacion>>();
-                        }
-
-                        // Obtener servicios
-                        var serviciosResponse = await _httpClient.GetAsync($"Reservas/{reserva.NumReserva}/servicios");
-                        if (serviciosResponse.IsSuccessStatusCode)
-                        {
-                            reserva.Servicios = await serviciosResponse.Content.ReadFromJsonAsync<List<Servicio>>();
-                        }
-
-                        reservasCompletas.Add(reserva);
-                    }
-
-                    return View(reservasCompletas);
-                }
+                var resp = await _api.GetAsync($"reservas/cliente/{cid}");
+                if (resp.IsSuccessStatusCode)
+                    reservas = await resp.Content.ReadFromJsonAsync<List<Reserva>>();
+                else
+                    TempData["Error"] = $"API error: {resp.StatusCode}";
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error al obtener reservas");
+                TempData["Error"] = $"Error de conexión: {ex.Message}";
             }
 
-            return View(new List<Reserva>());
+            return View(reservas);
         }
 
+        // 2) Mostrar formulario de búsqueda por tipo y cantidad
         [HttpGet]
         public IActionResult BuscarDisponibilidad()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("ClienteEmail")))
-                return RedirectToAction("Login", "Auth", new { returnUrl = "/Reservas/BuscarDisponibilidad" });
+            // Si no hay usuario logueado, voy a Login
+            if (!HttpContext.Session.GetInt32("ClienteId").HasValue)
+                return RedirectToAction("Login", "Auth");
 
             return View();
         }
 
+        // 3) Llamada a GET api/habitaciones/disponibles/{tipo}/{cantidad}
         [HttpPost]
-        public async Task<IActionResult> HabitacionesDisponibles(DateTime fechaEntrada, DateTime fechaSalida)
+        public async Task<IActionResult> HabitacionesDisponibles(BuscarHabitacionesViewModel vm)
         {
-            if (fechaEntrada >= fechaSalida)
+            // 1) No permitir fechas pasadas
+            if (vm.FechaEntrada < DateTime.Now)
             {
-                TempData["Error"] = "La fecha de salida debe ser posterior a la de entrada";
+                TempData["Error"] = "La fecha de entrada no puede ser anterior a hoy.";
                 return RedirectToAction("BuscarDisponibilidad");
             }
 
-            if (fechaEntrada < DateTime.Today)
+            // 2) Salida posterior a entrada
+            if (vm.FechaSalida <= vm.FechaEntrada)
             {
-                TempData["Error"] = "No se pueden hacer reservas para fechas pasadas";
+                TempData["Error"] = "La fecha de salida debe ser posterior a la de entrada.";
                 return RedirectToAction("BuscarDisponibilidad");
             }
 
-            var fechaInicioEncoded = Uri.EscapeDataString(fechaEntrada.ToString("o"));
-            var fechaFinEncoded = Uri.EscapeDataString(fechaSalida.ToString("o"));
-
-            var response = await _httpClient.GetAsync($"Habitaciones/disponibles?fechaInicio={fechaInicioEncoded}&fechaFin={fechaFinEncoded}");
-
-            if (!response.IsSuccessStatusCode)
+            // 3) Mínimo 1 hora de estadía
+            if ((vm.FechaSalida - vm.FechaEntrada).TotalHours < 1)
             {
-                TempData["Error"] = "Error al consultar disponibilidad";
+                TempData["Error"] = "La estadía mínima es de 1 hora.";
                 return RedirectToAction("BuscarDisponibilidad");
             }
 
-            var habitaciones = await response.Content.ReadFromJsonAsync<List<Habitacion>>();
-            if (habitaciones == null || !habitaciones.Any())
+            // 4) Validación de tipo y cantidad existente
+            if (string.IsNullOrWhiteSpace(vm.TipoHabitacion) || vm.Cantidad < 1)
             {
-                TempData["Error"] = "No hay habitaciones disponibles para las fechas seleccionadas";
+                TempData["Error"] = "Debes indicar tipo de habitación y cantidad válida.";
                 return RedirectToAction("BuscarDisponibilidad");
             }
 
-            TempData["FechaEntrada"] = fechaEntrada.ToString("o");
-            TempData["FechaSalida"] = fechaSalida.ToString("o");
+            // 5) Guardar fechas para pasos siguientes
+            TempData["FechaEntrada"] = vm.FechaEntrada.ToString("o");
+            TempData["FechaSalida"] = vm.FechaSalida.ToString("o");
             TempData.Keep("FechaEntrada");
             TempData.Keep("FechaSalida");
 
-            return View(habitaciones);
+            // 6) Llamada a tu API Core
+            var url = $"habitaciones/disponibles/{Uri.EscapeDataString(vm.TipoHabitacion)}/{vm.Cantidad}";
+            var resp = await _api.GetAsync(url);
+            if (!resp.IsSuccessStatusCode)
+            {
+                var err = await resp.Content.ReadAsStringAsync();
+                TempData["Error"] = $"Error disponibilidad: {err}";
+                return RedirectToAction("BuscarDisponibilidad");
+            }
+
+            var list = await resp.Content.ReadFromJsonAsync<List<Habitacion>>() ?? new();
+            return View("HabitacionesDisponibles", list);
         }
 
+        // 4) Elegir servicios tras seleccionar habitaciones
         [HttpPost]
         public async Task<IActionResult> ElegirServicios(string habitacionIds)
         {
             if (string.IsNullOrEmpty(habitacionIds))
             {
-                TempData["Error"] = "Debe seleccionar al menos una habitación";
+                TempData["Error"] = "Selecciona al menos una habitación.";
                 return RedirectToAction("BuscarDisponibilidad");
             }
 
+            // Guardamos habitaciones y mantenemos fechas
             TempData["HabitacionIds"] = habitacionIds;
+            TempData.Keep("HabitacionIds");
             TempData.Keep("FechaEntrada");
             TempData.Keep("FechaSalida");
-            TempData.Keep("HabitacionIds");
 
+            // Traer lista de servicios (ID, Nombre, Precio)
+            List<Servicios> servicios = new();
             try
             {
-                var response = await _httpClient.GetAsync("Servicios");
-                if (response.IsSuccessStatusCode)
-                {
-                    var servicios = await response.Content.ReadFromJsonAsync<List<Servicio>>();
-                    return View(servicios ?? new List<Servicio>());
-                }
+                var resp = await _api.GetAsync("ReservaServicios/nombres-precios-ids");
+                if (resp.IsSuccessStatusCode)
+                    servicios = await resp.Content.ReadFromJsonAsync<List<Servicios>>();
+                else
+                    TempData["Error"] = $"API error: {resp.StatusCode}";
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error al obtener servicios");
+                TempData["Error"] = $"Error de conexión: {ex.Message}";
             }
 
-            return View(new List<Servicio>());
+            return View("ElegirServicios", servicios);
         }
 
+        // 5) Mostrar datos del cliente y pasar habitaciones+servicios
         [HttpPost]
-        public IActionResult DatosCliente(string habitacionIds, string servicioIds = null)
+        public IActionResult DatosCliente(string habitacionIds, string servicioIds)
         {
             if (string.IsNullOrEmpty(habitacionIds))
-            {
-                TempData["Error"] = "Debe seleccionar al menos una habitación";
                 return RedirectToAction("BuscarDisponibilidad");
-            }
 
-            TempData["ServicioIds"] = servicioIds;
             TempData["HabitacionIds"] = habitacionIds;
-
+            TempData["ServicioIds"] = servicioIds ?? "";
             TempData.Keep("HabitacionIds");
             TempData.Keep("ServicioIds");
             TempData.Keep("FechaEntrada");
             TempData.Keep("FechaSalida");
 
-            var clienteEmail = HttpContext.Session.GetString("ClienteEmail");
-            return View(new Cliente { CorreoCliente = clienteEmail });
+            var email = HttpContext.Session.GetString("ClienteEmail") ?? "";
+            return View(new Cliente { CorreoCliente = email });
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        // 6) Confirmar reserva: recibe Cliente, fechas y servicios
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> ConfirmarReserva(
-    Cliente cliente,
-    string habitacionIds,
-    string servicioIds,
-    DateTime fechaEntrada,
-    DateTime fechaSalida)
-        {
+            Cliente cliente,
+            DateTime fechaEntrada,
+            DateTime fechaSalida,
+            string servicioIds)
+        {   
             if (!ModelState.IsValid)
-            {
                 return View("DatosCliente", cliente);
+
+            // 6.1) Crear o actualizar cliente
+            var cid = HttpContext.Session.GetInt32("ClienteId");
+            if (!cid.HasValue)
+            {
+                var respCli = await _api.PostAsJsonAsync("clientes", cliente);
+                var creado = await respCli.Content.ReadFromJsonAsync<Cliente>();
+                cid = creado!.NumCliente;
+                HttpContext.Session.SetInt32("ClienteId", cid.Value);
             }
 
-            try
+            // 6.2) Calcular total y crear reserva
+            var horas = (decimal)(fechaSalida - fechaEntrada).TotalHours;
+            var total = 0m;
+
+            var habIds = TempData["HabitacionIds"]!
+                           .ToString()!
+                           .Split(',', StringSplitOptions.RemoveEmptyEntries);
+            var srvIds = (servicioIds ?? "")
+                           .Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+            // Obtener info y precios de las habitaciones
+            var todasHab = new List<Habitacion>();
+            foreach (var h in habIds)
             {
-                // 1. Registrar o actualizar cliente
-                var clienteId = HttpContext.Session.GetInt32("ClienteId");
-                if (clienteId == null)
+                var r = await _api.GetAsync($"habitaciones/byid/{h}");
+                if (r.IsSuccessStatusCode)
                 {
-                    var respCliente = await _httpClient.PostAsJsonAsync("Clientes", cliente);
-                    if (!respCliente.IsSuccessStatusCode)
+                    var hInfo = await r.Content.ReadFromJsonAsync<Habitacion>();
+                    if (hInfo != null)
                     {
-                        ModelState.AddModelError("", "Error al registrar cliente");
-                        return View("DatosCliente", cliente);
+                        todasHab.Add(hInfo);
+                        total += hInfo.PrecioHabitacion * horas;
                     }
-                    var cli = await respCliente.Content.ReadFromJsonAsync<Cliente>();
-                    clienteId = cli.NumCliente;
-                    HttpContext.Session.SetInt32("ClienteId", clienteId.Value);
-                    HttpContext.Session.SetString("ClienteEmail", cliente.CorreoCliente);
                 }
-
-                // 2. Procesar la reserva con los datos recibidos
-                var (numReserva, error) = await ProcesarReserva(
-                    clienteId.Value,
-                    habitacionIds.Split(',', StringSplitOptions.RemoveEmptyEntries),
-                    servicioIds?.Split(',', StringSplitOptions.RemoveEmptyEntries),
-                    fechaEntrada,
-                    fechaSalida);
-
-                if (!string.IsNullOrEmpty(error))
-                {
-                    ModelState.AddModelError("", error);
-                    return View("DatosCliente", cliente);
-                }
-
-                TempData["MensajeExito"] = "¡Reserva realizada con éxito!";
-                return RedirectToAction("Confirmacion", new { id = numReserva });
             }
-            catch (Exception ex)
+
+            // Obtener info y precios de los servicios
+            var todosSrv = new List<Servicios>();
+            foreach (var s in srvIds)
             {
-                _logger.LogError(ex, "Error al confirmar reserva");
-                ModelState.AddModelError("", $"Error al procesar la reserva: {ex.Message}");
-                return View("DatosCliente", cliente);
+                var r = await _api.GetAsync($"servicios/{s}");
+                if (r.IsSuccessStatusCode)
+                {
+                    var sInfo = await r.Content.ReadFromJsonAsync<Servicios>();
+                    if (sInfo != null)
+                    {
+                        todosSrv.Add(sInfo);
+                        total += sInfo.PrecioServicio;
+                    }
+                }
             }
-        }
 
-
-        private async Task<(int numReserva, string error)> ProcesarReserva(
-    int clienteId,
-    string[] habitacionIds,
-    string[] servicioIds,
-    DateTime fechaEntrada,
-    DateTime fechaSalida)
-        {
-            try
+            var nuevaReserva = new
             {
-                // 1. Calcular horas de estadía
-                var horasEstadia = (decimal)(fechaSalida - fechaEntrada).TotalHours;
+                NumCliente = cid.Value,
+                FechaEntrada = fechaEntrada,
+                FechaSalida = fechaSalida,
+                EstadoReserva = "Confirmada",
+                TotalReserva = total,
+                FechaReserva = DateTime.Now,
+                ComentarioReserva = $"Estadía: {horas:0.##}h"
+            };
 
-                // 2. Obtener habitaciones por NumHabitacion
-                var habitaciones = new List<Habitacion>();
-                foreach (var numHab in habitacionIds)
+            var respRes = await _api.PostAsJsonAsync("reservas", nuevaReserva);
+            var creada = await respRes.Content.ReadFromJsonAsync<Reserva>();
+
+            // 6.3) Asignar habitaciones con precio real
+            foreach (var hInfo in todasHab)
+            {
+                var detalle = new ReservaHabitacion
                 {
-                    var r = await _httpClient.GetAsync($"Habitaciones/{numHab.Trim()}");
-                    if (r.IsSuccessStatusCode)
-                    {
-                        var h = await r.Content.ReadFromJsonAsync<Habitacion>();
-                        if (h != null) habitaciones.Add(h);
-                    }
-                    else
-                    {
-                        _logger.LogWarning($"No se encontró habitación: {numHab}");
-                    }
-                }
-                if (!habitaciones.Any())
-                    return (0, "No se encontraron las habitaciones seleccionadas");
-
-                // 3. Obtener servicios (si hay)
-                var servicios = new List<Servicio>();
-                if (servicioIds != null)
-                {
-                    foreach (var sId in servicioIds)
-                    {
-                        var r = await _httpClient.GetAsync($"Servicios/{sId.Trim()}");
-                        if (r.IsSuccessStatusCode)
-                        {
-                            var s = await r.Content.ReadFromJsonAsync<Servicio>();
-                            if (s != null) servicios.Add(s);
-                        }
-                    }
-                }
-
-                // 4. Calcular total
-                decimal total = habitaciones.Sum(h => h.PrecioHabitacion * horasEstadia)
-                              + servicios.Sum(s => s.PrecioServicio);
-
-                // 5. Crear reserva en la API
-                var nuevaReserva = new
-                {
-                    NumCliente = clienteId,
-                    FechaEntrada = fechaEntrada,
-                    FechaSalida = fechaSalida,
-                    EstadoReserva = "Confirmada",
-                    TotalReserva = total,
-                    FechaReserva = DateTime.Now,
-                    ComentarioReserva = $"Estadía: {horasEstadia} horas"
+                    NumReserva = creada!.NumReserva,
+                    IdHabitacion = hInfo.IdHabitacion,
+                    PrecioHabitacion = hInfo.PrecioHabitacion
                 };
-                var resp = await _httpClient.PostAsJsonAsync("Reservas", nuevaReserva);
-                if (!resp.IsSuccessStatusCode)
-                {
-                    var err = await resp.Content.ReadAsStringAsync();
-                    _logger.LogError($"Error al crear reserva: {err}");
-                    return (0, "Error al crear la reserva");
-                }
-                var creada = await resp.Content.ReadFromJsonAsync<Reserva>();
-                if (creada == null)
-                    return (0, "Error al obtener la reserva creada");
-
-                // 6. Asignar habitaciones y servicios
-                foreach (var h in habitaciones)
-                {
-                    await _httpClient.PostAsync($"Reservas/{creada.NumReserva}/habitaciones/{h.NumHabitacion}", null);
-                }
-                foreach (var s in servicios)
-                {
-                    await _httpClient.PostAsync($"Reservas/{creada.NumReserva}/servicios/{s.NumServicio}", null);
-                }
-
-                return (creada.NumReserva, null);
+                await _api.PostAsJsonAsync("ReservaHabitacion", detalle);
             }
-            catch (Exception ex)
+
+            // 6.4) Asignar servicios con precio real
+            foreach (var sInfo in todosSrv)
             {
-                _logger.LogError(ex, "Error en ProcesarReserva");
-                return (0, $"Error inesperado: {ex.Message}");
+                var detalle = new ReservaServicio
+                {
+                    NumReserva = creada!.NumReserva,
+                    NumServicio = sInfo.NumServicio,
+                    PrecioServicio = sInfo.PrecioServicio
+                };
+                await _api.PostAsJsonAsync("ReservaServicios", detalle);
             }
+
+            return RedirectToAction("Confirmacion", new { id = creada!.NumReserva });
         }
 
-
-
+        // 7) Mostrar confirmación con detalles
         public async Task<IActionResult> Confirmacion(int id)
         {
-            var resp = await _httpClient.GetAsync($"Reservas/{id}");
-            if (!resp.IsSuccessStatusCode) return NotFound();
+            // 1. Reserva básica
+            var reserva = await _api.GetFromJsonAsync<Reserva>($"reservas/{id}");
+            if (reserva == null) return NotFound();
 
-            var reserva = await resp.Content.ReadFromJsonAsync<Reserva>();
-            var cliId = HttpContext.Session.GetInt32("ClienteId");
-            if (reserva == null || reserva.NumCliente != cliId)
-                return RedirectToAction("Login", "Auth");
+            // 2. Detalle de habitaciones
+            reserva.DetalleHabitaciones = await _api
+                .GetFromJsonAsync<List<ReservaHabitacion>>(
+                    $"ReservaHabitacion/habitacionesPorReserva/{id}")
+                ?? new();
 
-            // traer habitaciones
-            var hResp = await _httpClient.GetAsync($"Reservas/{id}/habitaciones");
-            if (hResp.IsSuccessStatusCode)
-                reserva.Habitaciones = await hResp.Content.ReadFromJsonAsync<List<Habitacion>>();
+            // 3. Detalle de servicios (mapping)
+            var mapaServicios = await _api
+                .GetFromJsonAsync<List<ReservaServicio>>(
+                    $"ReservaServicios/serviciosPorReserva/{id}")
+                ?? new();
+            reserva.DetalleServicios = mapaServicios;
 
-            // traer servicios
-            var sResp = await _httpClient.GetAsync($"Reservas/{id}/servicios");
-            if (sResp.IsSuccessStatusCode)
-                reserva.Servicios = await sResp.Content.ReadFromJsonAsync<List<Servicio>>();
+            // 4. Traer TODAS las habitaciones y servicios para resolver nombres
+            reserva.Habitaciones = await _api
+                .GetFromJsonAsync<List<Habitacion>>("habitaciones")
+                ?? new();
+
+            reserva.Servicios = await _api
+                .GetFromJsonAsync<List<Servicios>>("servicios")
+                ?? new();
 
             return View(reserva);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        // 8) Cancelar reserva
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Cancelar(int id)
         {
-            // Llama al endpoint de la API Core que marca Cancelada y libera habitaciones
-            var response = await _httpClient.PutAsync($"Reservas/cancelar/{id}", null);
-            if (response.IsSuccessStatusCode)
-                TempData["Success"] = "Reserva cancelada correctamente.";
-            else
-                TempData["Error"] = "No se pudo cancelar la reserva.";
-            return RedirectToAction("Index");
+            var resp = await _api.PutAsync($"reservas/cancelar/{id}", null);
+            TempData[resp.IsSuccessStatusCode ? "Success" : "Error"] =
+                resp.IsSuccessStatusCode ? "Reserva cancelada" : "No se pudo cancelar";
+            return RedirectToAction(nameof(Index));
         }
-
-
     }
 }

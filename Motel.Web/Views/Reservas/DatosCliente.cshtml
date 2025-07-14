@@ -1,53 +1,66 @@
 ﻿@model Motel.Web.Models.Cliente
-
 @{
     ViewData["Title"] = "Datos del Cliente";
-    var habitacionIds = TempData["HabitacionIds"]?.ToString();
-    var servicioIds = TempData["ServicioIds"]?.ToString();
-    var fechaEntrada = TempData["FechaEntrada"]?.ToString();
-    var fechaSalida = TempData["FechaSalida"]?.ToString();
+
+    var fechaIni = TempData["FechaEntrada"]?.ToString();
+    var fechaFin = TempData["FechaSalida"]?.ToString();
+    var servIds = TempData["ServicioIds"]?.ToString();
+
+    TempData.Keep("FechaEntrada");
+    TempData.Keep("FechaSalida");
+    TempData.Keep("ServicioIds");
+    TempData.Keep("HabitacionIds");
 }
 
-<h2>Datos del Cliente</h2>
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+        <div class="card-body">
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
 
-<form asp-action="ConfirmarReserva" method="post">
-    @Html.AntiForgeryToken()
+            <form asp-action="ConfirmarReserva" method="post">
+                @Html.AntiForgeryToken()
 
-    <!-- Llevar las selecciones y fechas en hidden fields -->
-    <input type="hidden" name="habitacionIds" value="@habitacionIds" />
-    <input type="hidden" name="servicioIds"   value="@servicioIds" />
-    <input type="hidden" name="fechaEntrada"  value="@fechaEntrada" />
-    <input type="hidden" name="fechaSalida"   value="@fechaSalida" />
+                <!-- Datos ocultos para ConfirmarReserva -->
+                <input type="hidden" name="fechaEntrada" value="@fechaIni" />
+                <input type="hidden" name="fechaSalida" value="@fechaFin" />
+                <input type="hidden" name="servicioIds" value="@servIds" />
 
-    <div class="mb-3">
-        <label asp-for="NombreCliente" class="form-label"></label>
-        <input asp-for="NombreCliente" class="form-control" />
-        <span asp-validation-for="NombreCliente" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="ApellidoCliente" class="form-label"></label>
-        <input asp-for="ApellidoCliente" class="form-control" />
-        <span asp-validation-for="ApellidoCliente" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="CorreoCliente" class="form-label"></label>
-        <input asp-for="CorreoCliente" class="form-control" />
-        <span asp-validation-for="CorreoCliente" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="TelefonoCliente" class="form-label"></label>
-        <input asp-for="TelefonoCliente" class="form-control" />
-        <span asp-validation-for="TelefonoCliente" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="FechaNacimiento" class="form-label"></label>
-        <input asp-for="FechaNacimiento" type="date" class="form-control" />
-        <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
-    </div>
+                <input type="hidden" asp-for="CorreoCliente" />
 
-    <button type="submit" class="btn btn-success">Confirmar Reserva</button>
-</form>
+                <div class="mb-3">
+                    <label asp-for="NombreCliente" class="form-label">Nombre</label>
+                    <input asp-for="NombreCliente" class="form-control" required />
+                    <span asp-validation-for="NombreCliente" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ApellidoCliente" class="form-label">Apellido</label>
+                    <input asp-for="ApellidoCliente" class="form-control" required />
+                    <span asp-validation-for="ApellidoCliente" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="CorreoCliente" class="form-label">Email</label>
+                    <input asp-for="CorreoCliente" class="form-control" readonly />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="TelefonoCliente" class="form-label">Teléfono</label>
+                    <input asp-for="TelefonoCliente" class="form-control" required />
+                    <span asp-validation-for="TelefonoCliente" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    Confirmar Reserva
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }
