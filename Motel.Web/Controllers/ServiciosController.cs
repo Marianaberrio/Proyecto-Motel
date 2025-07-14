@@ -1,18 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Motel.Web.Models;
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
 
 namespace Motel.Web.Controllers
 {
     public class ServiciosController : Controller
     {
         private readonly HttpClient _api;
+
         public ServiciosController(IHttpClientFactory factory)
-            => _api = factory.CreateClient("MotelApi");
+        {
+            // Usamos el cliente configurado para Integración
+            _api = factory.CreateClient("MotelIntegracion");
+        }
 
         // GET: /Servicios
         public async Task<IActionResult> Index()
@@ -21,7 +25,8 @@ namespace Motel.Web.Controllers
 
             try
             {
-                var response = await _api.GetAsync("servicios");
+                // Como BaseAddress ya incluye /api/, solo usamos "Servicios"
+                var response = await _api.GetAsync("Servicios");
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -30,11 +35,11 @@ namespace Motel.Web.Controllers
                     return View(servicios);
                 }
 
-                servicios = await response.Content.ReadFromJsonAsync<List<Servicios>>();
+                servicios = await response.Content.ReadFromJsonAsync<List<Servicios>>() ?? new();
             }
             catch (Exception ex)
             {
-                TempData["Error"] = $"Excepción: {ex.Message}";
+                TempData["Error"] = $"Error de conexión: {ex.Message}";
             }
 
             return View(servicios);

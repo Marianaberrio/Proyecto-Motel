@@ -1,22 +1,26 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Motel.Web.Controllers;
 using System.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuración de servicios
+// 1) MVC + acceso a HttpContext
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 
-// Configuración de HttpClient
-builder.Services.AddHttpClient("MotelApi", client => {
-    client.BaseAddress = new Uri("https://localhost:7244/api/");
-    client.DefaultRequestHeaders.Accept.Add(
-        new MediaTypeWithQualityHeaderValue("application/json"));
+// 2) Leer la URL base de la API de Integración desde appsettings.json
+var apiBase = builder.Configuration.GetValue<string>("ApiSettings:BaseUrl");
+
+// 3) Registrar HttpClient para “MotelIntegracion”
+builder.Services.AddHttpClient("MotelIntegracion", client =>
+{
+    client.BaseAddress = new Uri($"{apiBase.TrimEnd('/')}/api/");
+    client.DefaultRequestHeaders.Accept
+        .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
 
-// Configuración de autenticación
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+// 4) Authentication / Cookies
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/Auth/Login";
@@ -24,8 +28,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromHours(2);
     });
 
-
-// Configuración de sesión
+// 5) Session
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromHours(2);
@@ -34,25 +37,16 @@ builder.Services.AddSession(options =>
     options.Cookie.SameSite = SameSiteMode.Strict;
 });
 
-// Logging
+// 6) Logging (console + debug)
 builder.Services.AddLogging(logging =>
 {
     logging.AddConsole();
     logging.AddDebug();
 });
-builder.Services.AddHttpClient();
-builder.Services.AddScoped<AuthController>(); // Si usas inyección de dependencias
 
-// Asegúrate de tener esto para la sesión
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
 var app = builder.Build();
 
-// Configuración del pipeline HTTP
+// 7) Pipeline HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
