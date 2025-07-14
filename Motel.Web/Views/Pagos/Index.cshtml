@@ -1,12 +1,21 @@
 ﻿@model List<Motel.Web.Models.Pagos>
-
 @{
     ViewData["Title"] = "Pagos";
 }
 
-<h2 class="text-center mb-4">Pagos Registrados</h2>
+<h2 class="mb-4">@ViewData["Title"]</h2>
 
-<table class="table table-bordered table-hover">
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<table class="table table-hover">
     <thead class="table-dark">
         <tr>
             <th># Pago</th>
@@ -16,29 +25,44 @@
             <th>Método</th>
             <th>Estado</th>
             <th>Comentario</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @if (Model != null && Model.Any())
+        @if (Model?.Any() == true)
         {
             foreach (var pago in Model)
             {
-                        <tr>
-                            <td>@pago.NumPago</td>
-                            <td>@pago.NumReserva</td>
-                            <td>@pago.MontoPago.ToString("C")</td>
-                            <td>@pago.FechaPago.ToString("dd/MM/yyyy")</td>
-                            <td>@pago.MetodoPago</td>
-                            <td>@pago.EstadoPago</td>
-                            <td>@pago.ComentarioPago</td>
-                        </tr>
+                <tr>
+                    <td>@pago.NumPago</td>
+                    <td>@pago.NumReserva</td>
+                    <td>@pago.MontoPago.ToString("C")</td>
+                    <td>@pago.FechaPago:g</td>
+                    <td>@pago.MetodoPago</td>
+                    <td>@pago.EstadoPago</td>
+                    <td>@pago.ComentarioPago</td>
+                    <td>
+                        @if (pago.EstadoPago != "Cancelado")
+                        {
+                            <form asp-action="Cancelar"
+                                  asp-route-numPago="@pago.NumPago"
+                                  method="post"
+                                  class="d-inline">
+                                <button type="submit"
+                                        class="btn btn-sm btn-warning">
+                                    Cancelar
+                                </button>
+                            </form>
+                        }
+                    </td>
+                </tr>
             }
         }
         else
         {
-                <tr>
-                    <td colspan="7" class="text-center">No hay pagos registrados.</td>
-                </tr>
+            <tr>
+                <td colspan="8" class="text-center">No hay pagos registrados.</td>
+            </tr>
         }
     </tbody>
 </table>

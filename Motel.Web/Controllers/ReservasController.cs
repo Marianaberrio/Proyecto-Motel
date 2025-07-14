@@ -258,7 +258,12 @@ namespace Motel.Web.Controllers
                 await _api.PostAsJsonAsync("ReservaServicios", detalle);
             }
 
-            return RedirectToAction("Confirmacion", new { id = creada!.NumReserva });
+            return RedirectToAction(
+    actionName: "Pagar",
+    controllerName: "Pagos",
+    routeValues: new { reservaId = creada.NumReserva, monto = total }
+);
+
         }
 
         // 7) Mostrar confirmación con detalles

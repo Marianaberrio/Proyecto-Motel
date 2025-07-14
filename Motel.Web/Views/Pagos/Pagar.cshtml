@@ -1,0 +1,44 @@
+﻿@model Motel.Web.Models.Pagos
+@{
+    ViewData["Title"] = "Pagar Reserva";
+}
+
+<h2 class="mb-4">@ViewData["Title"] #@Model.NumReserva</h2>
+
+<form asp-action="Pagar" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- Estos dos faltaban -->
+    <input asp-for="NumReserva" hidden />
+    <input asp-for="MontoPago" hidden />
+    <input asp-for="FechaPago" type="hidden"
+           value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+    <input asp-for="EstadoPago" type="hidden" value="Pendiente" />
+
+    <div class="mb-3">
+        <label asp-for="MetodoPago" class="form-label">Método de Pago</label>
+        <select asp-for="MetodoPago" class="form-select">
+            <option>Tarjeta</option>
+            <option>Efectivo</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Monto a Pagar</label>
+        <input value="@Model.MontoPago.ToString("C")"
+               class="form-control"
+               readonly />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ComentarioPago" class="form-label">Comentario (opcional)</label>
+        <textarea asp-for="ComentarioPago" class="form-control"></textarea>
+        <span asp-validation-for="ComentarioPago" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Pagar Ahora</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
