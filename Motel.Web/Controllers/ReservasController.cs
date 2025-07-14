@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using System.Text.Json;
 
 namespace Motel.Web.Controllers
 {
@@ -16,7 +16,6 @@ namespace Motel.Web.Controllers
 
         public ReservasController(IHttpClientFactory factory)
         {
-            // HttpClient configurado con BaseAddress = {ApiBaseUrl}/api/
             _api = factory.CreateClient("MotelIntegracion");
         }
 
@@ -30,10 +29,9 @@ namespace Motel.Web.Controllers
             var reservas = new List<Reserva>();
             try
             {
-                // GET {ApiBaseUrl}/api/Reservas/cliente/{cid}
                 var resp = await _api.GetAsync($"Reservas/cliente/{cid.Value}");
                 if (resp.IsSuccessStatusCode)
-                    reservas = await resp.Content.ReadFromJsonAsync<List<Reserva>>();
+                    reservas = await resp.Content.ReadFromJsonAsync<List<Reserva>>() ?? new();
                 else
                     TempData["Error"] = $"API error: {resp.StatusCode}";
             }
@@ -62,7 +60,6 @@ namespace Motel.Web.Controllers
             if (!HttpContext.Session.GetInt32("ClienteId").HasValue)
                 return RedirectToAction("Login", "Auth");
 
-            // Validaciones de fecha
             if (vm.FechaEntrada < DateTime.Now)
             {
                 TempData["Error"] = "La fecha de entrada no puede ser anterior a hoy.";
@@ -84,13 +81,11 @@ namespace Motel.Web.Controllers
                 return RedirectToAction("BuscarDisponibilidad");
             }
 
-            // Guardar fechas en TempData
             TempData["FechaEntrada"] = vm.FechaEntrada.ToString("o");
             TempData["FechaSalida"] = vm.FechaSalida.ToString("o");
             TempData.Keep("FechaEntrada");
             TempData.Keep("FechaSalida");
 
-            // GET {ApiBaseUrl}/api/Habitaciones/disponibles/{tipo}/{cantidad}
             var url = $"Habitaciones/disponibles/{Uri.EscapeDataString(vm.TipoHabitacion)}/{vm.Cantidad}";
             var resp = await _api.GetAsync(url);
             if (!resp.IsSuccessStatusCode)
@@ -119,13 +114,12 @@ namespace Motel.Web.Controllers
             TempData.Keep("FechaEntrada");
             TempData.Keep("FechaSalida");
 
-            // GET {ApiBaseUrl}/api/Servicios
             var servicios = new List<Servicios>();
             try
             {
                 var resp = await _api.GetAsync("Servicios");
                 if (resp.IsSuccessStatusCode)
-                    servicios = await resp.Content.ReadFromJsonAsync<List<Servicios>>();
+                    servicios = await resp.Content.ReadFromJsonAsync<List<Servicios>>() ?? new();
                 else
                     TempData["Error"] = $"API error: {resp.StatusCode}";
             }
@@ -158,10 +152,10 @@ namespace Motel.Web.Controllers
         // 6) Confirmar reserva → crea cliente, reserva y redirige a pago
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> ConfirmarReserva(
-    Cliente cliente,
-    DateTime fechaEntrada,
-    DateTime fechaSalida,
-    string servicioIds)
+            Cliente cliente,
+            DateTime fechaEntrada,
+            DateTime fechaSalida,
+            string servicioIds)
         {
             if (!ModelState.IsValid)
                 return View("DatosCliente", cliente);
@@ -175,10 +169,12 @@ namespace Motel.Web.Controllers
                 HttpContext.Session.SetInt32("ClienteId", cid.Value);
             }
 
-            var horas = (decimal)(fechaSalida - fechaEntrada).TotalHours;
-            var total = 0m;
-            var habIds = TempData["HabitacionIds"]!.ToString()!.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            var srvIds = (servicioIds ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries);
+            decimal horas = (decimal)(fechaSalida - fechaEntrada).TotalHours;
+            decimal total = 0m;
+            var habIds = TempData["HabitacionIds"]!.ToString()!
+                            .Split(',', StringSplitOptions.RemoveEmptyEntries);
+            var srvIds = (servicioIds ?? "")
+                            .Split(',', StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var h in habIds)
             {
@@ -220,24 +216,10 @@ namespace Motel.Web.Controllers
                 return View("DatosCliente", cliente);
             }
 
-            var rawJson = await respRes.Content.ReadAsStringAsync();
-            if (string.IsNullOrWhiteSpace(rawJson))
-            {
-                TempData["Error"] = "La API no devolvió contenido.";
-                return View("DatosCliente", cliente);
-            }
-
-            Reserva? creada;
-            try
-            {
-                creada = JsonSerializer.Deserialize<Reserva>(rawJson);
-            }
-            catch
-            {
-                TempData["Error"] = "La respuesta no pudo ser procesada.";
-                return View("DatosCliente", cliente);
-            }
-
+            // 👉 Aquí deserializas correctamente con case-insensitive
+            var creada = await respRes.Content.ReadFromJsonAsync<Reserva>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
             if (creada == null)
             {
                 TempData["Error"] = "No se recibió la reserva creada.";
