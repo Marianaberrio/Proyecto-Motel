@@ -1,0 +1,1139 @@
+[
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ClientesController",
+    "Method": "Crear",
+    "RelativePath": "api/Clientes",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Clientes.ClienteRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ClientesController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/Clientes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Motel.Integracion.Clientes.ClienteResponse, Motel.Integracion, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ClientesController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/Clientes/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Motel.Integracion.Clientes.ClienteResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ClientesController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Clientes/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Clientes.ClienteRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ClientesController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Clientes/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ClientesController",
+    "Method": "BuscarPorCorreo",
+    "RelativePath": "api/Clientes/buscar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Motel.Integracion.Clientes.ClienteResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ClientesController",
+    "Method": "ObtenerCorreos",
+    "RelativePath": "api/Clientes/correos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ClientesController",
+    "Method": "ObtenerIds",
+    "RelativePath": "api/Clientes/ids",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ClientesController",
+    "Method": "ObtenerIdPorCorreo",
+    "RelativePath": "api/Clientes/obtenerIdPorCorreo/{correo}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Int32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.HabitacionesController",
+    "Method": "Crear",
+    "RelativePath": "api/Habitaciones",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Habitacion.HabitacionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.HabitacionesController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/Habitaciones",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Motel.Integracion.Habitaciones.HabitacionResponse, Motel.Integracion, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.HabitacionesController",
+    "Method": "ObtenerPorNumero",
+    "RelativePath": "api/Habitaciones/{numHabitacion}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numHabitacion",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Motel.Integracion.Habitaciones.HabitacionResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.HabitacionesController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Habitaciones/{numHabitacion}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numHabitacion",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "habitacion",
+        "Type": "Motel.Integracion.Habitaciones.HabitacionResponse",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.HabitacionesController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Habitaciones/{numHabitacion}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numHabitacion",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.HabitacionesController",
+    "Method": "Asignar",
+    "RelativePath": "api/Habitaciones/asignar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Habitacion.AsignarHabitacionesRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.HabitacionesController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/Habitaciones/byid/{idHabitacion}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idHabitacion",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Motel.Integracion.Habitaciones.HabitacionResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.HabitacionesController",
+    "Method": "CambiarEstado",
+    "RelativePath": "api/Habitaciones/cambiarEstado/{idHabitacion}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idHabitacion",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "nuevoEstado",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.HabitacionesController",
+    "Method": "ObtenerPorTipoCantidad",
+    "RelativePath": "api/Habitaciones/disponibles/{tipoHabitacion}/{cantidad}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tipoHabitacion",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "cantidad",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Motel.Integracion.Habitaciones.HabitacionResponse, Motel.Integracion, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.HabitacionesController",
+    "Method": "ObtenerDisponibles",
+    "RelativePath": "api/Habitaciones/habitacionesDisponibles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Motel.Integracion.Habitaciones.HabitacionResponse, Motel.Integracion, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.HabitacionesController",
+    "Method": "OcuparHabitaciones",
+    "RelativePath": "api/Habitaciones/ocupar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ids",
+        "Type": "System.Collections.Generic.List\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.PagosController",
+    "Method": "Crear",
+    "RelativePath": "api/Pagos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Pagos.PagoRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.PagosController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/Pagos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.PagosController",
+    "Method": "ObtenerPorNumPago",
+    "RelativePath": "api/Pagos/{numPago}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numPago",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.PagosController",
+    "Method": "ActualizarEstado",
+    "RelativePath": "api/Pagos/{numPago}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numPago",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Pagos.PagoRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.PagosController",
+    "Method": "Cancelar",
+    "RelativePath": "api/Pagos/cancelar/{numPago}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numPago",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.PagosController",
+    "Method": "Modificar",
+    "RelativePath": "api/Pagos/modificar/{numPago}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numPago",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Pagos.PagoRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.PagosController",
+    "Method": "ObtenerPorReserva",
+    "RelativePath": "api/Pagos/reserva/{numReserva}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numReserva",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaHabitacionController",
+    "Method": "Crear",
+    "RelativePath": "api/ReservaHabitacion",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.ReservaHabitacion.ReservaHabitacionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaHabitacionController",
+    "Method": "Eliminar",
+    "RelativePath": "api/ReservaHabitacion/{numReserva}/{idHabitacion}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numReserva",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "idHabitacion",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaHabitacionController",
+    "Method": "ObtenerHabitaciones",
+    "RelativePath": "api/ReservaHabitacion/habitaciones",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaHabitacionController",
+    "Method": "ObtenerDisponibles",
+    "RelativePath": "api/ReservaHabitacion/habitacionesDisponibles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaHabitacionController",
+    "Method": "ObtenerPorReserva",
+    "RelativePath": "api/ReservaHabitacion/habitacionesPorReserva/{numReserva}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numReserva",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaHabitacionController",
+    "Method": "ObtenerTodas",
+    "RelativePath": "api/ReservaHabitacion/todasReservaHabitacion",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservasController",
+    "Method": "Crear",
+    "RelativePath": "api/Reservas",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Reservas.ReservaRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservasController",
+    "Method": "ObtenerTodas",
+    "RelativePath": "api/Reservas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservasController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/Reservas/{numReserva}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numReserva",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservasController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Reservas/{numReserva}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numReserva",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Reservas.ReservaRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservasController",
+    "Method": "CambiarEstado",
+    "RelativePath": "api/Reservas/cambiarEstado/{numReserva}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numReserva",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "nuevoEstado",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservasController",
+    "Method": "Cancelar",
+    "RelativePath": "api/Reservas/cancelar/{numReserva}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numReserva",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservasController",
+    "Method": "ObtenerPorCliente",
+    "RelativePath": "api/Reservas/cliente/{clienteId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "clienteId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservasController",
+    "Method": "ObtenerIds",
+    "RelativePath": "api/Reservas/ids",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservasController",
+    "Method": "ObtenerPagas",
+    "RelativePath": "api/Reservas/pagas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservasController",
+    "Method": "ObtenerPendientes",
+    "RelativePath": "api/Reservas/pendientes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservasController",
+    "Method": "ObtenerActivas",
+    "RelativePath": "api/Reservas/reservasActivas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaServiciosController",
+    "Method": "Crear",
+    "RelativePath": "api/ReservaServicios",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.ReservaServicios.ReservaServicioRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaServiciosController",
+    "Method": "Eliminar",
+    "RelativePath": "api/ReservaServicios/{numReserva}/{numServicio}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numReserva",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "numServicio",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaServiciosController",
+    "Method": "ObtenerIdsReservas",
+    "RelativePath": "api/ReservaServicios/ids/reservas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaServiciosController",
+    "Method": "ObtenerIdsServicios",
+    "RelativePath": "api/ReservaServicios/ids/servicios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaServiciosController",
+    "Method": "ObtenerResumenServicios",
+    "RelativePath": "api/ReservaServicios/nombres-precios-ids",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaServiciosController",
+    "Method": "ObtenerPorNombre",
+    "RelativePath": "api/ReservaServicios/servicio/{nombreServicio}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nombreServicio",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaServiciosController",
+    "Method": "ActualizarPorNombre",
+    "RelativePath": "api/ReservaServicios/servicio/{nombreServicio}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nombreServicio",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Servicios.ServicioRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaServiciosController",
+    "Method": "ObtenerServiciosPorReserva",
+    "RelativePath": "api/ReservaServicios/serviciosPorReserva/{numReserva}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numReserva",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ReservaServiciosController",
+    "Method": "ObtenerTodas",
+    "RelativePath": "api/ReservaServicios/todasReservaServicios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ServiciosController",
+    "Method": "Crear",
+    "RelativePath": "api/Servicios",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Servicios.ServicioRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ServiciosController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/Servicios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ServiciosController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/Servicios/{numServicio}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numServicio",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ServiciosController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Servicios/{numServicio}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numServicio",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Servicios.ServicioRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.ServiciosController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Servicios/{numServicio}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numServicio",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.UsuariosController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/Usuarios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.UsuariosController",
+    "Method": "Agregar",
+    "RelativePath": "api/Usuarios/agregar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Requests.UsuarioRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.UsuariosController",
+    "Method": "BuscarPorId",
+    "RelativePath": "api/Usuarios/buscarPorId/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.UsuariosController",
+    "Method": "BuscarPorNombre",
+    "RelativePath": "api/Usuarios/buscarPorNombre/{usuario}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.UsuariosController",
+    "Method": "EliminarPorId",
+    "RelativePath": "api/Usuarios/eliminarPorId/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.UsuariosController",
+    "Method": "EliminarPorNombre",
+    "RelativePath": "api/Usuarios/eliminarPorNombre/{usuario}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.UsuariosController",
+    "Method": "ModificarPorId",
+    "RelativePath": "api/Usuarios/modificarPorId/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Requests.UsuarioRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.UsuariosController",
+    "Method": "ModificarPorNombre",
+    "RelativePath": "api/Usuarios/modificarPorNombre/{usuario}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "Motel.Integracion.Requests.UsuarioRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Motel.Integracion.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Motel.Integracion.WeatherForecast, Motel.Integracion, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]

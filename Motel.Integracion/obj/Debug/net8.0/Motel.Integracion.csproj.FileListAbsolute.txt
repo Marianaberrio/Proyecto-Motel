@@ -1,0 +1,108 @@
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\appsettings.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.staticwebassets.endpoints.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.exe
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.deps.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.runtimeconfig.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.dll
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.pdb
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.csproj.AssemblyReference.cache
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.AssemblyInfoInputs.cache
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.AssemblyInfo.cs
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.csproj.CoreCompileInputs.cache
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.sourcelink.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\scopedcss\bundle\Motel.Integracion.styles.css
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.In.ACC10001.Up2Date
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.dll
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\refint\Motel.Integracion.dll
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.pdb
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.genruntimeconfig.cache
+C:\Users\poolg\Source\Repos\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\ref\Motel.Integracion.dll
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\appsettings.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.staticwebassets.endpoints.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.exe
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.deps.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.runtimeconfig.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.dll
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.pdb
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.csproj.AssemblyReference.cache
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.AssemblyInfoInputs.cache
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.AssemblyInfo.cs
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.csproj.CoreCompileInputs.cache
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.sourcelink.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\scopedcss\bundle\Motel.Integracion.styles.css
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.In.ACC10001.Up2Date
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.dll
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\refint\Motel.Integracion.dll
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.pdb
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.genruntimeconfig.cache
+C:\Users\poolg\OneDrive - INTEC\Escritorio\Proyecto-Motel100\Proyecto-Motel100\Motel.Integracion\obj\Debug\net8.0\ref\Motel.Integracion.dll
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\bin\Debug\net8.0\appsettings.json
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.staticwebassets.endpoints.json
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.exe
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.deps.json
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.runtimeconfig.json
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.dll
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\bin\Debug\net8.0\Motel.Integracion.pdb
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.csproj.AssemblyReference.cache
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.AssemblyInfoInputs.cache
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.AssemblyInfo.cs
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.csproj.CoreCompileInputs.cache
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\scopedcss\bundle\Motel.Integracion.styles.css
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\staticwebassets\msbuild.Motel.Integracion.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\staticwebassets\msbuild.Motel.Integracion.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\staticwebassets\msbuild.build.Motel.Integracion.props
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Motel.Integracion.props
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Motel.Integracion.props
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\Motel.In.ACC10001.Up2Date
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.dll
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\refint\Motel.Integracion.dll
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.pdb
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\Motel.Integracion.genruntimeconfig.cache
+C:\Users\jorge\OneDrive\Desktop\Motel.Integracion\obj\Debug\net8.0\ref\Motel.Integracion.dll
