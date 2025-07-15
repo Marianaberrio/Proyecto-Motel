@@ -20,26 +20,45 @@
             }
 
             <form asp-action="HabitacionesDisponibles" method="post" id="disponibilidadForm">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label asp-for="TipoHabitacion" class="form-label">Tipo de Habitación</label>
-                        <input asp-for="TipoHabitacion" class="form-control" placeholder="Ej. Doble" required />
-                        <span asp-validation-for="TipoHabitacion" class="text-danger"></span>
+                <!-- filas dinámicas de Tipo + Cantidad -->
+                <div class="mb-3">
+                    <label class="form-label">Tipo y Cantidad de Habitación</label>
+                    <div id="filas-tipos">
+                        @for (int i = 0; i < Model.TiposCantidad.Count; i++)
+                        {
+                            <div class="row g-2 mb-2 tipo-cantidad" data-index="@i">
+                                <div class="col-md-6">
+                                    <select asp-for="TiposCantidad[@i].Tipo" class="form-select">
+                                        <option value="">-- Selecciona un tipo --</option>
+                                        @foreach (var t in Model.TodosLosTipos)
+                                        {
+                                            <option value="@t">@t</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="TiposCantidad[@i].Tipo" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <input asp-for="TiposCantidad[@i].Cantidad"
+                                           type="number" min="1" class="form-control" />
+                                    <span asp-validation-for="TiposCantidad[@i].Cantidad" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-2 d-flex align-items-end">
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="quitar(@i)">&times;</button>
+                                </div>
+                            </div>
+                        }
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label asp-for="Cantidad" class="form-label">Cantidad</label>
-                        <input asp-for="Cantidad" type="number" min="1" class="form-control" placeholder="Ej. 2" required />
-                        <span asp-validation-for="Cantidad" class="text-danger"></span>
-                    </div>
+                    <button type="button" class="btn btn-link p-0" onclick="agregar()">+ Agregar otro tipo</button>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
+                <!-- fechas -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
                         <label asp-for="FechaEntrada" class="form-label">Fecha de Entrada</label>
                         <input asp-for="FechaEntrada" type="datetime-local" class="form-control" required />
                         <span asp-validation-for="FechaEntrada" class="text-danger"></span>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6">
                         <label asp-for="FechaSalida" class="form-label">Fecha de Salida</label>
                         <input asp-for="FechaSalida" type="datetime-local" class="form-control" required />
                         <span asp-validation-for="FechaSalida" class="text-danger"></span>
@@ -58,4 +77,46 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // precompila las <option> para usar en filas nuevas
+        const comboOptions = '@Html.Raw(
+      string.Join("",
+        Model.TodosLosTipos.Select(
+          t => $"<option value=\"{t}\">{t}</option>"
+        )
+      )
+    )';
+
+        function agregar() {
+          const cont = document.getElementById('filas-tipos');
+          const idx  = cont.children.length;
+          const row  = document.createElement('div');
+          row.className       = 'row g-2 mb-2 tipo-cantidad';
+          row.dataset.index   = idx;
+          row.innerHTML = `
+            <div class="col-md-6">
+              <select name="TiposCantidad[${idx}].Tipo" class="form-select">
+                <option value="">-- Selecciona un tipo --</option>${comboOptions}
+              </select>
+              <span class="text-danger" data-valmsg-for="TiposCantidad[${idx}].Tipo"></span>
+            </div>
+            <div class="col-md-4">
+              <input name="TiposCantidad[${idx}].Cantidad"
+                     type="number" min="1" value="1"
+                     class="form-control" />
+              <span class="text-danger" data-valmsg-for="TiposCantidad[${idx}].Cantidad"></span>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+              <button type="button" class="btn btn-danger btn-sm" onclick="quitar(${idx})">&times;</button>
+            </div>`;
+          cont.appendChild(row);
+        }
+
+        function quitar(i) {
+          const cont = document.getElementById('filas-tipos');
+          const el   = cont.querySelector(`div[data-index='${i}']`);
+          if (el) cont.removeChild(el);
+        }
+    </script>
 }

@@ -44,60 +44,94 @@ namespace Motel.Web.Controllers
         }
 
         // 2) Formulario para buscar disponibilidad
+        // GET: /Reservas/BuscarDisponibilidad
         [HttpGet]
-        public IActionResult BuscarDisponibilidad()
+        public async Task<IActionResult> BuscarDisponibilidad()
         {
-            if (!HttpContext.Session.GetInt32("ClienteId").HasValue)
-                return RedirectToAction("Login", "Auth");
+            // 1) Traer todas las habitaciones
+            var allHabs = await _api
+                .GetFromJsonAsync<List<Habitacion>>("Habitaciones")
+                     ?? new List<Habitacion>();
 
-            return View();
+            // 2) Extraer tipos únicos
+            var tipos = allHabs
+                .Select(h => h.TipoHabitacion)
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .Distinct()
+                .ToList();
+
+            // 3) Armar el VM con una fila inicial
+            var vm = new BuscarHabitacionesViewModel
+            {
+                TodosLosTipos = tipos,
+                TiposCantidad = new List<TipoCantidad>
+                {
+                    new TipoCantidad
+                    {
+                        Tipo     = tipos.FirstOrDefault() ?? "",
+                        Cantidad = 1
+                    }
+                },
+                FechaEntrada = DateTime.Now,
+                FechaSalida = DateTime.Now.AddHours(1)
+            };
+
+            return View(vm);
         }
 
-        // 3) Mostrar habitaciones disponibles
+        // POST: /Reservas/HabitacionesDisponibles
         [HttpPost]
         public async Task<IActionResult> HabitacionesDisponibles(BuscarHabitacionesViewModel vm)
         {
-            if (!HttpContext.Session.GetInt32("ClienteId").HasValue)
-                return RedirectToAction("Login", "Auth");
+            if (!ModelState.IsValid)
+                return View("BuscarDisponibilidad", vm);
 
-            if (vm.FechaEntrada < DateTime.Now)
+            // Validar fechas aquí si lo necesitas...
+
+            var listaTotal = new List<Habitacion>();
+            foreach (var tc in vm.TiposCantidad)
             {
-                TempData["Error"] = "La fecha de entrada no puede ser anterior a hoy.";
-                return RedirectToAction("BuscarDisponibilidad");
-            }
-            if (vm.FechaSalida <= vm.FechaEntrada)
-            {
-                TempData["Error"] = "La fecha de salida debe ser posterior a la de entrada.";
-                return RedirectToAction("BuscarDisponibilidad");
-            }
-            if ((vm.FechaSalida - vm.FechaEntrada).TotalHours < 1)
-            {
-                TempData["Error"] = "La estadía mínima es de 1 hora.";
-                return RedirectToAction("BuscarDisponibilidad");
-            }
-            if (string.IsNullOrWhiteSpace(vm.TipoHabitacion) || vm.Cantidad < 1)
-            {
-                TempData["Error"] = "Debes indicar tipo de habitación y cantidad válida.";
-                return RedirectToAction("BuscarDisponibilidad");
+                var resp = await _api.GetAsync(
+                    $"Habitaciones/disponibles/{Uri.EscapeDataString(tc.Tipo)}/{tc.Cantidad}"
+                );
+
+                if (!resp.IsSuccessStatusCode)
+                {
+                    ModelState.AddModelError("",
+                        $"No hay {tc.Cantidad} habitaciones disponibles de tipo “{tc.Tipo}”.");
+                    continue;
+                }
+
+                var subset = await resp.Content
+                    .ReadFromJsonAsync<List<Habitacion>>()
+                    ?? new List<Habitacion>();
+
+                listaTotal.AddRange(subset);
             }
 
+            if (!listaTotal.Any())
+            {
+                // recargar tipos desde la misma fuente
+                var allHabs = await _api
+                    .GetFromJsonAsync<List<Habitacion>>("Habitaciones")
+                         ?? new List<Habitacion>();
+
+                vm.TodosLosTipos = allHabs
+                    .Select(h => h.TipoHabitacion)
+                    .Where(t => !string.IsNullOrWhiteSpace(t))
+                    .Distinct()
+                    .ToList();
+
+                return View("BuscarDisponibilidad", vm);
+            }
+
+            // Guardar fechas y mostrar resultados
             TempData["FechaEntrada"] = vm.FechaEntrada.ToString("o");
             TempData["FechaSalida"] = vm.FechaSalida.ToString("o");
-            TempData.Keep("FechaEntrada");
-            TempData.Keep("FechaSalida");
-
-            var url = $"Habitaciones/disponibles/{Uri.EscapeDataString(vm.TipoHabitacion)}/{vm.Cantidad}";
-            var resp = await _api.GetAsync(url);
-            if (!resp.IsSuccessStatusCode)
-            {
-                var err = await resp.Content.ReadAsStringAsync();
-                TempData["Error"] = $"Error disponibilidad: {err}";
-                return RedirectToAction("BuscarDisponibilidad");
-            }
-
-            var list = await resp.Content.ReadFromJsonAsync<List<Habitacion>>() ?? new();
-            return View("HabitacionesDisponibles", list);
+            return View("HabitacionesDisponibles", listaTotal);
         }
+    
+
 
         // 4) Elegir servicios tras seleccionar habitaciones
         [HttpPost]
@@ -152,52 +186,63 @@ namespace Motel.Web.Controllers
         // 6) Confirmar reserva → crea cliente, reserva y redirige a pago
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> ConfirmarReserva(
-            Cliente cliente,
-            DateTime fechaEntrada,
-            DateTime fechaSalida,
-            string servicioIds)
+    Cliente cliente,
+    DateTime fechaEntrada,
+    DateTime fechaSalida,
+    string servicioIds)
         {
             if (!ModelState.IsValid)
                 return View("DatosCliente", cliente);
 
+            // 1) Registrar o recuperar cliente
             var cid = HttpContext.Session.GetInt32("ClienteId");
             if (!cid.HasValue)
             {
                 var respCli = await _api.PostAsJsonAsync("Clientes", cliente);
-                var creado = await respCli.Content.ReadFromJsonAsync<Cliente>();
-                cid = creado!.NumCliente;
+                if (!respCli.IsSuccessStatusCode)
+                {
+                    TempData["Error"] = "No se pudo registrar el cliente.";
+                    return View("DatosCliente", cliente);
+                }
+                var creadoCli = await respCli.Content.ReadFromJsonAsync<Cliente>();
+                cid = creadoCli!.NumCliente;
                 HttpContext.Session.SetInt32("ClienteId", cid.Value);
             }
 
+            // 2) Calcular horas y precio total
             decimal horas = (decimal)(fechaSalida - fechaEntrada).TotalHours;
             decimal total = 0m;
-            var habIds = TempData["HabitacionIds"]!.ToString()!
-                            .Split(',', StringSplitOptions.RemoveEmptyEntries);
-            var srvIds = (servicioIds ?? "")
-                            .Split(',', StringSplitOptions.RemoveEmptyEntries);
 
+            var habIds = (TempData["HabitacionIds"]?.ToString() ?? "")
+                .Split(',', StringSplitOptions.RemoveEmptyEntries);
+            var srvIds = (servicioIds ?? "")
+                .Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+            // 3) Sumar precio de cada habitación
             foreach (var h in habIds)
             {
-                var r = await _api.GetAsync($"Habitaciones/byid/{h}");
-                if (r.IsSuccessStatusCode)
-                {
-                    var hInfo = await r.Content.ReadFromJsonAsync<Habitacion>();
-                    if (hInfo != null)
-                        total += hInfo.PrecioHabitacion * horas;
-                }
+                var respH = await _api.GetAsync($"Habitaciones/byid/{h}");
+                if (!respH.IsSuccessStatusCode) continue;
+
+                var hInfo = await respH.Content.ReadFromJsonAsync<Habitacion>();
+                if (hInfo == null) continue;
+
+                total += hInfo.PrecioHabitacion * horas;
             }
 
+            // 4) Sumar precio de cada servicio
             foreach (var s in srvIds)
             {
-                var r = await _api.GetAsync($"Servicios/{s}");
-                if (r.IsSuccessStatusCode)
-                {
-                    var sInfo = await r.Content.ReadFromJsonAsync<Servicios>();
-                    if (sInfo != null)
-                        total += sInfo.PrecioServicio;
-                }
+                var respS = await _api.GetAsync($"Servicios/{s}");
+                if (!respS.IsSuccessStatusCode) continue;
+
+                var sInfo = await respS.Content.ReadFromJsonAsync<Servicios>();
+                if (sInfo == null) continue;
+
+                total += sInfo.PrecioServicio;
             }
 
+            // 5) Crear la reserva
             var nueva = new
             {
                 NumCliente = cid.Value,
@@ -216,41 +261,54 @@ namespace Motel.Web.Controllers
                 return View("DatosCliente", cliente);
             }
 
-            // 👉 Aquí deserializas correctamente con case-insensitive
-            var creada = await respRes.Content.ReadFromJsonAsync<Reserva>(
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-            );
+            // 6) Leer reserva creada (case-insensitive)
+            var creada = await respRes.Content.ReadFromJsonAsync<Reserva>(new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
             if (creada == null)
             {
                 TempData["Error"] = "No se recibió la reserva creada.";
                 return View("DatosCliente", cliente);
             }
 
-            // Asignar habitaciones
+            // 7) Guardar cada detalle de habitación con su precio real
             foreach (var h in habIds)
             {
-                var detalle = new ReservaHabitacion
+                var respH = await _api.GetAsync($"Habitaciones/byid/{h}");
+                if (!respH.IsSuccessStatusCode) continue;
+
+                var hInfo = await respH.Content.ReadFromJsonAsync<Habitacion>();
+                if (hInfo == null) continue;
+
+                var detalleHab = new ReservaHabitacion
                 {
                     NumReserva = creada.NumReserva,
-                    IdHabitacion = int.Parse(h),
-                    PrecioHabitacion = 0
+                    IdHabitacion = hInfo.IdHabitacion,
+                    PrecioHabitacion = hInfo.PrecioHabitacion
                 };
-                await _api.PostAsJsonAsync("ReservaHabitacion", detalle);
+                await _api.PostAsJsonAsync("ReservaHabitacion", detalleHab);
             }
 
-            // Asignar servicios
+            // 8) Guardar cada detalle de servicio con su precio real
             foreach (var s in srvIds)
             {
-                var detalle = new ReservaServicio
+                var respS = await _api.GetAsync($"Servicios/{s}");
+                if (!respS.IsSuccessStatusCode) continue;
+
+                var sInfo = await respS.Content.ReadFromJsonAsync<Servicios>();
+                if (sInfo == null) continue;
+
+                var detalleSrv = new ReservaServicio
                 {
                     NumReserva = creada.NumReserva,
-                    NumServicio = int.Parse(s),
-                    PrecioServicio = 0
+                    NumServicio = sInfo.NumServicio,
+                    PrecioServicio = sInfo.PrecioServicio
                 };
-                await _api.PostAsJsonAsync("ReservaServicios", detalle);
+                await _api.PostAsJsonAsync("ReservaServicios", detalleSrv);
             }
 
-            // Redirigir a pago
+            // 9) Redirigir al pago con ID y monto
             return RedirectToAction("Pagar", "Pagos", new
             {
                 reservaId = creada.NumReserva,
@@ -262,9 +320,44 @@ namespace Motel.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Confirmacion(int id)
         {
+            // 1) Traer la reserva
             var reserva = await _api.GetFromJsonAsync<Reserva>($"Reservas/{id}");
-            if (reserva == null) return NotFound();
-            return View(reserva);
+            if (reserva == null)
+                return NotFound();
+
+            // 2) Traer los detalles de habitación (ruta correcta)
+            var detallesHab = await _api
+                .GetFromJsonAsync<List<ReservaHabitacion>>(
+                    $"ReservaHabitacion/habitacionesPorReserva/{id}"
+                ) ?? new List<ReservaHabitacion>();
+
+            // 3) Traer el catálogo completo de habitaciones
+            var catalogoHab = await _api
+                .GetFromJsonAsync<List<Habitacion>>("Habitaciones")
+                ?? new List<Habitacion>();
+
+            // 4) Traer los detalles de servicio (ruta correcta)
+            var detallesSrv = await _api
+                .GetFromJsonAsync<List<ReservaServicio>>(
+                    $"ReservaServicios/serviciosPorReserva/{id}"
+                ) ?? new List<ReservaServicio>();
+
+            // 5) Traer el catálogo completo de servicios
+            var catalogoSrv = await _api
+                .GetFromJsonAsync<List<Servicios>>("Servicios")
+                ?? new List<Servicios>();
+
+            // 6) Empaquetar en el ViewModel y pasar a la vista
+            var vm = new ConfirmacionReservaViewModel
+            {
+                Reserva = reserva,
+                DetalleHabitaciones = detallesHab,
+                Habitaciones = catalogoHab,
+                DetalleServicios = detallesSrv,
+                Servicios = catalogoSrv
+            };
+
+            return View(vm);
         }
 
         // 8) Cancelar reserva

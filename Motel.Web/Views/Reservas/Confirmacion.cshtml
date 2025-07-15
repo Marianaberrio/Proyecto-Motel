@@ -1,21 +1,22 @@
-﻿@model Motel.Web.Models.Reserva
+﻿@model Motel.Web.Models.ConfirmacionReservaViewModel
 @using System.Linq
+
 @{
     ViewData["Title"] = "Confirmación de Reserva";
-    var horas = (Model.FechaSalida - Model.FechaEntrada).TotalHours;
+    var horas = (Model.Reserva.FechaSalida - Model.Reserva.FechaEntrada).TotalHours;
 }
 
 <div class="container mt-5">
     <div class="alert alert-success">
-        <strong>¡Reserva #@Model.NumReserva confirmada!</strong>
+        <strong>¡Reserva #@Model.Reserva.NumReserva confirmada!</strong>
     </div>
 
     <div class="card mb-4">
         <div class="card-body">
-            <p><strong>Check-in:</strong> @Model.FechaEntrada:g</p>
-            <p><strong>Check-out:</strong> @Model.FechaSalida:g</p>
+            <p><strong>Check-in:</strong> @Model.Reserva.FechaEntrada:g</p>
+            <p><strong>Check-out:</strong> @Model.Reserva.FechaSalida:g</p>
             <p><strong>Duración:</strong> @horas:0.## horas</p>
-            <p><strong>Estado:</strong> @Model.EstadoReserva</p>
+            <p><strong>Estado:</strong> @Model.Reserva.EstadoReserva</p>
         </div>
     </div>
 
@@ -30,11 +31,10 @@
                 @for (int i = 0; i < Model.DetalleHabitaciones.Count; i++)
                 {
                     var d = Model.DetalleHabitaciones[i];
-                    var hab = Model.Habitaciones
-                    .FirstOrDefault(h => h.IdHabitacion == d.IdHabitacion);
+                    var hab = Model.Habitaciones.FirstOrDefault(h => h.IdHabitacion == d.IdHabitacion);
                     <tr>
                         <td>@(i + 1)</td>
-                        <td>@(hab?.NumHabitacion ?? d.IdHabitacion.ToString())</td>
+                        <td>@(hab != null ? hab.NumHabitacion.ToString() : d.IdHabitacion.ToString())</td>
                         <td>@d.PrecioHabitacion.ToString("C")</td>
                     </tr>
                 }
@@ -57,12 +57,10 @@
                 @for (int i = 0; i < Model.DetalleServicios.Count; i++)
                 {
                     var sd = Model.DetalleServicios[i];
-                    // Buscamos el servicio completo por su ID
-                    var svc = Model.Servicios
-                    .FirstOrDefault(s => s.NumServicio == sd.NumServicio);
+                    var svc = Model.Servicios.FirstOrDefault(s => s.NumServicio == sd.NumServicio);
                     <tr>
                         <td>@(i + 1)</td>
-                        <td>@(svc?.NombreServicio ?? sd.NumServicio.ToString())</td>
+                        <td>@(svc != null ? svc.NombreServicio : sd.NumServicio.ToString())</td>
                         <td>@sd.PrecioServicio.ToString("C")</td>
                     </tr>
                 }
@@ -75,7 +73,7 @@
     }
 
     <div class="alert alert-info text-end mt-4">
-        <h4>Total a pagar: <strong>@Model.TotalReserva.ToString("C")</strong></h4>
+        <h4>Total a pagar: <strong>@Model.Reserva.TotalReserva.ToString("C")</strong></h4>
     </div>
 
     <div class="d-flex justify-content-between">
@@ -83,7 +81,3 @@
         <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Inicio</a>
     </div>
 </div>
-
-@section Scripts {
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-}
