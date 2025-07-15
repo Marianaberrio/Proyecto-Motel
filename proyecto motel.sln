@@ -14,8 +14,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminApp", "AdminApp\AdminA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motel.Web", "Motel.Web\Motel.Web.csproj", "{73A9F99C-04BE-4F10-8886-F4D5B4DB7BD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motel.Integracion", "..\..\..\Desktop\Motel.Integracion\Motel.Integracion.csproj", "{3AFEF1E5-F7D3-3892-D73D-ADD7FF21460C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,10 +32,6 @@ Global
 		{73A9F99C-04BE-4F10-8886-F4D5B4DB7BD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73A9F99C-04BE-4F10-8886-F4D5B4DB7BD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73A9F99C-04BE-4F10-8886-F4D5B4DB7BD2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3AFEF1E5-F7D3-3892-D73D-ADD7FF21460C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AFEF1E5-F7D3-3892-D73D-ADD7FF21460C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AFEF1E5-F7D3-3892-D73D-ADD7FF21460C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AFEF1E5-F7D3-3892-D73D-ADD7FF21460C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
