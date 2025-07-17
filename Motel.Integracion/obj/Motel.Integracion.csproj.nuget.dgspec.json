@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\poolg\\source\\repos\\Proyecto-Motel (FE)\\Motel.Integracion\\Motel.Integracion.csproj": {}
+    "C:\\Users\\poolg\\Source\\Repos\\Proyecto-Motel (FE)\\Motel.Integracion\\Motel.Integracion.csproj": {}
   },
   "projects": {
-    "C:\\Users\\poolg\\source\\repos\\Proyecto-Motel (FE)\\Motel.Integracion\\Motel.Integracion.csproj": {
+    "C:\\Users\\poolg\\Source\\Repos\\Proyecto-Motel (FE)\\Motel.Integracion\\Motel.Integracion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\poolg\\source\\repos\\Proyecto-Motel (FE)\\Motel.Integracion\\Motel.Integracion.csproj",
+        "projectUniqueName": "C:\\Users\\poolg\\Source\\Repos\\Proyecto-Motel (FE)\\Motel.Integracion\\Motel.Integracion.csproj",
         "projectName": "Motel.Integracion",
-        "projectPath": "C:\\Users\\poolg\\source\\repos\\Proyecto-Motel (FE)\\Motel.Integracion\\Motel.Integracion.csproj",
+        "projectPath": "C:\\Users\\poolg\\Source\\Repos\\Proyecto-Motel (FE)\\Motel.Integracion\\Motel.Integracion.csproj",
         "packagesPath": "C:\\Users\\poolg\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\poolg\\source\\repos\\Proyecto-Motel (FE)\\Motel.Integracion\\obj\\",
         "projectStyle": "PackageReference",

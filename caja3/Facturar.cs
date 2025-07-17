@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,11 +7,11 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 
 namespace caja3
@@ -40,7 +41,7 @@ namespace caja3
             {
                 int numReserva = Convert.ToInt32(numreservacombo.SelectedItem);
                 await ObtenerMontoReservaAsync(numReserva);
-             
+
             }
         }
 
@@ -50,7 +51,7 @@ namespace caja3
             {
                 using (var client = new HttpClient())
                 {
-                    string url = "http://localhost:5264/api/Reservas/ids"; // URL de la API para obtener los IDs de las reservas
+                    string url = "https://localhost:7013/api/Reservas/ids"; // URL de la API para obtener los IDs de las reservas
 
                     var response = await client.GetAsync(url);
                     if (response.IsSuccessStatusCode)
@@ -63,7 +64,7 @@ namespace caja3
 
                         // Cargar los IDs de las reservas en el ComboBox
                         numreservacombo.DataSource = idsReservas;
-                        
+
                     }
                     else
                     {
@@ -99,21 +100,21 @@ namespace caja3
             {
                 using (var client = new HttpClient())
                 {
-                    string url = $"http://localhost:5264/api/Reservas/{numReserva}";
+                    string url = $"https://localhost:7013/api/Reservas/{numReserva}";
 
                     var response = await client.GetAsync(url);
                     if (response.IsSuccessStatusCode)
                     {
                         var json = await response.Content.ReadAsStringAsync();
-                       // MessageBox.Show(json);  // Verifica la respuesta JSON aquí
+                        // MessageBox.Show(json);  // Verifica la respuesta JSON aquí
 
                         // Deserializar la respuesta JSON en un objeto de tipo Reservas
                         var reserva = JsonConvert.DeserializeObject<Reservas>(json);
 
-                       if (reserva != null)
+                        if (reserva != null)
                         {
-                           // Mostrar el monto de la reserva con formato de moneda
-                           montototaltxt.Text = reserva.TotalReserva.ToString("C"); // Formato RD$
+                            // Mostrar el monto de la reserva con formato de moneda
+                            montototaltxt.Text = reserva.TotalReserva.ToString("C"); // Formato RD$
                         }
                     }
                     else
@@ -141,63 +142,60 @@ namespace caja3
         }
         private async Task<bool> RealizarPagoAsync(int numReserva, decimal montoPago, string metodoPago)
         {
-            string connectionString = "Data Source=LAPTOP-7C7NP3J4\\SQLEXPRESS;Initial Catalog=dbMotel;Integrated Security=True;";
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (var client = new HttpClient())
                 {
-                    await conn.OpenAsync();
-
-                    using (SqlCommand cmd = new SqlCommand("RealizarPago", conn))
+                    var pagoRequest = new
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@NumReserva", numReserva);
-                        cmd.Parameters.AddWithValue("@MontoPago", montoPago);
-                        cmd.Parameters.AddWithValue("@MetodoPago", metodoPago);
-                        cmd.Parameters.AddWithValue("@EstadoPago", "Activo");
+                        NumReserva = numReserva,
+                        MontoPago = montoPago,
+                        FechaPago = DateTime.Now,
+                        MetodoPago = metodoPago,
+                        EstadoPago = "Activo",
+                        ComentarioPago = "" 
+                    };
 
-                        await cmd.ExecuteNonQueryAsync();
-                        return true;
-                    }
+                    var response = await client.PostAsJsonAsync("https://localhost:7013/api/Pagos", pagoRequest);
+                    return response.IsSuccessStatusCode;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al realizar el pago: {ex.Message}");
+                MessageBox.Show($"Error al registrar el pago: {ex.Message}");
                 return false;
             }
+        }
+        public class PagoResponse
+        {
+            public int NumPago { get; set; }
+            public int NumReserva { get; set; }
+            public decimal MontoPago { get; set; }
+            public DateTime FechaPago { get; set; }
+            public string MetodoPago { get; set; }
+            public string EstadoPago { get; set; }
+            public string ComentarioPago { get; set; }
         }
 
         private async Task<int?> ObtenerUltimoNumPagoAsync(int numReserva)
         {
-            string connectionString = "Data Source=LAPTOP-7C7NP3J4\\SQLEXPRESS;Initial Catalog=dbMotel;Integrated Security=True;";
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (var client = new HttpClient())
                 {
-                    await conn.OpenAsync();
+                    string url = $"https://localhost:7013/api/Pagos/reserva/{numReserva}";
 
-                    string query = @"SELECT TOP 1 NumPago 
-                             FROM Pagos 
-                             WHERE NumReserva = @NumReserva 
-                             ORDER BY FechaPago DESC";
-
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    var response = await client.GetAsync(url);
+                    if (response.IsSuccessStatusCode)
                     {
-                        cmd.Parameters.AddWithValue("@NumReserva", numReserva);
+                        var json = await response.Content.ReadAsStringAsync();
+                        var pago = JsonConvert.DeserializeObject<PagoResponse>(json);
 
-                        var result = await cmd.ExecuteScalarAsync();
-
-                        if (result != null)
-                        {
-                            return Convert.ToInt32(result);
-                        }
-                        else
-                        {
-                            return null;
-                        }
+                        return pago?.NumPago;
+                    }
+                    else
+                    {
+                        return null;
                     }
                 }
             }
@@ -209,17 +207,25 @@ namespace caja3
         }
 
 
+
         private async void facturarbtn_Click(object sender, EventArgs e)
         {
             int numReserva = Convert.ToInt32(numreservacombo.SelectedItem);
             string textoMonto = montototaltxt.Text;
-           
 
-            // Limpieza del texto: elimina todo lo que no sea número o punto decimal
-            string montoLimpio = new string(textoMonto.Where(c => char.IsDigit(c) || c == '.').ToArray());
-            
-            decimal montoPago = Convert.ToDecimal(montoLimpio);
+            string montoLimpio = new string(textoMonto.Where(c => char.IsDigit(c) || c == '.' || c == ',').ToArray());
 
+            // Reemplazar coma por punto si es necesario (por configuración regional)
+            montoLimpio = montoLimpio.Replace(',', '.');
+
+            decimal montoPago;
+            bool esDecimal = decimal.TryParse(montoLimpio, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out montoPago);
+
+            if (!esDecimal)
+            {
+                MessageBox.Show("Por favor, ingresa un monto válido (número sin letras).", "Monto inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
 
 
@@ -227,7 +233,7 @@ namespace caja3
 
             bool pagoRealizado = await RealizarPagoAsync(numReserva, montoPago, metodoPago);
 
-            
+
 
             if (pagoRealizado)
             {

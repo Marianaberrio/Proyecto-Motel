@@ -1,36 +1,26 @@
 ﻿using Newtonsoft.Json;
 using QuestPDF.Fluent;
+using QuestPDF.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using QuestPDF.Helpers;
-using QuestPDF.Infrastructure;
 
 namespace caja3
 {
     public partial class DetallePago : Form
     {
-
         private int _numPago;
-       
+
         public DetallePago(int numPago = -1)
         {
             InitializeComponent();
-
             _numPago = numPago;
-
         }
 
+        // Clase Pagos que mapea los datos del pago
         public class Pagos
         {
             public int NumPago { get; set; }
@@ -41,65 +31,78 @@ namespace caja3
             public string EstadoPago { get; set; }
             public string ComentarioPago { get; set; }
         }
-
-        private async Task<int> ObtenerUltimoPagoAsync()
+        public class PagoResponse
         {
-            string connectionString = "Data Source=LAPTOP-7C7NP3J4\\SQLEXPRESS;Initial Catalog=dbMotel;Integrated Security=True;";
+            public int NumPago { get; set; }
+            public int NumReserva { get; set; }
+            public decimal MontoPago { get; set; }
+            public DateTime FechaPago { get; set; }
+            public string MetodoPago { get; set; }
+            public string EstadoPago { get; set; }
+            public string ComentarioPago { get; set; }
+        }
+
+        // Método para obtener el último pago a través de la API
+        private async Task<int?> ObtenerUltimoNumPagoAsync(int numReserva)
+        {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (var client = new HttpClient())
                 {
-                    await conn.OpenAsync();
+                    string url = $"https://localhost:7013/api/Pagos/reserva/{numReserva}";  // Llamada a la API de integración
 
-                    string query = "SELECT TOP 1 NumPago FROM tblPago ORDER BY NumPago DESC";
-
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    var response = await client.GetAsync(url);
+                    if (response.IsSuccessStatusCode)
                     {
-                        object result = await cmd.ExecuteScalarAsync();
-                        return result != null ? Convert.ToInt32(result) : -1;
+                        var json = await response.Content.ReadAsStringAsync();
+                        var pago = JsonConvert.DeserializeObject<PagoResponse>(json);
+
+                        return pago?.NumPago;
+                    }
+                    else
+                    {
+                        return null;
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al obtener el último pago: {ex.Message}");
-                return -1;
+                MessageBox.Show($"Error al obtener el número de pago: {ex.Message}");
+                return null;
             }
         }
 
+        // Método que obtiene los detalles del pago desde la API
         private async Task CargarDetallesPagoAsync(int numPago)
         {
-            string connectionString = "Data Source=LAPTOP-7C7NP3J4\\SQLEXPRESS;Initial Catalog=dbMotel;Integrated Security=True;";
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (var client = new HttpClient())
                 {
-                    await conn.OpenAsync();
+                    string url = $"https://localhost:7013/api/Pagos/{numPago}";  // Llamada a la API de integración
 
-                    string query = @"SELECT NumPago, NumReserva, MontoPago, FechaPago, MetodoPago, EstadoPago, ComentarioPago 
-                                     FROM Pagos
-                                     WHERE NumPago = @NumPago";
+                    var response = await client.GetAsync(url);  // Realiza la solicitud HTTP
 
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    if (response.IsSuccessStatusCode)
                     {
-                        cmd.Parameters.AddWithValue("@NumPago", numPago);
+                        var json = await response.Content.ReadAsStringAsync();  // Obtiene la respuesta JSON
 
-                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        // Deserializa la respuesta en un objeto de tipo Pagos
+                        var pago = JsonConvert.DeserializeObject<Pagos>(json);
+
+                        if (pago != null)
                         {
-                            if (await reader.ReadAsync())
-                            {
-                                numpagotxt.Text = reader["NumPago"].ToString();
-                                numreservatxt.Text = reader["NumReserva"].ToString();
-                                montopagadotxt.Text = Convert.ToDecimal(reader["MontoPago"]).ToString("C");
-                                fechapagotxt.Text = Convert.ToDateTime(reader["FechaPago"]).ToString("yyyy-MM-dd");
-                                metodopagotxt.Text = reader["MetodoPago"].ToString();
-                               
-                            }
-                            else
-                            {
-                                MessageBox.Show("No se encontraron detalles para ese número de pago.");
-                            }
+                            // Muestra los detalles en los TextBoxes
+                            numpagotxt.Text = pago.NumPago.ToString();
+                            numreservatxt.Text = pago.NumReserva.ToString();
+                            montopagadotxt.Text = pago.MontoPago.ToString("C");
+                            fechapagotxt.Text = pago.FechaPago.ToString("yyyy-MM-dd");
+                            metodopagotxt.Text = pago.MetodoPago;
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se encontraron detalles para ese número de pago.");
                     }
                 }
             }
@@ -109,16 +112,15 @@ namespace caja3
             }
         }
 
-
+        // Método que se ejecuta cuando el formulario se carga
         private async void DetallePago_Load(object sender, EventArgs e)
         {
             await CargarDetallesPagoAsync(_numPago);
         }
 
+        // Genera el recibo de pago en formato PDF
         private void button1_Click(object sender, EventArgs e)
         {
-
-
             QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
             var document = Document.Create(container =>
             {
@@ -132,7 +134,6 @@ namespace caja3
                         col.Item().Text($"Fecha: {fechapagotxt.Text}");
                         col.Item().Text($"Método: {metodopagotxt.Text}");
                         col.Item().Text($"Monto: {montopagadotxt.Text}");
-                       
                     });
                 });
             });
@@ -154,15 +155,6 @@ namespace caja3
                 File.WriteAllBytes(saveFileDialog.FileName, stream.ToArray());
                 MessageBox.Show("PDF generado y guardado correctamente.");
             }
-
         }
-
-        // Form Load event - Fetch payment details using static NumPago
-
-
-        // Método que se ejecuta cuando el formulario se carga
-
-
-
     }
 }

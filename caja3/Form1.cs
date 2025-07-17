@@ -1,24 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Configuration;
-
-
 
 namespace caja3
 {
     public partial class Form1 : Form
     {
+        private readonly HttpClient _httpClient;
+
         public Form1()
         {
             InitializeComponent();
+
+            // Instanciamos HttpClient con la URL base de la API de integración
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri("https://localhost:7013/api/") // Reemplaza con tu puerto correcto
+            };
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -28,97 +28,76 @@ namespace caja3
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
-        private void ingresarBtn_Click(object sender, EventArgs e)
+        public class Usuario
         {
-            string usuario = usuariotxt.Text.Trim();  // Eliminar espacios innecesarios
-            string contrasena = contrasenatxt.Text.Trim();  // Eliminar espacios innecesarios
+            public int Id { get; set; }
+            public string UsuarioNombre { get; set; } = string.Empty;
+            public string Contraseña { get; set; } = string.Empty;
+        }
 
-            // Verificar si los campos están vacíos antes de continuar
+        private async void ingresarBtn_Click(object sender, EventArgs e)
+        {
+            string usuario = usuariotxt.Text.Trim();
+            string contrasena = contrasenatxt.Text.Trim();
+
             if (string.IsNullOrEmpty(usuario) || string.IsNullOrEmpty(contrasena))
             {
-                // Mostrar el mensaje de advertencia si alguno de los campos está vacío
                 MessageBox.Show("Por favor, ingrese ambos campos (usuario y contraseña).",
                                  "Campos incompletos",
                                  MessageBoxButtons.OK,
                                  MessageBoxIcon.Warning);
-                return; // Detener la ejecución del código y no proceder a la autenticación
+                return;
             }
 
-            //  Si ambos campos están llenos, proceder con la autenticación
-            if (AuthenticateUser(usuario, contrasena))
+            bool autenticado = await AuthenticateUserAsync(usuario, contrasena);
+
+            if (autenticado)
             {
-                // Redirigir al dashboard principal o pantalla correspondiente
                 var mainForm = new Facturar();
                 mainForm.Show();
                 this.Hide();
             }
             else
             {
-                //Si las credenciales son incorrectas
                 MessageBox.Show("Usuario o contraseña incorrectos.",
                              "Error de autenticación",
                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
             }
         }
 
-        // Método para autenticar al usuario en la base de datos
-        private bool AuthenticateUser(string usuario, string contrasena)
+        // Llamada a la API de integración para autenticar
+        private async Task<bool> AuthenticateUserAsync(string usuario, string contrasena)
         {
-            // Obtener la cadena de conexión desde el archivo App.config
-            string connectionString = ConfigurationManager.ConnectionStrings["dbMotel"].ConnectionString;
-
-            // Llamar al método para verificar la contraseña
-            return VerifyPasswordInDatabase(usuario, contrasena, connectionString);
-        }
-
-        // Verificar las credenciales en la base de datos
-        private bool VerifyPasswordInDatabase(string usuario, string contrasena, string connectionString)
-        {
-            // La consulta para obtener el hash de la contraseña para el usuario
-            string query = "SELECT Contraseña FROM Usuarios WHERE Usuario = @usuario";
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            try
             {
-                // Establecer la conexión
-                conn.Open();
+                // Realizar GET a la API de integración
+                var response = await _httpClient.GetAsync($"usuarios/buscarPorNombre/{usuario}");
 
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    // Definir los parámetros para evitar inyección SQL
-                    cmd.Parameters.AddWithValue("@usuario", usuario);
+                if (!response.IsSuccessStatusCode)
+                    return false;
 
-                    // Ejecutar la consulta y obtener el valor
-                    object result = cmd.ExecuteScalar();
+                var user = await response.Content.ReadFromJsonAsync<Usuario>();
 
-                    // Si no se encuentra el usuario, retornar falso
-                    if (result == null)
-                    {
-                        return false;
-                    }
+                if (user == null)
+                    return false;
 
-                    // Obtener el hash de la contraseña almacenado en la base de datos
-                    string storedPasswordHash = result.ToString();
-
-                    // Comparar el hash de la contraseña ingresada con el hash almacenado
-                    return VerifyPassword(contrasena, storedPasswordHash);
-                }
+                // Comparar contraseñas
+                return VerifyPassword(contrasena, user.Contraseña);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error de conexión con la API: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
         }
 
-        // Comparar la contraseña ingresada con la almacenada
-        private bool VerifyPassword(string enteredPassword, string storedPasswordHash)
+        private bool VerifyPassword(string enteredPassword, string storedPassword)
         {
-            // Eliminar los espacios en blanco antes de comparar
-            enteredPassword = enteredPassword.Trim();
-            storedPasswordHash = storedPasswordHash.Trim();
-
-            // Comparar las contraseñas directamente (sin importar mayúsculas/minúsculas)
-            return enteredPassword.Equals(storedPasswordHash, StringComparison.OrdinalIgnoreCase);
+            return enteredPassword.Trim().Equals(storedPassword.Trim(), StringComparison.OrdinalIgnoreCase);
         }
-
     }
 }
+
